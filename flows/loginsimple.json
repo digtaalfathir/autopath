@@ -1,7 +1,6 @@
 {
-  "name": "Untitled Workflow",
+  "name": "loginsimple",
   "version": "1.0",
-  "createdAt": "2026-06-15T05:36:57.547Z",
   "nodes": [
     {
       "id": "node_1781501190274_0",
@@ -83,8 +82,8 @@
         "clearFirst": true,
         "status": "completed"
       },
-      "width": 180,
-      "height": 58,
+      "width": 196,
+      "height": 54,
       "selected": false,
       "positionAbsolute": {
         "x": 288,
@@ -107,8 +106,8 @@
         "clearFirst": true,
         "status": "completed"
       },
-      "width": 180,
-      "height": 58,
+      "width": 196,
+      "height": 54,
       "selected": false,
       "positionAbsolute": {
         "x": 288,
@@ -130,8 +129,8 @@
         "doubleClick": false,
         "status": "completed"
       },
-      "width": 180,
-      "height": 58,
+      "width": 196,
+      "height": 54,
       "selected": false,
       "positionAbsolute": {
         "x": 288,
@@ -149,11 +148,12 @@
       "data": {
         "nodeType": "end",
         "label": "End",
-        "status": "completed"
+        "status": "completed",
+        "autoCloseBrowser": false
       },
       "width": 180,
       "height": 58,
-      "selected": false,
+      "selected": true,
       "positionAbsolute": {
         "x": 288,
         "y": 464
@@ -242,8 +242,8 @@
     }
   ],
   "viewport": {
-    "x": 139.92038364395256,
-    "y": 251.3834750247263,
-    "zoom": 0.7371346086455506
+    "x": 237.14868722452138,
+    "y": 175.3828095963624,
+    "zoom": 0.5285090202806904
   }
 }

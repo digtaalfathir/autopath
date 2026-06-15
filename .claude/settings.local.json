@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx vite *)",
+      "Bash(node -e \"const rf = require\\('./node_modules/reactflow/dist/umd/reactflow.js'\\); console.log\\('BackgroundVariant' in rf ? 'OK' : 'MISSING'\\);\")"
+    ]
+  }
+}

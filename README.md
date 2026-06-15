@@ -1,250 +1,427 @@
-# 🌀 Cyclone LokalPride — Visual RPA Workflow Designer
+# 🌀 Cyclone Automation Studio
 
-Desktop automation tool for building visual drag-and-drop workflows and executing browser automation using Playwright.
+Professional Visual RPA Workflow Designer for Browser Automation
 
-Built with **Electron** + **React** + **React Flow** + **Playwright**.
+Cyclone Automation Studio is a desktop automation platform that allows users to build drag-and-drop workflows visually and execute browser automation using Playwright.
+
+Built with:
+
+* Electron
+* React
+* React Flow
+* Playwright
+
+Designed to provide an experience similar to commercial RPA platforms such as UiPath Studio and Microsoft Power Automate Desktop.
 
 ---
 
-## 📁 Project Structure
+# 📁 Project Structure
 
-```
+```text
 cyclonelokalpride/
-├── electron/              # Electron main process
-│   ├── main.js           # Main process entry (IPC handlers, window mgmt)
-│   └── preload.js        # Context bridge for renderer process
+├── electron/
+│   ├── main.js
+│   └── preload.js
 │
-├── frontend/              # React frontend (Vite)
+├── frontend/
 │   ├── src/
 │   │   ├── components/
-│   │   │   ├── WorkflowNode.jsx      # Custom React Flow node component
-│   │   │   ├── NodePalette.jsx       # Left sidebar — draggable node list
-│   │   │   ├── PropertyPanel.jsx     # Right panel — node property editor
-│   │   │   └── ExecutionConsole.jsx   # Right panel — execution log viewer
-│   │   ├── nodeDefinitions.js        # Node type registry (schemas, defaults)
-│   │   ├── App.jsx                   # Main application component
-│   │   ├── main.jsx                  # React entry point
-│   │   └── index.css                 # Complete design system
-│   ├── index.html
+│   │   │   ├── WorkflowNode.jsx
+│   │   │   ├── NodePalette.jsx
+│   │   │   ├── PropertyPanel.jsx
+│   │   │   ├── ExecutionConsole.jsx
+│   │   │   └── ElementPickerButton.jsx
+│   │   │
+│   │   ├── nodeDefinitions.js
+│   │   ├── App.jsx
+│   │   ├── main.jsx
+│   │   └── index.css
+│   │
 │   ├── vite.config.js
 │   └── package.json
 │
-├── engine/                # Playwright execution engine
-│   ├── workflowEngine.js  # Core engine — reads JSON, runs steps
-│   ├── pluginRegistry.js  # Plugin system for extensible node types
-│   └── nodes/             # Built-in node handlers
-│       ├── start.js       # Start → workflow init
-│       ├── openBrowser.js # Open Browser → chromium.launch()
-│       ├── navigateUrl.js # Navigate URL → page.goto()
-│       ├── inputText.js   # Input Text → page.fill()
-│       ├── clickElement.js # Click → page.click()
-│       └── end.js         # End → workflow cleanup
+├── engine/
+│   ├── workflowEngine.js
+│   ├── pluginRegistry.js
+│   ├── browserManager.js
+│   ├── executionTracker.js
+│   ├── elementPicker.js
+│   │
+│   └── nodes/
+│       ├── start.js
+│       ├── openBrowser.js
+│       ├── navigateUrl.js
+│       ├── inputText.js
+│       ├── clickElement.js
+│       └── end.js
 │
-├── flows/                 # Saved workflow JSON files
-│   └── Sample Login Flow.json
+├── flows/
 │
-├── package.json           # Root config (Electron + builder)
-└── .gitignore
+├── package.json
+└── README.md
 ```
 
 ---
 
-## 🚀 Getting Started
+# 🚀 Features
 
-### Prerequisites
+## Visual Workflow Designer
 
-- **Node.js** >= 18 (recommended: LTS 20)
-- **npm** >= 8
-
-### Install
-
-```bash
-# Install root dependencies (Electron + Playwright)
-npm install
-
-# Install frontend dependencies (React + React Flow)
-cd frontend && npm install && cd ..
-
-# Install Playwright browsers
-npx playwright install chromium
-```
-
-### Development
-
-```bash
-# Run both frontend dev server and Electron in parallel
-npm run dev
-```
-
-Or run separately:
-
-```bash
-# Terminal 1: Start React dev server
-npm run dev:frontend
-
-# Terminal 2: Start Electron (after frontend is ready)
-npm run dev:electron
-```
-
-### Build for Windows (.exe)
-
-```bash
-# Build frontend then package with Electron Builder
-npm run build
-```
-
-Output will be in `dist/` directory as an NSIS installer `.exe`.
+* Drag and drop workflow editor
+* React Flow powered canvas
+* Node-based automation design
+* Snap-to-grid positioning
+* Zoom and pan controls
+* Workflow validation
+* Real-time execution visualization
 
 ---
 
-## 🎯 Features
+## Browser Automation
 
-### 1. Visual Workflow Designer
-- Drag-and-drop nodes from the palette to the canvas
-- Connect nodes with edges to define execution flow
-- Snap-to-grid alignment
-- Minimap overview
-- Zoom and pan controls
+### Open Browser
 
-### 2. Available Nodes
-| Node | Action | Playwright API |
-|------|--------|---------------|
-| **Start** | Workflow entry point | — |
-| **Open Browser** | Launch Chromium | `chromium.launch()` |
-| **Navigate URL** | Go to a URL | `page.goto()` |
-| **Input Text** | Type into field | `page.fill()` |
-| **Click Element** | Click an element | `page.click()` |
-| **End** | Workflow end point | — |
+Launch browser sessions using:
 
-### 3. Property Panel
-Select any node to edit its properties:
-- **Navigate URL**: url
-- **Input Text**: selector, value, clearFirst
-- **Click Element**: selector, doubleClick
-- **Open Browser**: headless mode
+* Google Chrome
+* Microsoft Edge
+* Chromium
 
-### 4. File Operations
-- **Save**: Save workflow as JSON
-- **Save As**: Save with file dialog
-- **Open**: Load workflow from JSON file
+Supports:
 
-### 5. Execution Engine
-- Reads flow JSON and resolves node execution order
-- Runs each node step-by-step using Playwright
-- Realtime log output to console panel
-- Visual node status (running → completed → error)
-- Stop execution at any time
-
-### 6. Execution Console
-```
-[INFO] 🚀 Workflow initialized
-[INFO] 🌐 Browser opened successfully
-[INFO] 📄 Navigate success → https://example.com
-[INFO] ⌨ Input filled: #username
-[INFO] 👆 Clicked: #login-button
-[INFO] 🏁 Workflow completed successfully
-```
+* Visible Mode
+* Headless Mode
 
 ---
 
-## 🔌 Plugin Architecture (Future-Ready)
+### Browser Session Reuse
 
-Adding a new node type requires 3 steps:
+Cyclone automatically attempts to reuse existing browser sessions.
 
-### 1. Create node handler in `engine/nodes/`
+When Element Picker is activated:
 
-```js
-// engine/nodes/delay.js
-module.exports = {
-  meta: {
-    type: 'delay',
-    label: 'Delay',
-    category: 'Utility',
-    description: 'Wait for specified time',
-    icon: '⏱',
-    color: '#06b6d4',
-  },
-  defaults: { ms: 1000 },
-  schema: [
-    { key: 'ms', label: 'Milliseconds', type: 'text', placeholder: '1000' },
-  ],
-  execute: async (data, context, engine) => {
-    const ms = parseInt(data.ms) || 1000;
-    engine.log('INFO', `Waiting ${ms}ms...`);
-    await new Promise(resolve => setTimeout(resolve, ms));
-  },
-};
-```
+1. Cyclone minimizes itself.
+2. Searches for active browser sessions.
+3. Attaches to existing browser if available.
+4. Does not create duplicate browser windows.
+5. Restores Cyclone after selection.
 
-### 2. Register in `engine/workflowEngine.js`
+If no active browser session exists:
 
-```js
-const delayHandler = require('./nodes/delay');
-this.registry.register('delay', delayHandler);
-```
+1. Browser is launched automatically.
+2. Target URL is opened.
+3. Picker mode starts.
 
-### 3. Add to `frontend/src/nodeDefinitions.js`
+---
 
-```js
+## Smart Element Picker
+
+Visual selector capture system inspired by enterprise RPA tools.
+
+Features:
+
+* Hover highlighting
+* Selector generation
+* Element metadata preview
+* Auto minimize / restore workflow designer
+* Existing browser session attachment
+* ESC cancel support
+
+Returned data:
+
+```json
 {
-  type: 'delay',
-  label: 'Delay',
-  category: 'Utility',
-  description: 'Wait for specified time',
-  icon: '⏱',
-  color: '#06b6d4',
-  defaults: { ms: 1000 },
-  schema: [
-    { key: 'ms', label: 'Milliseconds', type: 'text', placeholder: '1000' },
-  ],
-  hasInput: true,
-  hasOutput: true,
+  "selector": "#login-btn",
+  "tagName": "button",
+  "text": "Login",
+  "id": "login-btn"
 }
 ```
 
-### Planned Future Nodes
-- 📊 Read Excel / Write Excel
-- 🌍 HTTP Request
-- 📧 Send Email
-- ⏱ Delay
-- 🔀 If Condition
-- 🔄 Loop
-- 🗄 Database Query
+---
+
+## Node Types
+
+| Node          | Description          |
+| ------------- | -------------------- |
+| Start         | Workflow entry point |
+| Open Browser  | Open browser session |
+| Navigate URL  | Navigate browser     |
+| Input Text    | Fill input field     |
+| Click Element | Click UI element     |
+| End           | Workflow completion  |
+
+Future Nodes:
+
+* Delay
+* Condition
+* Loop
+* Excel
+* HTTP Request
+* Database
+* File Operations
+* Email
+* OCR
+* AI Activities
 
 ---
 
-## 🏗 Architecture
+## Property Panel
 
+Every node contains editable properties.
+
+Examples:
+
+### Open Browser
+
+* Browser Type
+* Headless
+* Reuse Existing Session
+
+### Navigate URL
+
+* URL
+
+### Input Text
+
+* Selector
+* Value
+* Clear Existing Value
+
+### Click Element
+
+* Selector
+* Double Click
+
+### End
+
+* Auto Close Browser
+* Restore Cyclone Window
+
+---
+
+## End Node
+
+The End node controls workflow completion behavior.
+
+### Auto Close Browser = ON
+
+```text
+Open Browser
+↓
+Automation
+↓
+End
+↓
+Browser Closed
+↓
+Cyclone Restored
 ```
-┌─────────────────────────────────────────────┐
-│                Designer (React)              │
-│  ┌──────────┐  ┌──────────┐  ┌───────────┐ │
-│  │  Node     │  │  Canvas  │  │ Property  │ │
-│  │  Palette  │  │  (React  │  │  Panel /  │ │
-│  │           │  │   Flow)  │  │  Console  │ │
-│  └──────────┘  └──────────┘  └───────────┘ │
-└─────────────────────┬───────────────────────┘
-                      │ save / execute (IPC)
+
+### Auto Close Browser = OFF
+
+```text
+Open Browser
+↓
+Automation
+↓
+End
+↓
+Browser Remains Open
+↓
+Cyclone Restored
+```
+
+Useful for:
+
+* Debugging
+* Manual continuation
+* Inspection
+* Recorder workflows
+
+---
+
+## Execution Engine
+
+Cyclone executes workflows node-by-node.
+
+Features:
+
+* Plugin-based architecture
+* Execution queue
+* Runtime context
+* Browser session management
+* Error handling
+* Workflow cancellation
+
+---
+
+## Execution Analytics
+
+Cyclone tracks workflow performance automatically.
+
+Captured metrics:
+
+* Start Time
+* End Time
+* Duration
+* Executed Nodes
+* Errors
+* Status
+
+Example:
+
+```text
+Workflow Started
+09:12:15.201
+
+Browser Opened
+09:12:16.810
+
+Navigate Success
+09:12:18.552
+
+Input Completed
+09:12:20.133
+
+Click Completed
+09:12:21.887
+
+Workflow Finished
+09:12:23.615
+
+Duration
+8.41s
+```
+
+Execution Summary:
+
+```text
+Status:
+Success
+
+Started:
+09:12:15
+
+Finished:
+09:12:23
+
+Duration:
+8.41s
+
+Executed Nodes:
+12
+
+Errors:
+0
+```
+
+---
+
+## Save & Load Workflows
+
+Supported operations:
+
+* New Workflow
+* Open Workflow
+* Save Workflow
+* Save As
+* Export JSON
+
+Workflow files are stored as JSON and can be version-controlled.
+
+---
+
+## Professional UI
+
+Inspired by:
+
+* UiPath Studio
+* Microsoft Power Automate Desktop
+* Visual Studio
+* JetBrains IDEs
+
+Design Principles:
+
+* Light Theme
+* Enterprise Appearance
+* Clean Workflow Canvas
+* Property Inspector
+* Execution Console
+* Minimal Branding
+
+No:
+
+* Neon effects
+* AI-style gradients
+* Robot mascots
+* Futuristic UI gimmicks
+
+---
+
+## Build
+
+Install dependencies:
+
+```bash
+npm install
+
+cd frontend
+npm install
+cd ..
+```
+
+Run development mode:
+
+```bash
+npm run dev
+```
+
+Build desktop application:
+
+```bash
+npm run build
+```
+
+Output:
+
+```text
+dist/
+└── Cyclone Setup.exe
+```
+
+---
+
+## Architecture
+
+```text
+┌────────────────────────────────────────────┐
+│           Cyclone Designer (React)         │
+├──────────────┬──────────────┬──────────────┤
+│ Activities   │ Canvas       │ Properties   │
+│ Panel        │ React Flow   │ Inspector    │
+└──────────────┴──────┬───────┴──────────────┘
+                      │
                       ▼
-              ┌──────────────┐
-              │  flow.json   │
-              └──────┬───────┘
-                     │
-                     ▼
-          ┌─────────────────────┐
-          │  Execution Engine   │
-          │  (Plugin Registry)  │
-          └──────────┬──────────┘
-                     │
-                     ▼
-          ┌─────────────────────┐
-          │  Playwright Robot   │
-          │  (Chromium)         │
-          └─────────────────────┘
+             Electron IPC Bridge
+                      │
+                      ▼
+         ┌─────────────────────────┐
+         │ Workflow Engine         │
+         │ Plugin Registry         │
+         │ Browser Manager         │
+         │ Runtime Tracker         │
+         └─────────────┬───────────┘
+                       │
+                       ▼
+            Playwright Browser Layer
+                       │
+                       ▼
+           Chrome / Edge / Chromium
 ```
 
 ---
 
-## 📄 License
+# License
 
-MIT
+MIT License

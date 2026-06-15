@@ -4,12 +4,11 @@ module.exports = {
     label: 'Start',
     category: 'Flow Control',
     description: 'Starting point of the workflow',
-    icon: '▶',
-    color: '#10b981',
+    color: '#16A34A',
   },
   defaults: {},
   schema: [],
   execute: async (_data, _context, engine) => {
-    engine.log('INFO', '🚀 Workflow initialized');
+    engine.log('INFO', 'Workflow initialized.');
   },
 };

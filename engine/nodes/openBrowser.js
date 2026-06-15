@@ -5,31 +5,43 @@ module.exports = {
     type: 'openBrowser',
     label: 'Open Browser',
     category: 'Browser',
-    description: 'Launch a Chromium browser instance',
-    icon: '🌐',
-    color: '#3b82f6',
+    description: 'Launch a browser instance',
+    color: '#2563EB',
   },
   defaults: {
     headless: false,
   },
   schema: [
-    { key: 'headless', label: 'Headless Mode', type: 'boolean', placeholder: '' },
+    { key: 'headless', label: 'Headless Mode', type: 'boolean' },
   ],
   execute: async (data, context, engine) => {
     const headless = data.headless === true || data.headless === 'true';
+
     engine.log('INFO', `Launching browser (headless: ${headless})`);
 
-    context.browser = await chromium.launch({
-      channel: 'chrome',
-      headless,
-      args: ['--start-maximized'],
-    });
+    const opts = { headless, args: ['--start-maximized'] };
 
-    const browserContext = await context.browser.newContext({
-      viewport: null,
-    });
-    context.page = await browserContext.newPage();
+    // Try Chrome first, then Edge, then bundled Chromium
+    const channels = ['chrome', 'msedge'];
+    let launched = false;
 
-    engine.log('INFO', '🌐 Browser opened successfully');
+    for (const channel of channels) {
+      try {
+        context.browser = await chromium.launch({ ...opts, channel });
+        engine.log('INFO', `Browser opened (${channel}).`);
+        launched = true;
+        break;
+      } catch (_) {
+        // Not installed — try next
+      }
+    }
+
+    if (!launched) {
+      context.browser = await chromium.launch(opts);
+      engine.log('INFO', 'Browser opened (Chromium).');
+    }
+
+    const ctx  = await context.browser.newContext({ viewport: null });
+    context.page = await ctx.newPage();
   },
 };
