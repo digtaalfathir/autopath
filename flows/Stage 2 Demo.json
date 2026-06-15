@@ -1,0 +1,102 @@
+{
+  "name": "Stage 2 Demo",
+  "nodes": [
+    {
+      "id": "node-start",
+      "type": "workflowNode",
+      "position": { "x": 300, "y": 50 },
+      "data": {
+        "nodeType": "start",
+        "label": "Start"
+      }
+    },
+    {
+      "id": "node-set-user",
+      "type": "workflowNode",
+      "position": { "x": 300, "y": 160 },
+      "data": {
+        "nodeType": "setVariable",
+        "label": "Set userId",
+        "variableName": "userId",
+        "value": "1"
+      }
+    },
+    {
+      "id": "node-log-start",
+      "type": "workflowNode",
+      "position": { "x": 300, "y": 270 },
+      "data": {
+        "nodeType": "logMessage",
+        "label": "Log: Starting request",
+        "message": "Fetching user with ID: {{userId}}",
+        "level": "INFO"
+      }
+    },
+    {
+      "id": "node-http",
+      "type": "workflowNode",
+      "position": { "x": 300, "y": 380 },
+      "data": {
+        "nodeType": "httpRequest",
+        "label": "GET User from API",
+        "method": "GET",
+        "url": "https://jsonplaceholder.typicode.com/users/{{userId}}",
+        "headers": "",
+        "body": "",
+        "outputVariable": "response"
+      }
+    },
+    {
+      "id": "node-log-result",
+      "type": "workflowNode",
+      "position": { "x": 300, "y": 490 },
+      "data": {
+        "nodeType": "logMessage",
+        "label": "Log: API result",
+        "message": "User name: {{response.data.name}} | Email: {{response.data.email}} | City: {{response.data.address.city}}",
+        "level": "SUCCESS"
+      }
+    },
+    {
+      "id": "node-delay",
+      "type": "workflowNode",
+      "position": { "x": 300, "y": 600 },
+      "data": {
+        "nodeType": "delay",
+        "label": "Wait 1.5s",
+        "milliseconds": "1500"
+      }
+    },
+    {
+      "id": "node-log-done",
+      "type": "workflowNode",
+      "position": { "x": 300, "y": 710 },
+      "data": {
+        "nodeType": "logMessage",
+        "label": "Log: Done",
+        "message": "Workflow complete. Fetched data for {{response.data.name}}.",
+        "level": "INFO"
+      }
+    },
+    {
+      "id": "node-end",
+      "type": "workflowNode",
+      "position": { "x": 300, "y": 820 },
+      "data": {
+        "nodeType": "end",
+        "label": "End",
+        "autoCloseBrowser": true,
+        "restoreWindow": true
+      }
+    }
+  ],
+  "edges": [
+    { "id": "e1", "source": "node-start",    "target": "node-set-user",  "type": "smoothstep" },
+    { "id": "e2", "source": "node-set-user", "target": "node-log-start", "type": "smoothstep" },
+    { "id": "e3", "source": "node-log-start","target": "node-http",      "type": "smoothstep" },
+    { "id": "e4", "source": "node-http",     "target": "node-log-result","type": "smoothstep" },
+    { "id": "e5", "source": "node-log-result","target": "node-delay",    "type": "smoothstep" },
+    { "id": "e6", "source": "node-delay",    "target": "node-log-done",  "type": "smoothstep" },
+    { "id": "e7", "source": "node-log-done", "target": "node-end",       "type": "smoothstep" }
+  ]
+}

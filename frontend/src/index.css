@@ -881,6 +881,31 @@ body {
   line-height: 1.4;
 }
 
+.prop-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 7px 10px;
+  font-size: 12px;
+  font-family: var(--font-mono);
+  color: var(--text-primary);
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  resize: vertical;
+  min-height: 72px;
+  line-height: 1.5;
+  outline: none;
+  transition: border-color 0.1s;
+}
+.prop-textarea:focus {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+.prop-textarea::placeholder {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
 /* Checkbox row */
 .prop-checkbox-row {
   display: flex;

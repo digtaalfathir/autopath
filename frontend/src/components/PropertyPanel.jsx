@@ -3,19 +3,24 @@ import { getNodeDefinition } from '../nodeDefinitions';
 import {
   IconGlobe, IconLink, IconType, IconMousePointer,
   IconPlay, IconStopSquare, IconProperties, IconCrosshair, IconSpinner,
+  IconVariable, IconClock, IconAPI, IconLog,
 } from './Icons';
 
 const api = window.electronAPI || null;
 
 function NodeIcon({ iconKey, size = 15 }) {
   switch (iconKey) {
-    case 'globe': return <IconGlobe size={size} />;
-    case 'link':  return <IconLink size={size} />;
-    case 'type':  return <IconType size={size} />;
-    case 'mouse': return <IconMousePointer size={size} />;
-    case 'play':  return <IconPlay size={size} />;
-    case 'stop':  return <IconStopSquare size={size} />;
-    default:      return <IconProperties size={size} />;
+    case 'globe':    return <IconGlobe size={size} />;
+    case 'link':     return <IconLink size={size} />;
+    case 'type':     return <IconType size={size} />;
+    case 'mouse':    return <IconMousePointer size={size} />;
+    case 'play':     return <IconPlay size={size} />;
+    case 'stop':     return <IconStopSquare size={size} />;
+    case 'variable': return <IconVariable size={size} />;
+    case 'clock':    return <IconClock size={size} />;
+    case 'api':      return <IconAPI size={size} />;
+    case 'log':      return <IconLog size={size} />;
+    default:         return <IconProperties size={size} />;
   }
 }
 
@@ -130,6 +135,19 @@ export default function PropertyPanel({ selectedNode, onNodeUpdate, nodes }) {
               </div>
               {field.hint && <div className="prop-helper">{field.hint}</div>}
             </>
+          ) : field.type === 'textarea' ? (
+            <>
+              <textarea
+                id={`prop-${field.key}`}
+                className="prop-textarea"
+                value={selectedNode.data?.[field.key] || ''}
+                onChange={e => handleChange(field.key, e.target.value)}
+                placeholder={field.placeholder || ''}
+                rows={4}
+                spellCheck={false}
+              />
+              {field.hint && <div className="prop-helper">{field.hint}</div>}
+            </>
           ) : field.isSelector ? (
             <>
               <div className="prop-selector-row">
@@ -161,14 +179,17 @@ export default function PropertyPanel({ selectedNode, onNodeUpdate, nodes }) {
               </div>
             </>
           ) : (
-            <input
-              id={`prop-${field.key}`}
-              className="prop-input"
-              type="text"
-              value={selectedNode.data?.[field.key] || ''}
-              onChange={e => handleChange(field.key, e.target.value)}
-              placeholder={field.placeholder || ''}
-            />
+            <>
+              <input
+                id={`prop-${field.key}`}
+                className="prop-input"
+                type="text"
+                value={selectedNode.data?.[field.key] || ''}
+                onChange={e => handleChange(field.key, e.target.value)}
+                placeholder={field.placeholder || ''}
+              />
+              {field.hint && <div className="prop-helper">{field.hint}</div>}
+            </>
           )}
         </div>
       ))}

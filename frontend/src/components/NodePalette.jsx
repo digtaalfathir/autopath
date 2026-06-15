@@ -4,17 +4,22 @@ import {
   IconSearch, IconChevronRight, IconChevronDown,
   IconGlobe, IconLink, IconType, IconMousePointer,
   IconPlay, IconStopSquare,
+  IconVariable, IconClock, IconAPI, IconLog,
 } from './Icons';
 
 function NodeIcon({ iconKey, size = 14 }) {
   switch (iconKey) {
-    case 'globe': return <IconGlobe size={size} />;
-    case 'link':  return <IconLink size={size} />;
-    case 'type':  return <IconType size={size} />;
-    case 'mouse': return <IconMousePointer size={size} />;
-    case 'play':  return <IconPlay size={size} />;
-    case 'stop':  return <IconStopSquare size={size} />;
-    default:      return null;
+    case 'globe':    return <IconGlobe size={size} />;
+    case 'link':     return <IconLink size={size} />;
+    case 'type':     return <IconType size={size} />;
+    case 'mouse':    return <IconMousePointer size={size} />;
+    case 'play':     return <IconPlay size={size} />;
+    case 'stop':     return <IconStopSquare size={size} />;
+    case 'variable': return <IconVariable size={size} />;
+    case 'clock':    return <IconClock size={size} />;
+    case 'api':      return <IconAPI size={size} />;
+    case 'log':      return <IconLog size={size} />;
+    default:         return null;
   }
 }
 

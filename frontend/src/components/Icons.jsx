@@ -273,3 +273,48 @@ export function IconChevronUp({ size = 14 }) {
     </svg>
   );
 }
+
+// ── Stage 2 icons ─────────────────────────────────────────────
+
+// { } curly braces — represents a variable
+export function IconVariable({ size = 16 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M5 3C3.5 3 3 3.8 3 5v1.5C3 7.3 2.3 7.8 1.5 8 2.3 8.2 3 8.7 3 9.5V11c0 1.2.5 2 2 2" />
+      <path d="M11 3c1.5 0 2 .8 2 2v1.5c0 .8.7 1.3 1.5 1.5-.8.2-1.5.7-1.5 1.5V11c0 1.2-.5 2-2 2" />
+    </svg>
+  );
+}
+
+// Clock / timer — represents Delay
+export function IconClock({ size = 16 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="8" cy="8" r="6" />
+      <path d="M8 5v3.5l2.5 1.5" />
+    </svg>
+  );
+}
+
+// Bidirectional arrows — represents HTTP / API call
+export function IconAPI({ size = 16 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M2 5h12M11 2l3 3-3 3" />
+      <path d="M14 11H2M5 8l-3 3 3 3" />
+    </svg>
+  );
+}
+
+// Document with bullets — represents Log Message
+export function IconLog({ size = 16 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="2" width="12" height="12" rx="1.5" />
+      <path d="M5.5 6h5M5.5 8.5h5M5.5 11h3" />
+      <circle cx="3.5" cy="6"    r=".5" fill="currentColor" stroke="none" />
+      <circle cx="3.5" cy="8.5"  r=".5" fill="currentColor" stroke="none" />
+      <circle cx="3.5" cy="11"   r=".5" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}

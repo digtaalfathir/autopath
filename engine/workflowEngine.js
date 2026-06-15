@@ -1,12 +1,17 @@
 const EventEmitter = require('events');
 const { PluginRegistry } = require('./pluginRegistry');
 
-const startHandler       = require('./nodes/start');
-const openBrowserHandler = require('./nodes/openBrowser');
-const navigateUrlHandler = require('./nodes/navigateUrl');
-const inputTextHandler   = require('./nodes/inputText');
-const clickElementHandler= require('./nodes/clickElement');
-const endHandler         = require('./nodes/end');
+const startHandler        = require('./nodes/start');
+const openBrowserHandler  = require('./nodes/openBrowser');
+const navigateUrlHandler  = require('./nodes/navigateUrl');
+const inputTextHandler    = require('./nodes/inputText');
+const clickElementHandler = require('./nodes/clickElement');
+const endHandler          = require('./nodes/end');
+// Stage 2 nodes
+const setVariableHandler  = require('./nodes/setVariable');
+const logMessageHandler   = require('./nodes/logMessage');
+const delayHandler        = require('./nodes/delay');
+const httpRequestHandler  = require('./nodes/httpRequest');
 
 class WorkflowEngine extends EventEmitter {
   constructor() {
@@ -33,12 +38,18 @@ class WorkflowEngine extends EventEmitter {
     };
 
     this.registry = new PluginRegistry();
+    // Stage 1
     this.registry.register('start',        startHandler);
     this.registry.register('openBrowser',  openBrowserHandler);
     this.registry.register('navigateUrl',  navigateUrlHandler);
     this.registry.register('inputText',    inputTextHandler);
     this.registry.register('clickElement', clickElementHandler);
     this.registry.register('end',          endHandler);
+    // Stage 2
+    this.registry.register('setVariable',  setVariableHandler);
+    this.registry.register('logMessage',   logMessageHandler);
+    this.registry.register('delay',        delayHandler);
+    this.registry.register('httpRequest',  httpRequestHandler);
   }
 
   // ── Logging ─────────────────────────────────────────────────
