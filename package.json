@@ -1,0 +1,62 @@
+{
+  "name": "cyclone-lokalpride",
+  "version": "1.0.0",
+  "description": "Cyclone LokalPride - Visual RPA Workflow Designer & Automation Engine",
+  "main": "electron/main.js",
+  "author": "LokalPride",
+  "license": "MIT",
+  "scripts": {
+    "dev:frontend": "cd frontend && npx vite --port 5173",
+    "dev:electron": "cross-env NODE_ENV=development electron .",
+    "dev": "concurrently \"npm run dev:frontend\" \"sleep 3 && npm run dev:electron\"",
+    "build:frontend": "cd frontend && npx vite build",
+    "build": "npm run build:frontend && electron-builder --win",
+    "install:frontend": "cd frontend && npm install"
+  },
+  "dependencies": {
+    "playwright": "^1.40.0"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "cross-env": "^7.0.3",
+    "electron": "^28.3.3",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.lokalpride.cyclone",
+    "productName": "Cyclone LokalPride",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "electron/**/*",
+      "engine/**/*",
+      "frontend/dist/**/*",
+      "flows/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "flows",
+        "to": "flows",
+        "filter": ["**/*"]
+      }
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        }
+      ],
+      "icon": "assets/icon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  }
+}
