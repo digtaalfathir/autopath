@@ -38,8 +38,6 @@ const defaultEdgeOptions = {
   type: 'smoothstep',
 };
 
-const BOTTOM_HEIGHT = 200;
-
 export default function App() {
   const reactFlowWrapper = useRef(null);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
@@ -51,7 +49,34 @@ export default function App() {
   const [engineStatus, setEngineStatus] = useState('idle');
   const [bottomOpen, setBottomOpen] = useState(true);
   const [bottomTab, setBottomTab] = useState('output');
-  const [execSummary, setExecSummary] = useState(null); // populated after each run
+  const [execSummary, setExecSummary] = useState(null);
+  const [bottomHeight, setBottomHeight] = useState(220);
+  const [isResizing, setIsResizing] = useState(false);
+  // Refs hold drag-start values so the mousemove closure is stale-closure-free
+  const resizeDragRef = useRef({ startY: 0, startH: 220 });
+
+  // ── Bottom panel resize (drag the top edge upward) ──────────
+  const onPanelResizeStart = useCallback((e) => {
+    if (!bottomOpen) return;
+    e.preventDefault();
+    resizeDragRef.current = { startY: e.clientY, startH: bottomHeight };
+    setIsResizing(true);
+
+    const onMouseMove = (ev) => {
+      const delta = resizeDragRef.current.startY - ev.clientY; // up = positive
+      const next  = Math.max(80, Math.min(window.innerHeight * 0.8, resizeDragRef.current.startH + delta));
+      setBottomHeight(next);
+    };
+
+    const onMouseUp = () => {
+      setIsResizing(false);
+      window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('mouseup',   onMouseUp);
+    };
+
+    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('mouseup',   onMouseUp);
+  }, [bottomOpen, bottomHeight]);
 
   // Engine event listeners
   useEffect(() => {
@@ -385,10 +410,16 @@ export default function App() {
 
       {/* ── Bottom Panel ─────────────────────────────────────── */}
       <div
-        className={`bottom-panel ${!bottomOpen ? 'bottom-panel--collapsed' : ''}`}
-        style={{ height: bottomOpen ? BOTTOM_HEIGHT : 32 }}
+        className={`bottom-panel ${!bottomOpen ? 'bottom-panel--collapsed' : ''} ${isResizing ? 'bottom-panel--resizing' : ''}`}
+        style={{ height: bottomOpen ? bottomHeight : 32 }}
         id="bottom-panel"
       >
+        {/* Drag handle — grab and pull up to expand */}
+        <div
+          className="bottom-panel__resize-handle"
+          onMouseDown={onPanelResizeStart}
+          title="Drag to resize"
+        />
         <div className="bottom-panel__topbar">
           <div className="bottom-panel__tabs">
             <button
@@ -437,7 +468,12 @@ export default function App() {
         {bottomOpen && (
           <div className="bottom-panel__body">
             {bottomTab === 'output' && (
-              <ExecutionConsole logs={logs} onClear={() => setLogs([])} summary={execSummary} />
+              <ExecutionConsole
+                logs={logs}
+                onClear={() => setLogs([])}
+                summary={execSummary}
+                onDismissSummary={() => setExecSummary(null)}
+              />
             )}
             {bottomTab === 'errors' && (
               <ExecutionConsole

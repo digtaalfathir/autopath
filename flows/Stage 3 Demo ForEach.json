@@ -1,73 +1,229 @@
 {
   "name": "Stage 3 Demo ForEach",
+  "version": "1.0",
   "nodes": [
     {
       "id": "node-start",
       "type": "workflowNode",
-      "position": { "x": 300, "y": 50 },
-      "data": { "nodeType": "start", "label": "Start", "status": "" }
+      "position": {
+        "x": 300,
+        "y": 50
+      },
+      "data": {
+        "nodeType": "start",
+        "label": "Start",
+        "status": "completed"
+      },
+      "width": 196,
+      "height": 49,
+      "positionAbsolute": {
+        "x": 300,
+        "y": 50
+      }
     },
     {
       "id": "node-set-fruits",
       "type": "workflowNode",
-      "position": { "x": 300, "y": 160 },
+      "position": {
+        "x": 300,
+        "y": 160
+      },
       "data": {
         "nodeType": "setVariable",
         "label": "Set fruits list",
         "variableName": "fruits",
         "value": "[\"Apple\", \"Banana\", \"Cherry\", \"Date\", \"Elderberry\"]",
-        "status": ""
+        "status": "completed"
+      },
+      "width": 196,
+      "height": 49,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 300,
+        "y": 160
       }
     },
     {
       "id": "node-foreach",
       "type": "workflowNode",
-      "position": { "x": 300, "y": 270 },
+      "position": {
+        "x": 304,
+        "y": 272
+      },
       "data": {
         "nodeType": "forEachNode",
         "label": "For Each fruit",
-        "collection": "{{fruits}}",
+        "collection": "[fruits]",
         "itemVariable": "fruit",
-        "status": ""
+        "status": "completed"
+      },
+      "width": 196,
+      "height": 78,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 304,
+        "y": 272
       }
     },
     {
       "id": "node-log-item",
       "type": "workflowNode",
-      "position": { "x": 150, "y": 390 },
+      "position": {
+        "x": 150,
+        "y": 390
+      },
       "data": {
         "nodeType": "logMessage",
         "label": "Log fruit",
         "message": "Processing fruit [{{fruit_index}}]: {{fruit}}",
         "level": "INFO",
-        "status": ""
+        "status": "completed"
+      },
+      "width": 196,
+      "height": 49,
+      "positionAbsolute": {
+        "x": 150,
+        "y": 390
       }
     },
     {
       "id": "node-delay",
       "type": "workflowNode",
-      "position": { "x": 150, "y": 500 },
-      "data": { "nodeType": "delay", "label": "Small delay", "milliseconds": "200", "status": "" }
+      "position": {
+        "x": 150,
+        "y": 500
+      },
+      "data": {
+        "nodeType": "delay",
+        "label": "Small delay",
+        "milliseconds": "200",
+        "status": "completed"
+      },
+      "width": 196,
+      "height": 49,
+      "positionAbsolute": {
+        "x": 150,
+        "y": 500
+      }
     },
     {
       "id": "node-log-done",
       "type": "workflowNode",
-      "position": { "x": 300, "y": 610 },
-      "data": { "nodeType": "logMessage", "label": "Log: All done", "message": "Processed all fruits in the list.", "level": "SUCCESS", "status": "" }
+      "position": {
+        "x": 300,
+        "y": 610
+      },
+      "data": {
+        "nodeType": "logMessage",
+        "label": "Log: All done",
+        "message": "Processed all fruits in the list.",
+        "level": "SUCCESS",
+        "status": "completed"
+      },
+      "width": 196,
+      "height": 49,
+      "positionAbsolute": {
+        "x": 300,
+        "y": 610
+      }
     },
     {
       "id": "node-end",
       "type": "workflowNode",
-      "position": { "x": 300, "y": 720 },
-      "data": { "nodeType": "end", "label": "End", "autoCloseBrowser": true, "restoreWindow": true, "status": "" }
+      "position": {
+        "x": 300,
+        "y": 720
+      },
+      "data": {
+        "nodeType": "end",
+        "label": "End",
+        "autoCloseBrowser": true,
+        "restoreWindow": true,
+        "status": "completed"
+      },
+      "width": 196,
+      "height": 49,
+      "positionAbsolute": {
+        "x": 300,
+        "y": 720
+      }
     }
   ],
   "edges": [
-    { "id": "e1", "source": "node-start",      "target": "node-set-fruits", "type": "smoothstep" },
-    { "id": "e2", "source": "node-set-fruits", "target": "node-foreach",    "type": "smoothstep" },
-    { "id": "e3", "source": "node-foreach",    "target": "node-log-item",   "type": "smoothstep", "sourceHandle": "body" },
-    { "id": "e4", "source": "node-log-item",   "target": "node-delay",      "type": "smoothstep" },
-    { "id": "e5", "source": "node-foreach",    "target": "node-log-done",   "type": "smoothstep", "sourceHandle": "done" },
-    { "id": "e6", "source": "node-log-done",   "target": "node-end",        "type": "smoothstep" }
-  ]
+    {
+      "animated": false,
+      "style": {
+        "stroke": "#9CA3AF",
+        "strokeWidth": 1.5
+      },
+      "type": "smoothstep",
+      "id": "e1",
+      "source": "node-start",
+      "target": "node-set-fruits"
+    },
+    {
+      "animated": false,
+      "style": {
+        "stroke": "#9CA3AF",
+        "strokeWidth": 1.5
+      },
+      "type": "smoothstep",
+      "id": "e2",
+      "source": "node-set-fruits",
+      "target": "node-foreach"
+    },
+    {
+      "animated": false,
+      "style": {
+        "stroke": "#9CA3AF",
+        "strokeWidth": 1.5
+      },
+      "type": "smoothstep",
+      "id": "e3",
+      "source": "node-foreach",
+      "target": "node-log-item",
+      "sourceHandle": "body"
+    },
+    {
+      "animated": false,
+      "style": {
+        "stroke": "#9CA3AF",
+        "strokeWidth": 1.5
+      },
+      "type": "smoothstep",
+      "id": "e4",
+      "source": "node-log-item",
+      "target": "node-delay"
+    },
+    {
+      "animated": false,
+      "style": {
+        "stroke": "#9CA3AF",
+        "strokeWidth": 1.5
+      },
+      "type": "smoothstep",
+      "id": "e5",
+      "source": "node-foreach",
+      "target": "node-log-done",
+      "sourceHandle": "done"
+    },
+    {
+      "animated": false,
+      "style": {
+        "stroke": "#9CA3AF",
+        "strokeWidth": 1.5
+      },
+      "type": "smoothstep",
+      "id": "e6",
+      "source": "node-log-done",
+      "target": "node-end"
+    }
+  ],
+  "viewport": {
+    "x": 121.38948317493572,
+    "y": -91.18567894228298,
+    "zoom": 0.6486388844013434
+  }
 }

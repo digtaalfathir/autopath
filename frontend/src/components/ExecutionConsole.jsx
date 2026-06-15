@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { IconTerminal, IconCheck, IconX, IconInfo } from './Icons';
+import { IconTerminal, IconCheck, IconX } from './Icons';
 
 function fmtTime(ms) {
   if (ms == null) return '—';
@@ -12,41 +12,46 @@ function fmtDuration(startMs, endMs) {
   return `${sec}s`;
 }
 
-function ExecSummary({ summary }) {
+// Compact one-line summary bar shown at the top of the console
+function ExecSummary({ summary, onDismiss }) {
   if (!summary) return null;
-
-  const rows = [
-    { label: 'Status',          value: summary.success ? 'Success' : 'Failed',
-      valueClass: summary.success ? 'exec-summary__value--ok' : 'exec-summary__value--err' },
-    { label: 'Started',         value: fmtTime(summary.startTime) },
-    { label: 'Finished',        value: fmtTime(summary.endTime) },
-    { label: 'Duration',        value: fmtDuration(summary.startTime, summary.endTime) },
-    { label: 'Nodes Executed',  value: summary.nodesExecuted ?? '—' },
-    { label: 'Errors',          value: summary.nodesFailed ?? 0,
-      valueClass: (summary.nodesFailed || 0) > 0 ? 'exec-summary__value--err' : '' },
-  ];
+  const ok      = summary.success;
+  const dur     = fmtDuration(summary.startTime, summary.endTime);
+  const errors  = summary.nodesFailed ?? 0;
+  const started = fmtTime(summary.startTime);
 
   return (
-    <div className="exec-summary">
-      <div className="exec-summary__header">
-        <span className="exec-summary__header-icon">
-          {summary.success ? <IconCheck size={13} /> : <IconX size={13} />}
-        </span>
-        Execution Summary
-      </div>
-      <div className="exec-summary__rows">
-        {rows.map(r => (
-          <div key={r.label} className="exec-summary__row">
-            <span className="exec-summary__label">{r.label}</span>
-            <span className={`exec-summary__value ${r.valueClass || ''}`}>{r.value}</span>
-          </div>
-        ))}
-      </div>
+    <div className={`exec-summary-bar ${ok ? 'exec-summary-bar--ok' : 'exec-summary-bar--err'}`}>
+      <span className="exec-summary-bar__icon">
+        {ok ? <IconCheck size={11} /> : <IconX size={11} />}
+      </span>
+      <span className="exec-summary-bar__status">{ok ? 'Completed' : 'Failed'}</span>
+      <span className="exec-summary-bar__sep">·</span>
+      <span className="exec-summary-bar__item">{started}</span>
+      <span className="exec-summary-bar__sep">·</span>
+      <span className="exec-summary-bar__item">{dur}</span>
+      <span className="exec-summary-bar__sep">·</span>
+      <span className="exec-summary-bar__item">{summary.nodesExecuted ?? 0} nodes</span>
+      {errors > 0 && (
+        <>
+          <span className="exec-summary-bar__sep">·</span>
+          <span className="exec-summary-bar__item exec-summary-bar__item--err">
+            {errors} error{errors !== 1 ? 's' : ''}
+          </span>
+        </>
+      )}
+      <button
+        className="exec-summary-bar__dismiss"
+        onClick={onDismiss}
+        title="Dismiss summary"
+      >
+        ×
+      </button>
     </div>
   );
 }
 
-export default function ExecutionConsole({ logs, onClear, summary }) {
+export default function ExecutionConsole({ logs, onClear, summary, onDismissSummary }) {
   const endRef = useRef(null);
 
   useEffect(() => {
@@ -55,6 +60,11 @@ export default function ExecutionConsole({ logs, onClear, summary }) {
 
   return (
     <div className="console" id="execution-console">
+      {/* Summary bar always stays at top — never covers logs */}
+      {summary && (
+        <ExecSummary summary={summary} onDismiss={onDismissSummary} />
+      )}
+
       <div className="console__output">
         {logs.length === 0 && !summary ? (
           <div className="console__empty">
@@ -76,8 +86,6 @@ export default function ExecutionConsole({ logs, onClear, summary }) {
           </>
         )}
       </div>
-
-      {summary && <ExecSummary summary={summary} />}
     </div>
   );
 }
