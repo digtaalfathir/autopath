@@ -31,7 +31,7 @@ class ControllerService extends EventEmitter {
   // baseDir  — root of the data directories (project root in dev, resourcesPath in prod)
   // callbacks — IPC forwarding functions injected by main.js
   constructor({ baseDir, onLog, onNodeStart, onNodeComplete, onNodeError,
-                onJobComplete, onJobQueued, onSchedulerJobComplete }) {
+                onJobComplete, onJobQueued, onSchedulerJobComplete, onDebugPaused }) {
     super();
 
     // ── Data directories ─────────────────────────────────────
@@ -61,6 +61,7 @@ class ControllerService extends EventEmitter {
       onJobComplete:          onJobComplete          || (() => {}),
       onJobQueued:            onJobQueued            || (() => {}),
       onSchedulerJobComplete: onSchedulerJobComplete || (() => {}),
+      onDebugPaused:          onDebugPaused          || (() => {}),
     };
 
     this._robotAgent      = null;
@@ -97,6 +98,7 @@ class ControllerService extends EventEmitter {
         onNodeComplete:  id   => this._cb.onNodeComplete(id),
         onNodeError:     data => this._cb.onNodeError(data),
         onJobComplete:   data => this._cb.onJobComplete(data),
+        onDebugPaused:   data => this._cb.onDebugPaused(data),
       });
       this._robotAgent.start();
       this._log('INFO', '[Controller] RobotAgent started — robot_local ONLINE');
@@ -172,6 +174,9 @@ class ControllerService extends EventEmitter {
   async stopCurrentJob() {
     await this._robotAgent?.stopCurrentJob();
   }
+
+  debugResume() { this._robotAgent?.debugResume(); }
+  debugStep()   { this._robotAgent?.debugStep(); }
 
   // ── Robot Management ──────────────────────────────────────────
   listRobots() {

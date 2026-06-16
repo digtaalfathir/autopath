@@ -730,3 +730,56 @@ export function IconDbDisconnect({ size = 16 }) {
     </svg>
   );
 }
+
+// ── Tier-2 feature icons ──────────────────────────────────────
+
+// Counter-clockwise arrow — Undo
+export function IconUndo({ size = 16 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M3.5 5.5H9a4 4 0 1 1 0 8H6" />
+      <path d="M3.5 3L1.5 5.5 3.5 8" />
+    </svg>
+  );
+}
+
+// Clockwise arrow — Redo
+export function IconRedo({ size = 16 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12.5 5.5H7a4 4 0 1 0 0 8h3" />
+      <path d="M12.5 3l2 2.5-2 2.5" />
+    </svg>
+  );
+}
+
+// Bug silhouette — Debug / Breakpoint
+export function IconBug({ size = 16 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M8 12.5a3.5 3.5 0 0 1-3.5-3.5V6.5a3.5 3.5 0 0 1 7 0V9A3.5 3.5 0 0 1 8 12.5Z" />
+      <path d="M6 5.5a2 2 0 0 1 4 0" />
+      <path d="M1.5 8h3M11.5 8h3M3 5L5 7M13 5l-2 2M3 11.5L5.5 10M13 11.5L10.5 10" />
+    </svg>
+  );
+}
+
+// Play arrow with vertical bar on right — Step
+export function IconPlayStep({ size = 16 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <polygon points="3,3 11,8 3,13" fill="currentColor" stroke="none" />
+      <line x1="13" y1="3" x2="13" y2="13" strokeWidth="2" />
+    </svg>
+  );
+}
+
+// Copy — Copy selection
+export function IconCopyNodes({ size = 16 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="5" y="5" width="9" height="9" rx="1.5" />
+      <path d="M11 5V3.5A1.5 1.5 0 0 0 9.5 2H3.5A1.5 1.5 0 0 0 2 3.5V9.5A1.5 1.5 0 0 0 3.5 11H5" />
+    </svg>
+  );
+}

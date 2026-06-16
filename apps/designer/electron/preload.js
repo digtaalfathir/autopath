@@ -47,6 +47,10 @@ contextBridge.exposeInMainWorld('electronAPI', {
   // Controller Dashboard
   getDashboard: () => ipcRenderer.invoke('controller:dashboard'),
 
+  // Step Debugger
+  debugResume: () => ipcRenderer.invoke('debug:resume'),
+  debugStep:   () => ipcRenderer.invoke('debug:step'),
+
   // Push events from main → renderer
   onSchedulerJobComplete: (callback) => {
     const listener = (_e, data) => callback(data);
@@ -82,5 +86,11 @@ contextBridge.exposeInMainWorld('electronAPI', {
     const listener = (_e, data) => callback(data);
     ipcRenderer.on('engine:node-error', listener);
     return () => ipcRenderer.removeListener('engine:node-error', listener);
+  },
+
+  onDebugPaused: (callback) => {
+    const listener = (_e, data) => callback(data);
+    ipcRenderer.on('debug:paused', listener);
+    return () => ipcRenderer.removeListener('debug:paused', listener);
   },
 });

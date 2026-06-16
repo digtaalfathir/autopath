@@ -47,31 +47,6 @@
         "from": "flows",
         "to": "flows",
         "filter": ["**/*"]
-      },
-      {
-        "from": "releases",
-        "to": "releases",
-        "filter": ["**/*"]
-      },
-      {
-        "from": "history",
-        "to": "history",
-        "filter": ["**/*"]
-      },
-      {
-        "from": "schedules",
-        "to": "schedules",
-        "filter": ["**/*"]
-      },
-      {
-        "from": "jobs",
-        "to": "jobs",
-        "filter": ["**/*"]
-      },
-      {
-        "from": "robots",
-        "to": "robots",
-        "filter": ["**/*"]
       }
     ],
     "win": {
@@ -83,7 +58,10 @@
           ]
         }
       ],
-      "icon": "assets/icon.png"
+      "icon": "assets/icon.png",
+      "publisherName": "LokalPride",
+      "signingHashAlgorithms": ["sha256"],
+      "signDlls": false
     },
     "nsis": {
       "oneClick": false,

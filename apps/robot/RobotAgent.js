@@ -12,7 +12,7 @@ function ts() {
 
 class RobotAgent extends EventEmitter {
   constructor({ robotId, jobQueue, workflowRepo, execRepo, registry,
-                onLog, onNodeStart, onNodeComplete, onNodeError, onJobComplete }) {
+                onLog, onNodeStart, onNodeComplete, onNodeError, onJobComplete, onDebugPaused }) {
     super();
     this.robotId      = robotId || 'robot_local';
     this.jobQueue     = jobQueue;
@@ -21,11 +21,12 @@ class RobotAgent extends EventEmitter {
     this.registry     = registry;
 
     // IPC forwarding callbacks
-    this._onLog         = onLog          || (() => {});
-    this._onNodeStart   = onNodeStart    || (() => {});
+    this._onLog          = onLog          || (() => {});
+    this._onNodeStart    = onNodeStart    || (() => {});
     this._onNodeComplete = onNodeComplete || (() => {});
-    this._onNodeError   = onNodeError    || (() => {});
-    this._onJobComplete = onJobComplete  || (() => {});
+    this._onNodeError    = onNodeError    || (() => {});
+    this._onJobComplete  = onJobComplete  || (() => {});
+    this._onDebugPaused  = onDebugPaused  || (() => {});
 
     this._busy            = false;
     this._currentEngine   = null;
@@ -55,6 +56,9 @@ class RobotAgent extends EventEmitter {
   async stopCurrentJob() {
     if (this._currentEngine) await this._currentEngine.stop();
   }
+
+  debugResume() { this._currentEngine?.debugResume(); }
+  debugStep()   { this._currentEngine?.debugStep(); }
 
   _log(level, message) {
     this._onLog({ level, message, timestamp: ts() });
@@ -117,10 +121,16 @@ class RobotAgent extends EventEmitter {
       const engine        = new WorkflowEngine();
       this._currentEngine = engine;
 
-      engine.on('log',          log  => this._onLog(log));
-      engine.on('node-start',   id   => this._onNodeStart(id));
-      engine.on('node-complete', id  => this._onNodeComplete(id));
-      engine.on('node-error',   data => this._onNodeError(data));
+      engine.on('log',           log  => this._onLog(log));
+      engine.on('node-start',    id   => this._onNodeStart(id));
+      engine.on('node-complete', id   => this._onNodeComplete(id));
+      engine.on('node-error',    data => this._onNodeError(data));
+      engine.on('debug:paused',  data => this._onDebugPaused(data));
+
+      // Apply breakpoints from flowData (Feature 9)
+      if (job.flowData?.breakpoints?.length) {
+        engine.setBreakpoints(job.flowData.breakpoints);
+      }
 
       const result = await engine.execute(flowData);
       this._currentEngine = null;

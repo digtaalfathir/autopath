@@ -55,6 +55,37 @@ function getFlowsDir() {
   return dir;
 }
 
+// ── Initial data seeding ──────────────────────────────────────────────
+// On first install: copy demo flows from resources/flows/ → userData/flows/.
+// Uses a version marker so new demo flows added in future releases are seeded too.
+// Never overwrites files the user has already created/modified.
+const SEED_VERSION = '1.0.0';
+
+function seedInitialData() {
+  if (isDev) return;   // dev uses project root directly — no seeding needed
+
+  const userDataDir = app.getPath('userData');
+  const markerFile  = path.join(userDataDir, `.seeded-v${SEED_VERSION}`);
+
+  if (fs.existsSync(markerFile)) return;   // already seeded this version
+
+  const srcFlows = path.join(process.resourcesPath, 'flows');
+  const dstFlows = path.join(userDataDir, 'flows');
+
+  if (fs.existsSync(srcFlows)) {
+    if (!fs.existsSync(dstFlows)) fs.mkdirSync(dstFlows, { recursive: true });
+    for (const file of fs.readdirSync(srcFlows)) {
+      const src = path.join(srcFlows, file);
+      const dst = path.join(dstFlows, file);
+      if (!fs.existsSync(dst)) {         // never overwrite user's existing files
+        try { fs.copyFileSync(src, dst); } catch (_) {}
+      }
+    }
+  }
+
+  fs.writeFileSync(markerFile, new Date().toISOString(), 'utf-8');
+}
+
 // ── Start the Controller (owns all repos + robot + scheduler) ─────────
 function startController() {
   const baseDir = getDataDir();
@@ -68,6 +99,7 @@ function startController() {
     onJobComplete:          data => mainWindow?.webContents.send('robot:job-complete',   data),
     onJobQueued:            data => mainWindow?.webContents.send('robot:job-queued',     data),
     onSchedulerJobComplete: data => mainWindow?.webContents.send('scheduler:job-complete', data),
+    onDebugPaused:          data => mainWindow?.webContents.send('debug:paused',         data),
   });
   controller.start();
 }
@@ -289,6 +321,17 @@ ipcMain.handle('controller:dashboard', async () => {
   }
 });
 
+// ── Step Debugger ─────────────────────────────────────────────────────
+ipcMain.handle('debug:resume', async () => {
+  try { controller.debugResume(); return { success: true }; }
+  catch (err) { return { success: false, error: err.message }; }
+});
+
+ipcMain.handle('debug:step', async () => {
+  try { controller.debugStep(); return { success: true }; }
+  catch (err) { return { success: false, error: err.message }; }
+});
+
 // ── Element Picker ────────────────────────────────────────────────────
 ipcMain.handle('picker:start', async (_e, { url }) => {
   try {
@@ -302,6 +345,7 @@ ipcMain.handle('picker:start', async (_e, { url }) => {
 
 // ── App lifecycle ─────────────────────────────────────────────────────
 app.whenReady().then(() => {
+  seedInitialData();
   createWindow();
   startController();
 });

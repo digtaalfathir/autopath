@@ -70,6 +70,11 @@ class WorkflowEngine extends EventEmitter {
     this.running = false;
     this.aborted = false;
 
+    // Breakpoint / step-debug state (reset per execution)
+    this._breakpoints = new Set();
+    this._stepMode    = false;
+    this._resumeFn    = null;
+
     this.metrics = {
       startTime:     null,
       endTime:       null,
@@ -135,6 +140,27 @@ class WorkflowEngine extends EventEmitter {
     this.registry.register('dbDisconnect', dbDisconnectHandler);
   }
 
+  // ── Breakpoint / step-debug API ─────────────────────────────
+  setBreakpoints(nodeIds) {
+    this._breakpoints = new Set(nodeIds || []);
+  }
+
+  async _pauseAt(nodeId) {
+    this.emit('debug:paused', { nodeId, variables: { ...this.context.variables } });
+    await new Promise(resolve => { this._resumeFn = resolve; });
+    this._resumeFn = null;
+  }
+
+  debugResume() {
+    this._stepMode = false;
+    if (this._resumeFn) { this._resumeFn(); this._resumeFn = null; }
+  }
+
+  debugStep() {
+    this._stepMode = true;
+    if (this._resumeFn) { this._resumeFn(); this._resumeFn = null; }
+  }
+
   // ── Logging ─────────────────────────────────────────────────
   log(level, message) {
     const timestamp = new Date().toISOString().substr(11, 12);
@@ -185,6 +211,16 @@ class WorkflowEngine extends EventEmitter {
     if (this.aborted) {
       this.metrics.nodesAborted++;
       return;
+    }
+
+    // Pause at breakpoint or when in step mode (Feature 9)
+    if (this._breakpoints.has(node.id) || this._stepMode) {
+      this._stepMode = false;  // consume step; debugStep() will re-arm it
+      await this._pauseAt(node.id);
+      if (this.aborted) {
+        this.metrics.nodesAborted++;
+        return;
+      }
     }
 
     const nodeType = node.data?.nodeType;
@@ -253,7 +289,7 @@ class WorkflowEngine extends EventEmitter {
 
     // Reset per-run state
     this.context.keepBrowserOpen = false;
-    this.context.variables = {};
+    this.context.variables = { ...(flowData.initialVariables || {}) };  // Feature 8
     this.context.workbooks = {};
     this.context.databases = {};
     this.context.lastError  = null;
@@ -300,6 +336,7 @@ class WorkflowEngine extends EventEmitter {
   // ── Stop ─────────────────────────────────────────────────────
   async stop() {
     this.aborted = true;
+    if (this._resumeFn) { this._resumeFn(); this._resumeFn = null; } // unblock debug pause
     this.log('WARN', 'Stop requested — aborting...');
     await this.cleanup(true);
   }

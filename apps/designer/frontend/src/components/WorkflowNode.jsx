@@ -1,6 +1,7 @@
-import React, { memo } from 'react';
+import React, { memo, useContext } from 'react';
 import { Handle, Position } from 'reactflow';
 import { getNodeDefinition } from '../nodeDefinitions';
+import { BreakpointContext } from '../contexts/BreakpointContext';
 import {
   IconGlobe, IconLink, IconType, IconMousePointer,
   IconPlay, IconStopSquare, IconCheck, IconX, IconSpinner,
@@ -87,12 +88,22 @@ function StatusBadge({ status }) {
       </div>
     );
   }
+  if (status === 'paused') {
+    return (
+      <div className="workflow-node__status workflow-node__status--paused">
+        ⏸
+      </div>
+    );
+  }
   return null;
 }
 
-function WorkflowNode({ data, selected }) {
+function WorkflowNode({ id, data, selected }) {
   const def = getNodeDefinition(data.nodeType);
   if (!def) return null;
+
+  const { breakpoints, onToggleBreakpoint } = useContext(BreakpointContext);
+  const isBreakpoint = breakpoints.has(id);
 
   const status = data.status || '';
 
@@ -102,6 +113,11 @@ function WorkflowNode({ data, selected }) {
   else if (data.nodeType === 'clickElement' && data.selector) subtitle = data.selector;
 
   const nodeColor = def.color;
+
+  const handleBreakpointClick = (e) => {
+    e.stopPropagation();
+    onToggleBreakpoint(id);
+  };
 
   return (
     <div
@@ -113,6 +129,13 @@ function WorkflowNode({ data, selected }) {
       )}
 
       <StatusBadge status={status} />
+
+      {/* Breakpoint dot on left edge */}
+      <div
+        className={`workflow-node__bp ${isBreakpoint ? 'workflow-node__bp--active' : ''}`}
+        onClick={handleBreakpointClick}
+        title={isBreakpoint ? 'Remove breakpoint (click)' : 'Set breakpoint (click)'}
+      />
 
       <div className="workflow-node__body">
         <div
