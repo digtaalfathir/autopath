@@ -1,0 +1,135 @@
+{
+  "name": "09 File Workflow",
+  "nodes": [
+    {
+      "id": "s",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 90
+      },
+      "data": {
+        "nodeType": "start",
+        "label": "start"
+      }
+    },
+    {
+      "id": "w",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 180
+      },
+      "data": {
+        "nodeType": "writeFile",
+        "label": "writeFile",
+        "filePath": "qa-lab/data/work/out.txt",
+        "content": "QA file test {{[1,2,3]}}"
+      }
+    },
+    {
+      "id": "r",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 270
+      },
+      "data": {
+        "nodeType": "readFile",
+        "label": "readFile",
+        "filePath": "qa-lab/data/work/out.txt",
+        "outputVariable": "content"
+      }
+    },
+    {
+      "id": "mv",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 360
+      },
+      "data": {
+        "nodeType": "moveFile",
+        "label": "moveFile",
+        "sourcePath": "qa-lab/data/work/out.txt",
+        "destinationPath": "qa-lab/data/work/moved.txt"
+      }
+    },
+    {
+      "id": "del",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 450
+      },
+      "data": {
+        "nodeType": "deleteFile",
+        "label": "deleteFile",
+        "filePath": "qa-lab/data/work/moved.txt",
+        "ignoreNotFound": true
+      }
+    },
+    {
+      "id": "log",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 540
+      },
+      "data": {
+        "nodeType": "logMessage",
+        "label": "logMessage",
+        "message": "File content: {{content}}"
+      }
+    },
+    {
+      "id": "e",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 630
+      },
+      "data": {
+        "nodeType": "end",
+        "label": "end"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e0",
+      "source": "s",
+      "target": "w"
+    },
+    {
+      "id": "e1",
+      "source": "w",
+      "target": "r"
+    },
+    {
+      "id": "e2",
+      "source": "r",
+      "target": "mv"
+    },
+    {
+      "id": "e3",
+      "source": "mv",
+      "target": "del"
+    },
+    {
+      "id": "e4",
+      "source": "del",
+      "target": "log"
+    },
+    {
+      "id": "e5",
+      "source": "log",
+      "target": "e"
+    }
+  ],
+  "viewport": {
+    "x": 0,
+    "y": 0,
+    "zoom": 0.85
+  }
+}

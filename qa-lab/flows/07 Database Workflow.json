@@ -1,0 +1,157 @@
+{
+  "name": "07 Database Workflow",
+  "nodes": [
+    {
+      "id": "s",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 90
+      },
+      "data": {
+        "nodeType": "start",
+        "label": "start"
+      }
+    },
+    {
+      "id": "c",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 180
+      },
+      "data": {
+        "nodeType": "dbConnect",
+        "label": "dbConnect",
+        "connectionName": "demo",
+        "databaseType": "sqlite",
+        "databasePath": "qa-lab/data/demo.db"
+      }
+    },
+    {
+      "id": "q",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 270
+      },
+      "data": {
+        "nodeType": "dbQuery",
+        "label": "dbQuery",
+        "connectionName": "demo",
+        "sql": "SELECT id, vin, status FROM vin_queue LIMIT 10",
+        "outputVariable": "rows"
+      }
+    },
+    {
+      "id": "fe",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 360
+      },
+      "data": {
+        "nodeType": "forEachNode",
+        "label": "forEachNode",
+        "collection": "{{rows}}",
+        "itemVariable": "row"
+      }
+    },
+    {
+      "id": "lg",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 450
+      },
+      "data": {
+        "nodeType": "logMessage",
+        "label": "Log VIN",
+        "message": "VIN {{row.vin}} = {{row.status}}"
+      }
+    },
+    {
+      "id": "ex",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 540
+      },
+      "data": {
+        "nodeType": "dbExecute",
+        "label": "dbExecute",
+        "connectionName": "demo",
+        "sql": "INSERT INTO execution_log (workflow,status,message,logged_at) VALUES ('DB Workflow','DONE','ok','2026-01-03')"
+      }
+    },
+    {
+      "id": "dc",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 630
+      },
+      "data": {
+        "nodeType": "dbDisconnect",
+        "label": "dbDisconnect",
+        "connectionName": "demo"
+      }
+    },
+    {
+      "id": "e",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 720
+      },
+      "data": {
+        "nodeType": "end",
+        "label": "end"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e0",
+      "source": "s",
+      "target": "c"
+    },
+    {
+      "id": "e1",
+      "source": "c",
+      "target": "q"
+    },
+    {
+      "id": "e2",
+      "source": "q",
+      "target": "fe"
+    },
+    {
+      "id": "e3",
+      "source": "fe",
+      "sourceHandle": "body",
+      "target": "lg"
+    },
+    {
+      "id": "e4",
+      "source": "fe",
+      "sourceHandle": "done",
+      "target": "ex"
+    },
+    {
+      "id": "e5",
+      "source": "ex",
+      "target": "dc"
+    },
+    {
+      "id": "e6",
+      "source": "dc",
+      "target": "e"
+    }
+  ],
+  "viewport": {
+    "x": 0,
+    "y": 0,
+    "zoom": 0.85
+  }
+}

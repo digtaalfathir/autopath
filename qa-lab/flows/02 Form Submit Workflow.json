@@ -1,0 +1,245 @@
+{
+  "name": "02 Form Submit Workflow",
+  "nodes": [
+    {
+      "id": "s",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 90
+      },
+      "data": {
+        "nodeType": "start",
+        "label": "start"
+      }
+    },
+    {
+      "id": "o",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 180
+      },
+      "data": {
+        "nodeType": "openBrowser",
+        "label": "openBrowser"
+      }
+    },
+    {
+      "id": "nav",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 270
+      },
+      "data": {
+        "nodeType": "navigateUrl",
+        "label": "navigateUrl",
+        "url": "http://localhost:4000/form"
+      }
+    },
+    {
+      "id": "nm",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 360
+      },
+      "data": {
+        "nodeType": "inputText",
+        "label": "inputText",
+        "selector": "#name",
+        "value": "Budi"
+      }
+    },
+    {
+      "id": "em",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 450
+      },
+      "data": {
+        "nodeType": "inputText",
+        "label": "inputText",
+        "selector": "#email",
+        "value": "budi@example.com"
+      }
+    },
+    {
+      "id": "vin",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 540
+      },
+      "data": {
+        "nodeType": "inputText",
+        "label": "inputText",
+        "selector": "#vin",
+        "value": "VIN12345"
+      }
+    },
+    {
+      "id": "sel",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 630
+      },
+      "data": {
+        "nodeType": "selectDropdown",
+        "label": "selectDropdown",
+        "selector": "#status",
+        "by": "value",
+        "value": "in_progress"
+      }
+    },
+    {
+      "id": "scr",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 720
+      },
+      "data": {
+        "nodeType": "scrollToElement",
+        "label": "scrollToElement",
+        "selector": "#scroll-marker"
+      }
+    },
+    {
+      "id": "hv",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 810
+      },
+      "data": {
+        "nodeType": "hoverElement",
+        "label": "hoverElement",
+        "selector": "#submit-btn"
+      }
+    },
+    {
+      "id": "btn",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 900
+      },
+      "data": {
+        "nodeType": "clickElement",
+        "label": "clickElement",
+        "selector": "#submit-btn",
+        "waitNavigation": true
+      }
+    },
+    {
+      "id": "g",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 990
+      },
+      "data": {
+        "nodeType": "getText",
+        "label": "getText",
+        "selector": "#result",
+        "outputVariable": "result"
+      }
+    },
+    {
+      "id": "log",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 1080
+      },
+      "data": {
+        "nodeType": "logMessage",
+        "label": "logMessage",
+        "message": "{{result}}"
+      }
+    },
+    {
+      "id": "e",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 1170
+      },
+      "data": {
+        "nodeType": "end",
+        "label": "end"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e0",
+      "source": "s",
+      "target": "o"
+    },
+    {
+      "id": "e1",
+      "source": "o",
+      "target": "nav"
+    },
+    {
+      "id": "e2",
+      "source": "nav",
+      "target": "nm"
+    },
+    {
+      "id": "e3",
+      "source": "nm",
+      "target": "em"
+    },
+    {
+      "id": "e4",
+      "source": "em",
+      "target": "vin"
+    },
+    {
+      "id": "e5",
+      "source": "vin",
+      "target": "sel"
+    },
+    {
+      "id": "e6",
+      "source": "sel",
+      "target": "scr"
+    },
+    {
+      "id": "e7",
+      "source": "scr",
+      "target": "hv"
+    },
+    {
+      "id": "e8",
+      "source": "hv",
+      "target": "btn"
+    },
+    {
+      "id": "e9",
+      "source": "btn",
+      "target": "g"
+    },
+    {
+      "id": "e10",
+      "source": "g",
+      "target": "log"
+    },
+    {
+      "id": "e11",
+      "source": "log",
+      "target": "e"
+    }
+  ],
+  "viewport": {
+    "x": 0,
+    "y": 0,
+    "zoom": 0.85
+  }
+}

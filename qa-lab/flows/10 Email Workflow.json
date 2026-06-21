@@ -1,0 +1,87 @@
+{
+  "name": "10 Email Workflow",
+  "nodes": [
+    {
+      "id": "s",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 90
+      },
+      "data": {
+        "nodeType": "start",
+        "label": "start"
+      }
+    },
+    {
+      "id": "send",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 180
+      },
+      "data": {
+        "nodeType": "sendEmail",
+        "label": "sendEmail",
+        "smtpHost": "localhost",
+        "smtpPort": "1025",
+        "secure": false,
+        "username": "",
+        "password": "",
+        "from": "bot@example.com",
+        "to": "ops@example.com",
+        "subject": "QA Lab Report",
+        "bodyType": "html",
+        "body": "<h1>QA OK</h1><p>Regression passed.</p>",
+        "attachments": "qa-lab/test-files/sample.csv"
+      }
+    },
+    {
+      "id": "log",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 270
+      },
+      "data": {
+        "nodeType": "logMessage",
+        "label": "logMessage",
+        "message": "Email sent to local SMTP sink"
+      }
+    },
+    {
+      "id": "e",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 360
+      },
+      "data": {
+        "nodeType": "end",
+        "label": "end"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e0",
+      "source": "s",
+      "target": "send"
+    },
+    {
+      "id": "e1",
+      "source": "send",
+      "target": "log"
+    },
+    {
+      "id": "e2",
+      "source": "log",
+      "target": "e"
+    }
+  ],
+  "viewport": {
+    "x": 0,
+    "y": 0,
+    "zoom": 0.85
+  }
+}

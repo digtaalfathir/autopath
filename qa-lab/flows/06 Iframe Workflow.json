@@ -1,0 +1,185 @@
+{
+  "name": "06 Iframe Workflow",
+  "nodes": [
+    {
+      "id": "s",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 90
+      },
+      "data": {
+        "nodeType": "start",
+        "label": "start"
+      }
+    },
+    {
+      "id": "o",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 180
+      },
+      "data": {
+        "nodeType": "openBrowser",
+        "label": "openBrowser"
+      }
+    },
+    {
+      "id": "nav",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 270
+      },
+      "data": {
+        "nodeType": "navigateUrl",
+        "label": "navigateUrl",
+        "url": "http://localhost:4000/iframe"
+      }
+    },
+    {
+      "id": "sf",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 360
+      },
+      "data": {
+        "nodeType": "switchFrame",
+        "label": "switchFrame",
+        "frameSelector": "#demo-frame"
+      }
+    },
+    {
+      "id": "in",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 450
+      },
+      "data": {
+        "nodeType": "inputText",
+        "label": "inputText",
+        "selector": "#frame-input",
+        "value": "hello-frame"
+      }
+    },
+    {
+      "id": "btn",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 540
+      },
+      "data": {
+        "nodeType": "clickElement",
+        "label": "clickElement",
+        "selector": "#frame-btn"
+      }
+    },
+    {
+      "id": "g",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 630
+      },
+      "data": {
+        "nodeType": "getText",
+        "label": "getText",
+        "selector": "#frame-result",
+        "outputVariable": "frameResult"
+      }
+    },
+    {
+      "id": "xf",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 720
+      },
+      "data": {
+        "nodeType": "exitFrame",
+        "label": "exitFrame"
+      }
+    },
+    {
+      "id": "log",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 810
+      },
+      "data": {
+        "nodeType": "logMessage",
+        "label": "logMessage",
+        "message": "{{frameResult}}"
+      }
+    },
+    {
+      "id": "e",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 900
+      },
+      "data": {
+        "nodeType": "end",
+        "label": "end"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e0",
+      "source": "s",
+      "target": "o"
+    },
+    {
+      "id": "e1",
+      "source": "o",
+      "target": "nav"
+    },
+    {
+      "id": "e2",
+      "source": "nav",
+      "target": "sf"
+    },
+    {
+      "id": "e3",
+      "source": "sf",
+      "target": "in"
+    },
+    {
+      "id": "e4",
+      "source": "in",
+      "target": "btn"
+    },
+    {
+      "id": "e5",
+      "source": "btn",
+      "target": "g"
+    },
+    {
+      "id": "e6",
+      "source": "g",
+      "target": "xf"
+    },
+    {
+      "id": "e7",
+      "source": "xf",
+      "target": "log"
+    },
+    {
+      "id": "e8",
+      "source": "log",
+      "target": "e"
+    }
+  ],
+  "viewport": {
+    "x": 0,
+    "y": 0,
+    "zoom": 0.85
+  }
+}

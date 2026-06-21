@@ -1,0 +1,115 @@
+{
+  "name": "04 Download Workflow",
+  "nodes": [
+    {
+      "id": "s",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 90
+      },
+      "data": {
+        "nodeType": "start",
+        "label": "start"
+      }
+    },
+    {
+      "id": "o",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 180
+      },
+      "data": {
+        "nodeType": "openBrowser",
+        "label": "openBrowser"
+      }
+    },
+    {
+      "id": "nav",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 270
+      },
+      "data": {
+        "nodeType": "navigateUrl",
+        "label": "navigateUrl",
+        "url": "http://localhost:4000/download"
+      }
+    },
+    {
+      "id": "dl",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 360
+      },
+      "data": {
+        "nodeType": "downloadFile",
+        "label": "downloadFile",
+        "triggerSelector": "#download-btn",
+        "saveDirectory": "qa-lab/data/downloads",
+        "outputVariable": "csvPath",
+        "waitForDownload": "30000"
+      }
+    },
+    {
+      "id": "log",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 450
+      },
+      "data": {
+        "nodeType": "logMessage",
+        "label": "logMessage",
+        "message": "Downloaded {{csvPath}}"
+      }
+    },
+    {
+      "id": "e",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 540
+      },
+      "data": {
+        "nodeType": "end",
+        "label": "end"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e0",
+      "source": "s",
+      "target": "o"
+    },
+    {
+      "id": "e1",
+      "source": "o",
+      "target": "nav"
+    },
+    {
+      "id": "e2",
+      "source": "nav",
+      "target": "dl"
+    },
+    {
+      "id": "e3",
+      "source": "dl",
+      "target": "log"
+    },
+    {
+      "id": "e4",
+      "source": "log",
+      "target": "e"
+    }
+  ],
+  "viewport": {
+    "x": 0,
+    "y": 0,
+    "zoom": 0.85
+  }
+}

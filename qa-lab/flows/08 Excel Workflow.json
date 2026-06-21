@@ -1,0 +1,157 @@
+{
+  "name": "08 Excel Workflow",
+  "nodes": [
+    {
+      "id": "s",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 90
+      },
+      "data": {
+        "nodeType": "start",
+        "label": "start"
+      }
+    },
+    {
+      "id": "o",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 180
+      },
+      "data": {
+        "nodeType": "openExcel",
+        "label": "openExcel",
+        "filePath": "qa-lab/data/sample.xlsx",
+        "outputVariable": "wb"
+      }
+    },
+    {
+      "id": "rr",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 270
+      },
+      "data": {
+        "nodeType": "readRange",
+        "label": "readRange",
+        "workbookId": "{{wb}}",
+        "sheetName": "VIN",
+        "range": "A2:D11",
+        "outputVariable": "vinRows"
+      }
+    },
+    {
+      "id": "wc",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 360
+      },
+      "data": {
+        "nodeType": "writeCell",
+        "label": "writeCell",
+        "workbookId": "{{wb}}",
+        "sheetName": "Result",
+        "cell": "B2",
+        "value": "PROCESSED"
+      }
+    },
+    {
+      "id": "sv",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 450
+      },
+      "data": {
+        "nodeType": "saveExcel",
+        "label": "saveExcel",
+        "workbookId": "{{wb}}",
+        "saveAs": "qa-lab/data/sample-out.xlsx"
+      }
+    },
+    {
+      "id": "cl",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 540
+      },
+      "data": {
+        "nodeType": "closeExcel",
+        "label": "closeExcel",
+        "workbookId": "{{wb}}"
+      }
+    },
+    {
+      "id": "log",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 630
+      },
+      "data": {
+        "nodeType": "logMessage",
+        "label": "logMessage",
+        "message": "Read {{vinRows.length}} rows"
+      }
+    },
+    {
+      "id": "e",
+      "type": "workflowNode",
+      "position": {
+        "x": 120,
+        "y": 720
+      },
+      "data": {
+        "nodeType": "end",
+        "label": "end"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e0",
+      "source": "s",
+      "target": "o"
+    },
+    {
+      "id": "e1",
+      "source": "o",
+      "target": "rr"
+    },
+    {
+      "id": "e2",
+      "source": "rr",
+      "target": "wc"
+    },
+    {
+      "id": "e3",
+      "source": "wc",
+      "target": "sv"
+    },
+    {
+      "id": "e4",
+      "source": "sv",
+      "target": "cl"
+    },
+    {
+      "id": "e5",
+      "source": "cl",
+      "target": "log"
+    },
+    {
+      "id": "e6",
+      "source": "log",
+      "target": "e"
+    }
+  ],
+  "viewport": {
+    "x": 0,
+    "y": 0,
+    "zoom": 0.85
+  }
+}
