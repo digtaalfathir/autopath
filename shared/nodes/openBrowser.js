@@ -1,5 +1,5 @@
 const { chromium } = require('playwright');
-const { defaultUserDataDir } = require('../utils/browserProfile');
+const { systemChromeUserDataDir, isProfileLockError } = require('../utils/browserProfile');
 
 module.exports = {
   meta: {
@@ -11,14 +11,17 @@ module.exports = {
   },
   defaults: {
     headless: false,
-    profileMode: 'isolated',   // 'isolated' = clean session | 'user' = persistent profile
+    profileMode: 'isolated',     // 'isolated' = clean session | 'user' = real Chrome profile
     userDataDir: '',
+    profileDirectory: 'Default',
   },
   schema: [
     { key: 'profileMode', label: 'Profile Mode', type: 'select', options: ['isolated', 'user'],
-      hint: 'isolated = fresh clean session. user = persistent profile (keeps logins, cookies, extensions across runs).' },
-    { key: 'userDataDir', label: 'User Data Dir (optional)', type: 'text', placeholder: 'blank = managed profile',
-      hint: 'Only for "user" mode. Path to a Chrome user-data directory. Leave blank to use the app-managed profile.' },
+      hint: 'isolated = fresh clean session. user = your real Chrome profile (logins, cookies, extensions). NOTE: close Chrome first — Chrome locks the profile while running.' },
+    { key: 'userDataDir', label: 'User Data Dir (optional)', type: 'text', placeholder: 'blank = your real Chrome User Data',
+      hint: 'Only for "user" mode. Blank = auto-detect your real Chrome profile. Set a custom path for a dedicated persistent profile.' },
+    { key: 'profileDirectory', label: 'Profile Directory', type: 'text', placeholder: 'Default',
+      hint: 'Which Chrome profile to load when User Data Dir is blank (e.g. "Default", "Profile 1").' },
     { key: 'headless', label: 'Headless Mode', type: 'boolean' },
   ],
   execute: async (data, context, engine) => {
@@ -26,31 +29,41 @@ module.exports = {
     const mode     = (data.profileMode || 'isolated').toLowerCase();
     const channels = ['chrome', 'msedge'];   // prefer real Chrome, then Edge, then bundled Chromium
 
-    // ── Mode 2: User / persistent profile ──────────────────────────────
-    // Keeps cookies, logins and extensions across runs. context.browser holds
-    // a BrowserContext here — cleanup() and tab nodes still work (close() /
-    // page.context() exist on both Browser and BrowserContext).
+    // ── Mode 2: User profile (real Chrome session) ─────────────────────
+    // Loads the user's actual logins / cookies / extensions. context.browser
+    // holds a BrowserContext here — cleanup() and tab nodes still work
+    // (close() / page.context() exist on both Browser and BrowserContext).
     if (mode === 'user' || mode === 'persistent') {
-      const userDataDir = (data.userDataDir && data.userDataDir.trim()) || defaultUserDataDir();
-      const opts = { headless, viewport: null, args: ['--start-maximized'] };
+      const custom = (data.userDataDir || '').trim();
+      const dir    = custom || systemChromeUserDataDir();
+      const args   = ['--start-maximized'];
+      // Selecting a named profile only applies to the real Chrome User Data dir.
+      if (!custom) args.push(`--profile-directory=${(data.profileDirectory || 'Default').trim()}`);
+      const opts = { headless, viewport: null, args };
 
-      engine.log('INFO', `Launching browser (persistent profile: ${userDataDir})`);
+      engine.log('INFO', `Launching ${custom ? 'persistent profile' : 'your Chrome profile'}: ${dir}`);
 
-      let ctx = null;
-      for (const channel of channels) {
-        try {
-          ctx = await chromium.launchPersistentContext(userDataDir, { ...opts, channel });
-          engine.log('INFO', `Browser opened (persistent, ${channel}).`);
-          break;
-        } catch (_) { /* not installed — try next */ }
+      try {
+        // Real Chrome profiles require the Chrome channel (not bundled Chromium).
+        context.browser = await chromium.launchPersistentContext(dir, { ...opts, channel: 'chrome' });
+      } catch (err) {
+        if (isProfileLockError(err.message)) {
+          throw new Error(
+            'Cannot open your Chrome profile because Chrome is already running. ' +
+            'Close all Chrome windows and run again — or use Profile Mode = isolated.'
+          );
+        }
+        if (custom) {
+          // Custom dedicated profile: fall back to Edge, then bundled Chromium.
+          try { context.browser = await chromium.launchPersistentContext(dir, { ...opts, channel: 'msedge' }); }
+          catch { context.browser = await chromium.launchPersistentContext(dir, opts); }
+        } else {
+          throw new Error(`Failed to open your Chrome profile ("${dir}"). Is Google Chrome installed? — ${err.message}`);
+        }
       }
-      if (!ctx) {
-        ctx = await chromium.launchPersistentContext(userDataDir, opts);
-        engine.log('INFO', 'Browser opened (persistent, Chromium).');
-      }
 
-      context.browser = ctx;                                  // BrowserContext
-      context.page    = ctx.pages()[0] || await ctx.newPage();
+      context.page = context.browser.pages()[0] || await context.browser.newPage();
+      engine.log('INFO', 'Browser opened (user profile).');
       return;
     }
 
