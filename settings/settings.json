@@ -18,5 +18,34 @@
     "enabled": false,
     "port": 3456,
     "token": "e6df768e8fb907088778306180091747fdc2bc6e551cc21e3b42d4fd"
+  },
+  "execution": {
+    "workflowTimeoutMs": 1800000,
+    "nodeTimeoutMs": 0,
+    "maxSteps": 100000
+  },
+  "general": {
+    "theme": "light",
+    "language": "en"
+  },
+  "system": {
+    "autoStart": false,
+    "startMinimized": false,
+    "closeToTray": true
+  },
+  "communication": {
+    "smtp": {
+      "host": "",
+      "port": 587,
+      "secure": false,
+      "user": "",
+      "from": ""
+    },
+    "imap": {
+      "host": "",
+      "port": 993,
+      "secure": true,
+      "user": ""
+    }
   }
 }
