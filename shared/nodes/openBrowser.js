@@ -43,27 +43,43 @@ module.exports = {
 
       engine.log('INFO', `Launching ${custom ? 'persistent profile' : 'your Chrome profile'}: ${dir}`);
 
+      // Anti-hang guard: if Chrome is already running it hands the launch off to
+      // the existing instance and exits, so launchPersistentContext can hang
+      // forever. Fail fast with a clear message instead of getting stuck.
+      const LOCK_MSG = 'Cannot open your Chrome profile — Chrome appears to be already running ' +
+        '(it locks the profile). Close ALL Chrome windows and run again, or use Profile Mode = isolated.';
+      const withTimeout = (p, ms) => {
+        let t;
+        const to = new Promise((_, rej) => { t = setTimeout(() => rej(new Error('CHROME_LAUNCH_TIMEOUT')), ms); });
+        return Promise.race([p, to]).finally(() => clearTimeout(t));
+      };
+
       try {
         // Real Chrome profiles require the Chrome channel (not bundled Chromium).
-        context.browser = await chromium.launchPersistentContext(dir, { ...opts, channel: 'chrome' });
+        context.browser = await withTimeout(chromium.launchPersistentContext(dir, { ...opts, channel: 'chrome' }), 20000);
       } catch (err) {
-        if (isProfileLockError(err.message)) {
-          throw new Error(
-            'Cannot open your Chrome profile because Chrome is already running. ' +
-            'Close all Chrome windows and run again — or use Profile Mode = isolated.'
-          );
+        if (err.message === 'CHROME_LAUNCH_TIMEOUT' || isProfileLockError(err.message)) {
+          throw new Error(LOCK_MSG);
         }
         if (custom) {
           // Custom dedicated profile: fall back to Edge, then bundled Chromium.
-          try { context.browser = await chromium.launchPersistentContext(dir, { ...opts, channel: 'msedge' }); }
-          catch { context.browser = await chromium.launchPersistentContext(dir, opts); }
+          try { context.browser = await withTimeout(chromium.launchPersistentContext(dir, { ...opts, channel: 'msedge' }), 20000); }
+          catch { context.browser = await withTimeout(chromium.launchPersistentContext(dir, opts), 20000); }
         } else {
           throw new Error(`Failed to open your Chrome profile ("${dir}"). Is Google Chrome installed? — ${err.message}`);
         }
       }
 
-      context.page = context.browser.pages()[0] || await context.browser.newPage();
-      engine.log('INFO', 'Browser opened (user profile).');
+      // A real profile may restore previous tabs, so pages()[0] can be a
+      // background tab the user can't see. Control the visible blank tab (or a
+      // fresh one) and bring it to the front so the workflow acts on what the
+      // user sees.
+      const blank = context.browser.pages().find(p => {
+        try { return p.url() === 'about:blank' || p.url() === 'chrome://newtab/'; } catch { return false; }
+      });
+      context.page = blank || await context.browser.newPage();
+      try { await context.page.bringToFront(); } catch (_) {}
+      engine.log('INFO', `Browser opened (user profile, ${context.browser.pages().length} tab(s) restored).`);
       return;
     }
 
