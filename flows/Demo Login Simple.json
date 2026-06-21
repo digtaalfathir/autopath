@@ -1,0 +1,240 @@
+{
+  "name": "Sample Login Flow",
+  "version": null,
+  "nodes": [
+    {
+      "id": "node_start_1",
+      "type": "workflowNode",
+      "position": {
+        "x": 304,
+        "y": 48
+      },
+      "data": {
+        "nodeType": "start",
+        "label": "Start"
+      },
+      "width": 196,
+      "height": 49,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 304,
+        "y": 48
+      },
+      "dragging": false
+    },
+    {
+      "id": "node_browser_1",
+      "type": "workflowNode",
+      "position": {
+        "x": 300,
+        "y": 170
+      },
+      "data": {
+        "nodeType": "openBrowser",
+        "label": "Open Browser",
+        "headless": false
+      },
+      "width": 196,
+      "height": 49,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 300,
+        "y": 170
+      }
+    },
+    {
+      "id": "node_navigate_1",
+      "type": "workflowNode",
+      "position": {
+        "x": 272,
+        "y": 304
+      },
+      "data": {
+        "nodeType": "navigateUrl",
+        "label": "Navigate to Login Page",
+        "url": "https://practicetestautomation.com/practice-test-login/"
+      },
+      "width": 240,
+      "height": 54,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 272,
+        "y": 304
+      }
+    },
+    {
+      "id": "node_end_1",
+      "type": "workflowNode",
+      "position": {
+        "x": 304,
+        "y": 752
+      },
+      "data": {
+        "nodeType": "end",
+        "label": "End",
+        "autoCloseBrowser": true,
+        "restoreWindow": true
+      },
+      "width": 196,
+      "height": 49,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 304,
+        "y": 752
+      },
+      "dragging": false
+    },
+    {
+      "id": "node_1781697444146_0",
+      "type": "workflowNode",
+      "position": {
+        "x": 304,
+        "y": 416
+      },
+      "data": {
+        "nodeType": "inputText",
+        "label": "Input Text",
+        "selector": "#username",
+        "value": "student",
+        "clearFirst": true
+      },
+      "width": 196,
+      "height": 54,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 304,
+        "y": 416
+      },
+      "dragging": false
+    },
+    {
+      "id": "node_1781697467802_1",
+      "type": "workflowNode",
+      "position": {
+        "x": 304,
+        "y": 528
+      },
+      "data": {
+        "nodeType": "inputText",
+        "label": "Input Text",
+        "selector": "#password",
+        "value": "Password123",
+        "clearFirst": true
+      },
+      "width": 196,
+      "height": 54,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 304,
+        "y": 528
+      },
+      "dragging": false
+    },
+    {
+      "id": "node_1781697484627_2",
+      "type": "workflowNode",
+      "position": {
+        "x": 304,
+        "y": 640
+      },
+      "data": {
+        "nodeType": "clickElement",
+        "label": "Click Element",
+        "selector": "#submit",
+        "doubleClick": false,
+        "waitNavigation": false
+      },
+      "width": 196,
+      "height": 54,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 304,
+        "y": 640
+      }
+    }
+  ],
+  "edges": [
+    {
+      "animated": true,
+      "style": {
+        "stroke": "#9CA3AF",
+        "strokeWidth": 1.5
+      },
+      "type": "smoothstep",
+      "id": "e1",
+      "source": "node_start_1",
+      "target": "node_browser_1"
+    },
+    {
+      "animated": true,
+      "style": {
+        "stroke": "#9CA3AF",
+        "strokeWidth": 1.5
+      },
+      "type": "smoothstep",
+      "id": "e2",
+      "source": "node_browser_1",
+      "target": "node_navigate_1"
+    },
+    {
+      "animated": false,
+      "style": {
+        "stroke": "#9CA3AF",
+        "strokeWidth": 1.5
+      },
+      "type": "smoothstep",
+      "source": "node_navigate_1",
+      "sourceHandle": null,
+      "target": "node_1781697444146_0",
+      "targetHandle": null,
+      "id": "reactflow__edge-node_navigate_1-node_1781697444146_0"
+    },
+    {
+      "animated": false,
+      "style": {
+        "stroke": "#9CA3AF",
+        "strokeWidth": 1.5
+      },
+      "type": "smoothstep",
+      "source": "node_1781697444146_0",
+      "sourceHandle": null,
+      "target": "node_1781697467802_1",
+      "targetHandle": null,
+      "id": "reactflow__edge-node_1781697444146_0-node_1781697467802_1"
+    },
+    {
+      "animated": false,
+      "style": {
+        "stroke": "#9CA3AF",
+        "strokeWidth": 1.5
+      },
+      "type": "smoothstep",
+      "source": "node_1781697467802_1",
+      "sourceHandle": null,
+      "target": "node_1781697484627_2",
+      "targetHandle": null,
+      "id": "reactflow__edge-node_1781697467802_1-node_1781697484627_2"
+    },
+    {
+      "animated": false,
+      "style": {
+        "stroke": "#9CA3AF",
+        "strokeWidth": 1.5
+      },
+      "type": "smoothstep",
+      "source": "node_1781697484627_2",
+      "sourceHandle": null,
+      "target": "node_end_1",
+      "targetHandle": null,
+      "id": "reactflow__edge-node_1781697484627_2-node_end_1"
+    }
+  ],
+  "viewport": {
+    "x": 438.5806496824149,
+    "y": 129.98679390199305,
+    "zoom": 0.6973718331752029
+  }
+}

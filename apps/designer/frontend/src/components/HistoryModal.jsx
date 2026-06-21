@@ -139,6 +139,15 @@ function RunHistoryTab({ runs, onViewReport }) {
 }
 
 function ReportTab({ report }) {
+  const [shot, setShot] = useState(null);
+
+  useEffect(() => {
+    setShot(null);
+    if (report?.errorScreenshot && api) {
+      api.getReportScreenshot(report.runId).then(r => { if (r?.success) setShot(r.dataUrl); });
+    }
+  }, [report?.runId, report?.errorScreenshot]);
+
   if (!report) return <div className="hist-empty">Select a run from Run History tab.</div>;
   const ok = report.status === 'SUCCESS';
   return (
@@ -162,6 +171,17 @@ function ReportTab({ report }) {
           <div className="exec-report__row exec-report__row--err"><span>Error</span><strong>{report.error}</strong></div>
         )}
       </div>
+
+      {report.errorScreenshot && (
+        <div className="exec-report__shot">
+          <div className="exec-report__shot-label">Screenshot at failure</div>
+          {shot
+            ? <a href={shot} target="_blank" rel="noreferrer" title="Open full size">
+                <img className="exec-report__shot-img" src={shot} alt="Error screenshot" />
+              </a>
+            : <div className="hist-muted" style={{ fontSize: 12 }}>Loading screenshot…</div>}
+        </div>
+      )}
     </div>
   );
 }

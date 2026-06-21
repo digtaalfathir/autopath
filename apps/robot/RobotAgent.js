@@ -4,6 +4,8 @@
 // Stage 11: this class becomes a network client that receives jobs from Controller.
 
 const EventEmitter      = require('events');
+const fs                = require('fs');
+const path              = require('path');
 const { WorkflowEngine } = require('../../shared/engine/workflowEngine');
 
 function ts() {
@@ -12,6 +14,7 @@ function ts() {
 
 class RobotAgent extends EventEmitter {
   constructor({ robotId, jobQueue, workflowRepo, execRepo, registry,
+                getSecrets, getExecutionConfig,
                 onLog, onNodeStart, onNodeComplete, onNodeError, onJobComplete, onDebugPaused }) {
     super();
     this.robotId      = robotId || 'robot_local';
@@ -19,6 +22,10 @@ class RobotAgent extends EventEmitter {
     this.workflowRepo = workflowRepo;
     this.execRepo     = execRepo;
     this.registry     = registry;
+
+    // Lazy providers (credential vault + execution guards) — see ControllerService
+    this._getSecrets         = getSecrets         || (() => ({}));
+    this._getExecutionConfig = getExecutionConfig || (() => ({}));
 
     // IPC forwarding callbacks
     this._onLog          = onLog          || (() => {});
@@ -62,6 +69,20 @@ class RobotAgent extends EventEmitter {
 
   _log(level, message) {
     this._onLog({ level, message, timestamp: ts() });
+  }
+
+  // Save an error-screenshot data URL to <historyDir>/screenshots/<runId>.jpg.
+  // Returns the stored filename (kept in runs.json) or null.
+  _saveScreenshot(runId, dataUrl) {
+    if (!dataUrl) return null;
+    try {
+      const dir = path.join(this.execRepo.historyDir, 'screenshots');
+      fs.mkdirSync(dir, { recursive: true });
+      const file = `${runId}.jpg`;
+      const b64  = dataUrl.replace(/^data:image\/\w+;base64,/, '');
+      fs.writeFileSync(path.join(dir, file), Buffer.from(b64, 'base64'));
+      return file;
+    } catch (_) { return null; }
   }
 
   // ── Poll for next PENDING job ────────────────────────────────
@@ -132,17 +153,26 @@ class RobotAgent extends EventEmitter {
         engine.setBreakpoints(job.flowData.breakpoints);
       }
 
-      const result = await engine.execute(flowData);
+      // Inject credential vault + execution guards (timeouts / cycle / max-steps)
+      let secrets = {}, execution = {};
+      try { secrets   = this._getSecrets()         || {}; } catch (_) {}
+      try { execution = this._getExecutionConfig() || {}; } catch (_) {}
+
+      const result = await engine.execute(flowData, { secrets, execution });
       this._currentEngine = null;
+
+      // Persist error screenshot (if any) as a file, keep runs.json small
+      const errorScreenshot = this._saveScreenshot(runId, result.screenshot);
 
       // ── 4. Update run history ─────────────────────────────
       this.execRepo.updateRun(runId, {
-        endTime:       new Date().toISOString(),
-        duration:      result.metrics ? (result.metrics.endTime - result.metrics.startTime) : null,
-        status:        result.success ? 'SUCCESS' : 'FAILED',
-        nodesExecuted: result.metrics?.nodesExecuted || 0,
-        nodesFailed:   result.metrics?.nodesFailed   || 0,
-        error:         result.error || null,
+        endTime:        new Date().toISOString(),
+        duration:       result.metrics ? (result.metrics.endTime - result.metrics.startTime) : null,
+        status:         result.success ? 'SUCCESS' : 'FAILED',
+        nodesExecuted:  result.metrics?.nodesExecuted || 0,
+        nodesFailed:    result.metrics?.nodesFailed   || 0,
+        error:          result.error || null,
+        errorScreenshot,
       });
 
       // ── 5. Update job status ──────────────────────────────

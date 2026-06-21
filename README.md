@@ -1,8 +1,8 @@
-# Stechoq Cyclone Studio
+# Manufactura Connect
 
 Professional Visual RPA Workflow Designer & Automation Engine
 
-Stechoq Cyclone Studio is a desktop automation platform for building drag-and-drop browser automation workflows and scheduling them to run unattended. It is built on Electron 28, React 18, and ReactFlow 11, and executes workflows using Playwright.
+Manufactura Connect is a desktop automation platform for building drag-and-drop browser automation workflows and scheduling them to run unattended. It is built on Electron 28, React 18, and ReactFlow 11, and executes workflows using Playwright.
 
 ---
 
@@ -39,8 +39,8 @@ Stechoq Cyclone Studio is a desktop automation platform for building drag-and-dr
 
 ```text
 ┌──────────────────────────────────────────────────┐
-│            Stechoq Cyclone Studio                │
-│   (Electron 28 — BrowserWindow + React 18 SPA)  │
+│              Manufactura Connect                 │
+│   (Electron 28 — BrowserWindow + React 18 SPA)   │
 │                                                  │
 │  Node Palette │ ReactFlow Canvas │ Property Panel│
 │  ─────────────┼──────────────────┼───────────────│
@@ -379,7 +379,7 @@ Open via the **History** button in the toolbar.
 
 ### Multiple Robot Support
 
-Stechoq Cyclone Studio supports a distributed execution model where multiple robot workers pull jobs from a shared queue.
+Manufactura Connect supports a distributed execution model where multiple robot workers pull jobs from a shared queue.
 
 **Local Robot** — the built-in `RobotAgent` runs inside the main process and handles jobs automatically.
 
@@ -409,7 +409,7 @@ Open **More → Audit Log** to view a filterable table of audit entries. Use the
 
 ## System Tray & Background Mode
 
-When you close the Cyclone window (the × button in the title bar, or `Alt+F4` on Windows) the application **hides to the system tray** instead of quitting. The scheduler and robot API server keep running.
+When you close the Manufactura Connect window (the × button in the title bar, or `Alt+F4` on Windows) the application **hides to the system tray** instead of quitting. The scheduler and robot API server keep running.
 
 The system tray icon provides:
 
@@ -507,12 +507,8 @@ Settings are saved to disk immediately on each change.
 
 Typical `userData` paths:
 
-- Windows: `%APPDATA%\Cyclone LokalPride\`
-- Linux: `~/.config/Cyclone LokalPride/`
-- macOS: `~/Library/Application Support/Cyclone LokalPride/`
+- Windows: `%APPDATA%\Manufactura Connect\`
+- Linux: `~/.config/Manufactura Connect/`
+- macOS: `~/Library/Application Support/Manufactura Connect/`
 
 ---
-
-## License
-
-MIT License

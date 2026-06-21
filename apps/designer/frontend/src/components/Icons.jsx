@@ -216,19 +216,27 @@ export function IconWarning({ size = 14 }) {
   );
 }
 
-// Cyclone logo — flat geometric square with "Cy" monogram
+// Manufactura Connect logo — industrial hexagon enclosing a connected
+// automation-node network. Matches assets/icon.svg.
 export function LogoMark({ size = 20 }) {
   return (
     <svg width={size} height={size} viewBox="0 0 20 20" fill="none">
-      <rect width="20" height="20" rx="4" fill="#2563EB" />
+      <rect width="20" height="20" rx="4.5" fill="#2563EB" />
       <path
-        d="M5 10.5V9.5C5 7.3 6.5 6 8.5 6C9.7 6 10.7 6.5 11.3 7.2L10.2 8.3C9.8 7.8 9.2 7.5 8.5 7.5C7.3 7.5 6.5 8.3 6.5 9.5V10.5C6.5 11.7 7.3 12.5 8.5 12.5C9.2 12.5 9.8 12.2 10.2 11.7L11.3 12.8C10.7 13.5 9.7 14 8.5 14C6.5 14 5 12.7 5 10.5Z"
-        fill="white"
+        d="M16 10 L13 15.2 L7 15.2 L4 10 L7 4.8 L13 4.8 Z"
+        fill="none" stroke="#FFFFFF" strokeWidth="1.2"
+        strokeLinejoin="round" strokeLinecap="round"
       />
-      <path
-        d="M13 6H14.5L12 10V14H10.5V10L8 6H9.5L11.25 9.2L13 6Z"
-        fill="white"
-      />
+      <g stroke="#FFFFFF" strokeWidth="0.9" strokeLinecap="round">
+        <line x1="10" y1="7.4" x2="7.7" y2="11.8" />
+        <line x1="10" y1="7.4" x2="12.3" y2="11.8" />
+        <line x1="7.7" y1="11.8" x2="12.3" y2="11.8" />
+      </g>
+      <g fill="#FFFFFF">
+        <circle cx="10" cy="7.4" r="1.3" />
+        <circle cx="7.7" cy="11.8" r="1.3" />
+        <circle cx="12.3" cy="11.8" r="1.3" />
+      </g>
     </svg>
   );
 }
@@ -824,6 +832,39 @@ export function IconExport({ size = 16 }) {
     <svg width={size} height={size} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <path d="M8 2v8M5 7l3 3 3-3" />
       <path d="M2 11v2a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-2" />
+    </svg>
+  );
+}
+
+// Key — Credential Vault
+export function IconKey({ size = 16 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="5.5" cy="5.5" r="3.5" />
+      <path d="M8 8l5.5 5.5M11 11l1.5-1.5M13 13l1.5-1.5" />
+    </svg>
+  );
+}
+
+// ── Navigation / toolbar icons ────────────────────────────────
+
+// Horizontal sliders — Run Parameters / Configuration (replaces the ⚡ bolt)
+export function IconSliders({ size = 16 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M2 4.5h7M11.5 4.5H14" />
+      <path d="M2 11.5h2.5M7 11.5H14" />
+      <circle cx="10" cy="4.5" r="1.6" fill="none" />
+      <circle cx="5.5" cy="11.5" r="1.6" fill="none" />
+    </svg>
+  );
+}
+
+// Wrench — Tools / Utilities (replaces the sun-like gear)
+export function IconTools({ size = 16 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M11.5 2.2a3.2 3.2 0 0 0-4.1 4l-5 5a1.6 1.6 0 0 0 2.3 2.3l5-5a3.2 3.2 0 0 0 4-4.1L11 4.9 9.5 4.1 9.1 2.5Z" />
     </svg>
   );
 }

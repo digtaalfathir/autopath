@@ -789,6 +789,400 @@ export const NODE_DEFINITIONS = [
     hasInput: true,
     hasOutput: true,
   },
+
+  // ══ Advanced Web Automation Library ════════════════════════════
+  // ── Mouse / interaction ──────────────────────────────────────
+  {
+    type: 'hoverElement', label: 'Hover Element', category: 'Mouse',
+    description: 'Hover the mouse over an element', iconKey: 'mouse', color: '#7C3AED',
+    defaults: { selector: '' },
+    schema: [{ key: 'selector', label: 'CSS / XPath Selector', type: 'text', placeholder: '#menu', isSelector: true }],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'doubleClick', label: 'Double Click', category: 'Mouse',
+    description: 'Double-click an element', iconKey: 'mouse', color: '#7C3AED',
+    defaults: { selector: '' },
+    schema: [{ key: 'selector', label: 'CSS / XPath Selector', type: 'text', placeholder: '#row', isSelector: true }],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'rightClick', label: 'Right Click', category: 'Mouse',
+    description: 'Right-click (context menu) an element', iconKey: 'mouse', color: '#7C3AED',
+    defaults: { selector: '' },
+    schema: [{ key: 'selector', label: 'CSS / XPath Selector', type: 'text', placeholder: '#item', isSelector: true }],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'focusElement', label: 'Focus Element', category: 'Mouse',
+    description: 'Move keyboard focus to an element', iconKey: 'mouse', color: '#7C3AED',
+    defaults: { selector: '' },
+    schema: [{ key: 'selector', label: 'CSS / XPath Selector', type: 'text', placeholder: '#input', isSelector: true }],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'scrollToElement', label: 'Scroll To Element', category: 'Mouse',
+    description: 'Scroll until an element is in view', iconKey: 'mouse', color: '#7C3AED',
+    defaults: { selector: '' },
+    schema: [{ key: 'selector', label: 'CSS / XPath Selector', type: 'text', placeholder: '#footer', isSelector: true }],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'scrollPage', label: 'Scroll Page', category: 'Mouse',
+    description: 'Scroll the page up or down by pixels', iconKey: 'mouse', color: '#7C3AED',
+    defaults: { direction: 'down', pixels: '600' },
+    schema: [
+      { key: 'direction', label: 'Direction', type: 'select', options: ['down', 'up'] },
+      { key: 'pixels',    label: 'Pixels',    type: 'text', placeholder: '600' },
+    ],
+    hasInput: true, hasOutput: true,
+  },
+  // ── Input ────────────────────────────────────────────────────
+  {
+    type: 'clearInput', label: 'Clear Input', category: 'Input',
+    description: 'Clear the value of an input field', iconKey: 'type', color: '#D97706',
+    defaults: { selector: '' },
+    schema: [{ key: 'selector', label: 'CSS / XPath Selector', type: 'text', placeholder: '#search', isSelector: true }],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'keyboardInput', label: 'Keyboard Input', category: 'Input',
+    description: 'Press a key or shortcut (Enter, Ctrl+A…)', iconKey: 'type', color: '#D97706',
+    defaults: { key: 'Enter', selector: '' },
+    schema: [
+      { key: 'key',      label: 'Key / Shortcut', type: 'text', placeholder: 'Enter, Tab, Control+A',
+        hint: 'Playwright key syntax. Combine with + (e.g. Control+Shift+S).' },
+      { key: 'selector', label: 'Focus Selector (optional)', type: 'text', placeholder: '#input', isSelector: true,
+        hint: 'Focus this element before pressing the key.' },
+    ],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'selectDropdown', label: 'Select Dropdown', category: 'Input',
+    description: 'Select an option in a <select>', iconKey: 'type', color: '#D97706',
+    defaults: { selector: '', by: 'value', value: '' },
+    schema: [
+      { key: 'selector', label: 'CSS / XPath Selector', type: 'text', placeholder: 'select#country', isSelector: true },
+      { key: 'by',       label: 'Match By', type: 'select', options: ['value', 'label', 'index'] },
+      { key: 'value',    label: 'Option', type: 'text', placeholder: 'value / label / index', hint: 'Supports {{variable}}.' },
+    ],
+    hasInput: true, hasOutput: true,
+  },
+  // ── Element operations ───────────────────────────────────────
+  {
+    type: 'getAttribute', label: 'Get Attribute', category: 'Browser Get',
+    description: 'Read an element attribute into a variable', iconKey: 'getText', color: '#2563EB',
+    defaults: { selector: '', attribute: 'href', outputVariable: 'attr' },
+    schema: [
+      { key: 'selector',       label: 'CSS / XPath Selector', type: 'text', placeholder: 'a.link', isSelector: true },
+      { key: 'attribute',      label: 'Attribute', type: 'text', placeholder: 'href, value, class' },
+      { key: 'outputVariable', label: 'Output Variable', type: 'text', placeholder: 'attr' },
+    ],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'setAttribute', label: 'Set Attribute', category: 'Browser Get',
+    description: 'Set an attribute on an element', iconKey: 'type', color: '#2563EB',
+    defaults: { selector: '', attribute: 'value', value: '' },
+    schema: [
+      { key: 'selector',  label: 'CSS / XPath Selector', type: 'text', placeholder: '#field', isSelector: true },
+      { key: 'attribute', label: 'Attribute', type: 'text', placeholder: 'value, class' },
+      { key: 'value',     label: 'Value', type: 'text', placeholder: 'new value', hint: 'Supports {{variable}}.' },
+    ],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'getHtml', label: 'Get HTML', category: 'Browser Get',
+    description: 'Read innerHTML/outerHTML of an element', iconKey: 'getText', color: '#2563EB',
+    defaults: { selector: '', outer: false, outputVariable: 'html' },
+    schema: [
+      { key: 'selector',       label: 'CSS / XPath Selector', type: 'text', placeholder: '#content', isSelector: true },
+      { key: 'outer',          label: 'Outer HTML', type: 'boolean', hint: 'Include the element tag itself.' },
+      { key: 'outputVariable', label: 'Output Variable', type: 'text', placeholder: 'html' },
+    ],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'getValue', label: 'Get Value', category: 'Browser Get',
+    description: 'Read the value of an input/select/textarea', iconKey: 'getText', color: '#2563EB',
+    defaults: { selector: '', outputVariable: 'value' },
+    schema: [
+      { key: 'selector',       label: 'CSS / XPath Selector', type: 'text', placeholder: '#email', isSelector: true },
+      { key: 'outputVariable', label: 'Output Variable', type: 'text', placeholder: 'value' },
+    ],
+    hasInput: true, hasOutput: true,
+  },
+  // ── Files ────────────────────────────────────────────────────
+  {
+    type: 'uploadFile', label: 'Upload File', category: 'Browser Files',
+    description: 'Set a file on an <input type=file>', iconKey: 'writeFile', color: '#0891B2',
+    defaults: { selector: 'input[type=file]', filePath: '' },
+    schema: [
+      { key: 'selector', label: 'File Input Selector', type: 'text', placeholder: 'input[type=file]', isSelector: true },
+      { key: 'filePath', label: 'File Path', type: 'text', placeholder: 'C:\\data\\report.xlsx', hint: 'Absolute path. Supports {{variable}}.' },
+    ],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'downloadFile', label: 'Download File', category: 'Browser Files',
+    description: 'Wait for a download and save it to disk', iconKey: 'readFile', color: '#0891B2',
+    defaults: { triggerSelector: '', saveDirectory: '', outputVariable: 'downloadedFilePath', waitForDownload: '30000' },
+    schema: [
+      { key: 'triggerSelector', label: 'Trigger Selector (optional)', type: 'text', placeholder: 'a.download', isSelector: true,
+        hint: 'Clicked while waiting for the download.' },
+      { key: 'saveDirectory',   label: 'Save Directory', type: 'text', placeholder: 'C:\\downloads', hint: 'Defaults to your Downloads folder.' },
+      { key: 'outputVariable',  label: 'Output Variable', type: 'text', placeholder: 'downloadedFilePath' },
+      { key: 'waitForDownload', label: 'Timeout (ms)', type: 'text', placeholder: '30000' },
+    ],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'takeScreenshot', label: 'Take Screenshot', category: 'Browser Files',
+    description: 'Capture a screenshot of the page', iconKey: 'exists', color: '#0891B2',
+    defaults: { filePath: '', fullPage: false, outputVariable: 'screenshotPath' },
+    schema: [
+      { key: 'filePath',       label: 'File Path (optional)', type: 'text', placeholder: 'C:\\shots\\page.png', hint: 'Auto-generated if blank.' },
+      { key: 'fullPage',       label: 'Full Page', type: 'boolean' },
+      { key: 'outputVariable', label: 'Output Variable', type: 'text', placeholder: 'screenshotPath' },
+    ],
+    hasInput: true, hasOutput: true,
+  },
+  // ── Tabs & popups ────────────────────────────────────────────
+  {
+    type: 'openTab', label: 'Open New Tab', category: 'Browser Tabs',
+    description: 'Open a new tab and switch to it', iconKey: 'globe', color: '#2563EB',
+    defaults: { url: '', outputVariable: 'tabIndex' },
+    schema: [
+      { key: 'url',            label: 'URL (optional)', type: 'text', placeholder: 'https://example.com' },
+      { key: 'outputVariable', label: 'Tab Index Variable', type: 'text', placeholder: 'tabIndex' },
+    ],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'switchTab', label: 'Switch Tab', category: 'Browser Tabs',
+    description: 'Switch the active tab by index', iconKey: 'globe', color: '#2563EB',
+    defaults: { index: '0' },
+    schema: [{ key: 'index', label: 'Tab Index', type: 'text', placeholder: '0', hint: '0 = first tab.' }],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'closeTab', label: 'Close Tab', category: 'Browser Tabs',
+    description: 'Close current tab, switch to last remaining', iconKey: 'globe', color: '#DC2626',
+    defaults: {},
+    schema: [],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'getCurrentTab', label: 'Get Current Tab', category: 'Browser Tabs',
+    description: 'Read active tab index, URL and title', iconKey: 'globe', color: '#2563EB',
+    defaults: { outputVariable: 'currentTab' },
+    schema: [{ key: 'outputVariable', label: 'Output Variable', type: 'text', placeholder: 'currentTab' }],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'waitPopup', label: 'Wait Popup', category: 'Browser Tabs',
+    description: 'Wait for a popup/new window and switch to it', iconKey: 'waitLoad', color: '#2563EB',
+    defaults: { triggerSelector: '', timeout: '15000', outputVariable: 'popupIndex' },
+    schema: [
+      { key: 'triggerSelector', label: 'Trigger Selector (optional)', type: 'text', placeholder: 'a[target=_blank]', isSelector: true },
+      { key: 'timeout',         label: 'Timeout (ms)', type: 'text', placeholder: '15000' },
+      { key: 'outputVariable',  label: 'Popup Index Variable', type: 'text', placeholder: 'popupIndex' },
+    ],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'handlePopup', label: 'Handle Popup', category: 'Browser Tabs',
+    description: 'Accept/dismiss a JS dialog (alert/confirm/prompt)', iconKey: 'waitLoad', color: '#2563EB',
+    defaults: { action: 'accept', promptText: '', triggerSelector: '', timeout: '10000' },
+    schema: [
+      { key: 'action',          label: 'Action', type: 'select', options: ['accept', 'dismiss'] },
+      { key: 'promptText',      label: 'Prompt Text (optional)', type: 'text', placeholder: 'value for window.prompt' },
+      { key: 'triggerSelector', label: 'Trigger Selector (optional)', type: 'text', placeholder: '#delete', isSelector: true },
+      { key: 'timeout',         label: 'Timeout (ms)', type: 'text', placeholder: '10000' },
+    ],
+    hasInput: true, hasOutput: true,
+  },
+  // ── Frames ───────────────────────────────────────────────────
+  {
+    type: 'switchFrame', label: 'Switch Frame', category: 'Browser Frame',
+    description: 'Enter an iframe so element nodes act inside it', iconKey: 'globe', color: '#0D9488',
+    defaults: { frameSelector: '', timeout: '10000' },
+    schema: [
+      { key: 'frameSelector', label: 'Iframe Selector', type: 'text', placeholder: 'iframe#content', isSelector: true,
+        hint: 'Element nodes run inside it until Exit Frame.' },
+      { key: 'timeout',       label: 'Timeout (ms)', type: 'text', placeholder: '10000' },
+    ],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'exitFrame', label: 'Exit Frame', category: 'Browser Frame',
+    description: 'Return to the main page from an iframe', iconKey: 'globe', color: '#0D9488',
+    defaults: {},
+    schema: [],
+    hasInput: true, hasOutput: true,
+  },
+  // ── Waits & retry ────────────────────────────────────────────
+  {
+    type: 'waitUntilVisible', label: 'Wait Until Visible', category: 'Browser Wait',
+    description: 'Wait until an element becomes visible', iconKey: 'waitEl', color: '#0EA5E9',
+    defaults: { selector: '', timeout: '10000' },
+    schema: [
+      { key: 'selector', label: 'CSS / XPath Selector', type: 'text', placeholder: '#el', isSelector: true },
+      { key: 'timeout',  label: 'Timeout (ms)', type: 'text', placeholder: '10000' },
+    ],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'waitUntilHidden', label: 'Wait Until Hidden', category: 'Browser Wait',
+    description: 'Wait until an element is hidden/removed', iconKey: 'waitEl', color: '#0EA5E9',
+    defaults: { selector: '', timeout: '10000' },
+    schema: [
+      { key: 'selector', label: 'CSS / XPath Selector', type: 'text', placeholder: '.spinner', isSelector: true },
+      { key: 'timeout',  label: 'Timeout (ms)', type: 'text', placeholder: '10000' },
+    ],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'waitUntilEnabled', label: 'Wait Until Enabled', category: 'Browser Wait',
+    description: 'Wait until an element is enabled', iconKey: 'waitEl', color: '#0EA5E9',
+    defaults: { selector: '', timeout: '10000' },
+    schema: [
+      { key: 'selector', label: 'CSS / XPath Selector', type: 'text', placeholder: 'button#save', isSelector: true },
+      { key: 'timeout',  label: 'Timeout (ms)', type: 'text', placeholder: '10000' },
+    ],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'waitUntilDisabled', label: 'Wait Until Disabled', category: 'Browser Wait',
+    description: 'Wait until an element is disabled', iconKey: 'waitEl', color: '#0EA5E9',
+    defaults: { selector: '', timeout: '10000' },
+    schema: [
+      { key: 'selector', label: 'CSS / XPath Selector', type: 'text', placeholder: 'button#submit', isSelector: true },
+      { key: 'timeout',  label: 'Timeout (ms)', type: 'text', placeholder: '10000' },
+    ],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'retryUntilSuccess', label: 'Retry Until Success', category: 'Logic',
+    description: 'Retry the BODY steps until they succeed', iconKey: 'loop', color: '#D97706',
+    defaults: { maxAttempts: '3', interval: '1000' },
+    schema: [
+      { key: 'maxAttempts', label: 'Max Attempts', type: 'text', placeholder: '3' },
+      { key: 'interval',    label: 'Interval (ms)', type: 'text', placeholder: '1000' },
+    ],
+    hasInput: true, hasOutput: false,
+    outputHandles: [
+      { id: 'body', label: 'BODY', color: '#D97706' },
+      { id: 'done', label: 'DONE', color: '#16A34A' },
+    ],
+  },
+  // ── Web scraping ─────────────────────────────────────────────
+  {
+    type: 'extractTable', label: 'Extract Table', category: 'Web Scraping',
+    description: 'Read an HTML table into an array of objects', iconKey: 'arrLength', color: '#16A34A',
+    defaults: { selector: 'table', outputVariable: 'tableData' },
+    schema: [
+      { key: 'selector',       label: 'Table Selector', type: 'text', placeholder: 'table#data', isSelector: true },
+      { key: 'outputVariable', label: 'Output Variable', type: 'text', placeholder: 'tableData', hint: 'Array of row objects — use with For Each.' },
+    ],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'extractLinks', label: 'Extract Links', category: 'Web Scraping',
+    description: 'Collect links ({text, href}) into an array', iconKey: 'link', color: '#16A34A',
+    defaults: { selector: 'a', outputVariable: 'links' },
+    schema: [
+      { key: 'selector',       label: 'Link Selector', type: 'text', placeholder: 'a', isSelector: true },
+      { key: 'outputVariable', label: 'Output Variable', type: 'text', placeholder: 'links' },
+    ],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'extractElements', label: 'Extract Elements', category: 'Web Scraping',
+    description: 'Collect text/attribute of matching elements', iconKey: 'getText', color: '#16A34A',
+    defaults: { selector: '', attribute: '', outputVariable: 'items' },
+    schema: [
+      { key: 'selector',       label: 'CSS / XPath Selector', type: 'text', placeholder: '.product .name', isSelector: true },
+      { key: 'attribute',      label: 'Attribute (optional)', type: 'text', placeholder: 'blank = text content' },
+      { key: 'outputVariable', label: 'Output Variable', type: 'text', placeholder: 'items' },
+    ],
+    hasInput: true, hasOutput: true,
+  },
+
+  // ══ Communication Library (Stage 12) ═══════════════════════════
+  {
+    type: 'sendEmail', label: 'Send Email', category: 'Communication',
+    description: 'Send an email via SMTP (HTML/plain + attachments)', iconKey: 'api', color: '#0EA5E9',
+    defaults: { smtpHost: '', smtpPort: '587', secure: false, username: '', password: '', from: '', to: '', cc: '', bcc: '', subject: '', body: '', bodyType: 'html', attachments: '' },
+    schema: [
+      { key: 'smtpHost',    label: 'SMTP Host', type: 'text', placeholder: 'smtp.gmail.com' },
+      { key: 'smtpPort',    label: 'SMTP Port', type: 'text', placeholder: '587' },
+      { key: 'secure',      label: 'SSL/TLS (port 465)', type: 'boolean' },
+      { key: 'username',    label: 'Username', type: 'text', placeholder: 'user@example.com' },
+      { key: 'password',    label: 'Password', type: 'text', placeholder: '{{secret.Mail.password}}', hint: 'Supports {{secret.NAME.password}}.' },
+      { key: 'from',        label: 'From', type: 'text', placeholder: 'Bot <bot@example.com>' },
+      { key: 'to',          label: 'To', type: 'text', placeholder: 'a@x.com, b@x.com' },
+      { key: 'cc',          label: 'Cc', type: 'text', placeholder: 'optional' },
+      { key: 'bcc',         label: 'Bcc', type: 'text', placeholder: 'optional' },
+      { key: 'subject',     label: 'Subject', type: 'text', placeholder: 'Report ready' },
+      { key: 'bodyType',    label: 'Body Type', type: 'select', options: ['html', 'text'] },
+      { key: 'body',        label: 'Body', type: 'textarea', placeholder: '<h1>Hi</h1> or plain text. Supports {{variable}}.' },
+      { key: 'attachments', label: 'Attachments', type: 'textarea', placeholder: 'C:\\a.pdf, C:\\b.xlsx (one per line or comma-separated)' },
+    ],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'readEmail', label: 'Read Email', category: 'Communication',
+    description: 'Read emails from an IMAP mailbox into an array', iconKey: 'log', color: '#0EA5E9',
+    defaults: { imapHost: '', imapPort: '993', secure: true, username: '', password: '', folder: 'INBOX', unreadOnly: true, limit: '25', outputVariable: 'emails' },
+    schema: [
+      { key: 'imapHost',       label: 'IMAP Host', type: 'text', placeholder: 'imap.gmail.com' },
+      { key: 'imapPort',       label: 'IMAP Port', type: 'text', placeholder: '993' },
+      { key: 'secure',         label: 'SSL/TLS', type: 'boolean' },
+      { key: 'username',       label: 'Username', type: 'text', placeholder: 'user@example.com' },
+      { key: 'password',       label: 'Password', type: 'text', placeholder: '{{secret.Mail.password}}', hint: 'Supports {{secret.NAME.password}}.' },
+      { key: 'folder',         label: 'Folder', type: 'text', placeholder: 'INBOX' },
+      { key: 'unreadOnly',     label: 'Unread Only', type: 'boolean' },
+      { key: 'limit',          label: 'Max Emails', type: 'text', placeholder: '25' },
+      { key: 'outputVariable', label: 'Output Variable', type: 'text', placeholder: 'emails', hint: 'Array of email objects — use with For Each.' },
+    ],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'saveAttachment', label: 'Save Attachment', category: 'Communication',
+    description: 'Save attachments of an email (or array) to disk', iconKey: 'writeFile', color: '#0EA5E9',
+    defaults: { emailVariable: '{{item}}', saveDirectory: '', outputVariable: 'savedFiles' },
+    schema: [
+      { key: 'emailVariable',  label: 'Email Variable', type: 'text', placeholder: '{{item}}', hint: 'An email object (from For Each) or array of emails.' },
+      { key: 'saveDirectory',  label: 'Save Directory', type: 'text', placeholder: 'C:\\attachments' },
+      { key: 'outputVariable', label: 'Output Variable', type: 'text', placeholder: 'savedFiles' },
+    ],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'moveEmail', label: 'Move Email', category: 'Communication',
+    description: 'Move an email to another folder', iconKey: 'moveFile', color: '#0EA5E9',
+    defaults: { emailId: '{{item.id}}', targetFolder: 'Archive' },
+    schema: [
+      { key: 'emailId',      label: 'Email Id (uid)', type: 'text', placeholder: '{{item.id}}' },
+      { key: 'targetFolder', label: 'Target Folder', type: 'text', placeholder: 'Archive' },
+    ],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'markEmailRead', label: 'Mark Email Read', category: 'Communication',
+    description: 'Flag an email as read', iconKey: 'fileExists', color: '#0EA5E9',
+    defaults: { emailId: '{{item.id}}' },
+    schema: [{ key: 'emailId', label: 'Email Id (uid)', type: 'text', placeholder: '{{item.id}}' }],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'deleteEmail', label: 'Delete Email', category: 'Communication',
+    description: 'Delete an email from the mailbox', iconKey: 'deleteFile', color: '#DC2626',
+    defaults: { emailId: '{{item.id}}' },
+    schema: [{ key: 'emailId', label: 'Email Id (uid)', type: 'text', placeholder: '{{item.id}}' }],
+    hasInput: true, hasOutput: true,
+  },
 ];
 
 export function getNodesByCategory() {

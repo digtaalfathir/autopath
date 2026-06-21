@@ -70,6 +70,15 @@ class WorkflowEngine extends EventEmitter {
     this.running = false;
     this.aborted = false;
 
+    // Execution guards (configurable per-run via execute() options)
+    this._nodeTimeoutMs     = 0;   // 0 = disabled
+    this._workflowTimeoutMs = 0;   // 0 = disabled
+    this._maxSteps          = 0;   // 0 = disabled
+    this._stepCount         = 0;
+
+    // Screenshot captured at the first failing node (when a page is open)
+    this._errorShot = null;
+
     // Breakpoint / step-debug state (reset per execution)
     this._breakpoints = new Set();
     this._stepMode    = false;
@@ -138,6 +147,23 @@ class WorkflowEngine extends EventEmitter {
     this.registry.register('dbQuery',      dbQueryHandler);
     this.registry.register('dbExecute',    dbExecuteHandler);
     this.registry.register('dbDisconnect', dbDisconnectHandler);
+
+    // ── Advanced Web Automation Library (grouped handler modules) ──
+    const webGroups = [
+      require('../nodes/web/interaction'),
+      require('../nodes/web/elements'),
+      require('../nodes/web/files'),
+      require('../nodes/web/tabs'),
+      require('../nodes/web/frames'),
+      require('../nodes/web/waits'),
+      require('../nodes/web/scraping'),
+      require('../nodes/comm/email'),
+    ];
+    for (const group of webGroups) {
+      for (const handler of group.handlers) {
+        this.registry.register(handler.meta.type, handler);
+      }
+    }
   }
 
   // ── Breakpoint / step-debug API ─────────────────────────────
@@ -146,7 +172,7 @@ class WorkflowEngine extends EventEmitter {
   }
 
   async _pauseAt(nodeId) {
-    this.emit('debug:paused', { nodeId, variables: { ...this.context.variables } });
+    this.emit('debug:paused', { nodeId, variables: this._publicVars() });
     await new Promise(resolve => { this._resumeFn = resolve; });
     this._resumeFn = null;
   }
@@ -177,6 +203,65 @@ class WorkflowEngine extends EventEmitter {
       if (!this.edgesFrom.has(edge.source)) this.edgesFrom.set(edge.source, []);
       this.edgesFrom.get(edge.source).push(edge);
     }
+  }
+
+  /**
+   * Detect a directed cycle in the workflow graph (DFS, 3-colour).
+   * ForEach/TryCatch loop internally in JS — the graph itself must stay
+   * acyclic, so any back-edge here is an unintended infinite loop.
+   * @returns {string[]|null} node ids forming the cycle, or null.
+   */
+  _detectCycle() {
+    const WHITE = 0, GRAY = 1, BLACK = 2;
+    const color = new Map();
+    for (const id of this.nodeMap.keys()) color.set(id, WHITE);
+
+    const stack = [];
+    let cycle = null;
+
+    const visit = (u) => {
+      color.set(u, GRAY);
+      stack.push(u);
+      for (const edge of (this.edgesFrom.get(u) || [])) {
+        const v = edge.target;
+        if (!this.nodeMap.has(v)) continue;
+        if (color.get(v) === GRAY) {
+          cycle = stack.slice(stack.indexOf(v)).concat(v);
+          return true;
+        }
+        if (color.get(v) === WHITE && visit(v)) return true;
+      }
+      stack.pop();
+      color.set(u, BLACK);
+      return false;
+    };
+
+    for (const id of this.nodeMap.keys()) {
+      if (color.get(id) === WHITE && visit(id)) break;
+    }
+    return cycle;
+  }
+
+  /**
+   * Race a promise against a timeout. The underlying work can't be cancelled
+   * mid-call, but the workflow fails fast and cleanup() closes the browser.
+   */
+  _withTimeout(promise, ms, label) {
+    let timer;
+    const timeout = new Promise((_, reject) => {
+      timer = setTimeout(
+        () => reject(new Error(`"${label}" timed out after ${ms}ms`)),
+        ms
+      );
+    });
+    return Promise.race([promise, timeout]).finally(() => clearTimeout(timer));
+  }
+
+  // Variables exposed to logs / debug UI — the reserved `secret` bucket is
+  // never surfaced, so injected credentials can't leak.
+  _publicVars() {
+    const { secret, ...rest } = this.context.variables;
+    return rest;
   }
 
   /**
@@ -213,6 +298,14 @@ class WorkflowEngine extends EventEmitter {
       return;
     }
 
+    // Runaway-loop safety net (covers pathological nested loops)
+    if (this._maxSteps > 0 && ++this._stepCount > this._maxSteps) {
+      throw new Error(
+        `Execution exceeded ${this._maxSteps} steps — possible runaway loop. ` +
+        `Increase "Max steps" in Settings → Execution if this is intentional.`
+      );
+    }
+
     // Pause at breakpoint or when in step mode (Feature 9)
     if (this._breakpoints.has(node.id) || this._stepMode) {
       this._stepMode = false;  // consume step; debugStep() will re-arm it
@@ -244,14 +337,19 @@ class WorkflowEngine extends EventEmitter {
       // Snapshot variable keys+serialised values for Variable Viewer diffing
       const varSnap = {};
       for (const [k, v] of Object.entries(this.context.variables)) {
+        if (k === 'secret') continue;   // never snapshot/log credentials
         varSnap[k] = typeof v === 'object' && v !== null ? JSON.stringify(v) : v;
       }
 
+      // Per-node timeout: data.timeoutMs override → engine default → disabled.
       // nodeId passed as 4th arg so ForEach/TryCatch can call executeFromHandle
-      result = await handler.execute(node.data, this.context, this, node.id);
+      const nodeTimeoutMs = Number(node.data?.timeoutMs) || this._nodeTimeoutMs || 0;
+      const work = handler.execute(node.data, this.context, this, node.id);
+      result = nodeTimeoutMs > 0 ? await this._withTimeout(work, nodeTimeoutMs, label) : await work;
 
       // Variable Viewer: log each variable that was set or changed by this node
       for (const [k, v] of Object.entries(this.context.variables)) {
+        if (k === 'secret') continue;   // never log credentials
         const before = varSnap[k];
         const after  = typeof v === 'object' && v !== null ? JSON.stringify(v) : v;
         if (before !== after) {
@@ -269,7 +367,19 @@ class WorkflowEngine extends EventEmitter {
       const dur = Date.now() - t0;
       this.metrics.nodesFailed++;
       this.metrics.nodeTimes[node.id] = { label, durationMs: dur, status: 'error', error: err.message };
-      this.emit('node-error', { nodeId: node.id, error: err.message });
+
+      // Screenshot-on-error — capture page state at the first failing node
+      let shotUrl = null;
+      if (this.context.page && !this._errorShot) {
+        try {
+          const buf = await this.context.page.screenshot({ type: 'jpeg', quality: 60 });
+          this._errorShot = { nodeId: node.id, label, base64: buf.toString('base64') };
+          shotUrl = `data:image/jpeg;base64,${this._errorShot.base64}`;
+          this.log('INFO', `[${label}] Screenshot captured on error`);
+        } catch (_) { /* page may be closing — ignore */ }
+      }
+
+      this.emit('node-error', { nodeId: node.id, error: err.message, screenshot: shotUrl });
       this.log('ERROR', `[${label}] Failed: ${err.message}`);
       throw err;
     }
@@ -283,13 +393,25 @@ class WorkflowEngine extends EventEmitter {
   }
 
   // ── Main execute ─────────────────────────────────────────────
-  async execute(flowData) {
+  // options: { secrets?, execution?: { nodeTimeoutMs, workflowTimeoutMs, maxSteps } }
+  async execute(flowData, options = {}) {
     this.running = true;
     this.aborted = false;
+
+    // Execution guards (backward-compatible — all default to disabled)
+    const exec = options.execution || {};
+    this._nodeTimeoutMs     = Number(exec.nodeTimeoutMs)     || 0;
+    this._workflowTimeoutMs = Number(exec.workflowTimeoutMs) || 0;
+    this._maxSteps          = Number(exec.maxSteps)          || 0;
+    this._stepCount         = 0;
+    this._errorShot         = null;
 
     // Reset per-run state
     this.context.keepBrowserOpen = false;
     this.context.variables = { ...(flowData.initialVariables || {}) };  // Feature 8
+    // Reserved `secret` bucket — resolvable via {{secret.NAME.password}},
+    // redacted from logs/debug, never written to flow JSON.
+    this.context.variables.secret = options.secrets || {};
     this.context.workbooks = {};
     this.context.databases = {};
     this.context.lastError  = null;
@@ -312,10 +434,33 @@ class WorkflowEngine extends EventEmitter {
       return { success: false, error: 'No Start node found in workflow.', metrics: this._snapshotMetrics() };
     }
 
+    // Reject cyclic graphs before running (prevents infinite loop / stack overflow)
+    const cycle = this._detectCycle();
+    if (cycle) {
+      const names = cycle.map(id => this.nodeMap.get(id)?.data?.label || id).join(' → ');
+      this.metrics.endTime = Date.now();
+      this.log('ERROR', `Workflow contains a loop (cycle): ${names}`);
+      this.running = false;
+      return { success: false, error: `Workflow contains a loop (cycle): ${names}`, metrics: this._snapshotMetrics() };
+    }
+
     this.log('INFO', `Workflow started — ${nodes.length} node(s), ${edges.length} edge(s).`);
 
+    let wfTimer = null;
     try {
-      await this.executeNode(startNode);
+      const run = this.executeNode(startNode);
+      if (this._workflowTimeoutMs > 0) {
+        const wfTimeout = new Promise((_, reject) => {
+          wfTimer = setTimeout(() => {
+            this.aborted = true;
+            if (this._resumeFn) { this._resumeFn(); this._resumeFn = null; } // unblock debug pause
+            reject(new Error(`Workflow timed out after ${this._workflowTimeoutMs}ms`));
+          }, this._workflowTimeoutMs);
+        });
+        await Promise.race([run, wfTimeout]);
+      } else {
+        await run;
+      }
 
       this.metrics.endTime = Date.now();
       const durSec = ((this.metrics.endTime - this.metrics.startTime) / 1000).toFixed(2);
@@ -325,9 +470,16 @@ class WorkflowEngine extends EventEmitter {
     } catch (err) {
       this.metrics.endTime = this.metrics.endTime || Date.now();
       this.log('ERROR', `Workflow failed: ${err.message}`);
-      return { success: false, error: err.message, metrics: this._snapshotMetrics() };
+      return {
+        success: false,
+        error:   err.message,
+        metrics: this._snapshotMetrics(),
+        screenshot:     this._errorShot ? `data:image/jpeg;base64,${this._errorShot.base64}` : null,
+        screenshotNode: this._errorShot?.label || null,
+      };
 
     } finally {
+      if (wfTimer) clearTimeout(wfTimer);
       await this.cleanup(false);
       this.running = false;
     }

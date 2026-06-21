@@ -155,6 +155,44 @@ const PICKER_SCRIPT = `
     return parts.join(' > ');
   }
 
+  // ── Resilient fallbacks — absolute XPath, text, attribute selectors ──
+  function buildXPath(el) {
+    if (el.id && !el.id.startsWith('__cyclone')) {
+      return '//*[@id="' + el.id + '"]';
+    }
+    var parts = [];
+    var cur = el;
+    while (cur && cur.nodeType === 1 && cur !== document.documentElement) {
+      var ix = 1, sib = cur.previousElementSibling;
+      while (sib) { if (sib.tagName === cur.tagName) ix++; sib = sib.previousElementSibling; }
+      parts.unshift(cur.tagName.toLowerCase() + '[' + ix + ']');
+      cur = cur.parentElement;
+    }
+    return '/html/' + parts.join('/');
+  }
+
+  function buildFallbacks(el, primary) {
+    var out = [];
+    function add(s) { if (s && out.indexOf(s) === -1 && s !== primary) out.push(s); }
+    var tag = el.tagName.toLowerCase();
+
+    // Stable attributes
+    ['data-testid','data-test','data-qa','name','aria-label','role'].forEach(function(a) {
+      var v = el.getAttribute && el.getAttribute(a);
+      if (v) add(tag + '[' + a + '="' + v + '"]');
+    });
+    if (el.id && !el.id.startsWith('__cyclone')) add('#' + el.id);
+
+    // Text-based (buttons/links/short text elements)
+    var txt = (el.textContent || '').trim();
+    if (txt && txt.length <= 40 && ['BUTTON','A','SPAN','LABEL','LI','TD','TH','H1','H2','H3'].indexOf(el.tagName) !== -1) {
+      add('text=' + txt);
+    }
+    // Absolute XPath — last resort
+    add(buildXPath(el));
+    return out;
+  }
+
   function getInfo(el) {
     var info = el.tagName.toLowerCase();
     if (el.id) info += '#' + el.id;
@@ -196,8 +234,9 @@ const PICKER_SCRIPT = `
     if (el.id && el.id.startsWith('__cyclone')) return;
     pickerLive = false;
 
-    var selector = generateSelector(el);
-    var info     = getInfo(el);
+    var selector  = generateSelector(el);
+    var info      = getInfo(el);
+    var fallbacks = buildFallbacks(el, selector);
 
     // Confirmation flash
     overlay.style.borderColor = '#16A34A';
@@ -221,7 +260,7 @@ const PICKER_SCRIPT = `
       document.removeEventListener('mousemove', onMove, true);
       document.removeEventListener('click',     onClick, true);
       document.removeEventListener('keydown',   onKey,   true);
-      window.__cyclonePickerResult = { selector: selector, info: info, tagName: el.tagName.toLowerCase() };
+      window.__cyclonePickerResult = { selector: selector, info: info, tagName: el.tagName.toLowerCase(), fallbacks: fallbacks };
     }, 500);
   }
 

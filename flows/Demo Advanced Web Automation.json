@@ -1,0 +1,37 @@
+{
+  "name": "Demo Advanced Web Automation",
+  "nodes": [
+    { "id": "n_start",  "type": "workflowNode", "position": { "x": 80,  "y": 60 },  "data": { "nodeType": "start", "label": "Start" } },
+    { "id": "n_open",   "type": "workflowNode", "position": { "x": 80,  "y": 160 }, "data": { "nodeType": "openBrowser", "label": "Open Browser", "headless": false } },
+    { "id": "n_nav",    "type": "workflowNode", "position": { "x": 80,  "y": 260 }, "data": { "nodeType": "navigateUrl", "label": "Navigate", "url": "https://example.com/login" } },
+    { "id": "n_user",   "type": "workflowNode", "position": { "x": 80,  "y": 360 }, "data": { "nodeType": "inputText", "label": "Username", "selector": "#username", "value": "{{secret.PortalLogin.username}}", "clearFirst": true } },
+    { "id": "n_pass",   "type": "workflowNode", "position": { "x": 80,  "y": 460 }, "data": { "nodeType": "inputText", "label": "Password", "selector": "#password", "value": "{{secret.PortalLogin.password}}", "clearFirst": true } },
+    { "id": "n_login",  "type": "workflowNode", "position": { "x": 80,  "y": 560 }, "data": { "nodeType": "clickElement", "label": "Login", "selector": "button[type=submit]", "selectorFallbacks": ["text=Login", "//button[@type='submit']"], "waitNavigation": true } },
+    { "id": "n_waiturl","type": "workflowNode", "position": { "x": 80,  "y": 660 }, "data": { "nodeType": "waitUrl", "label": "Wait URL", "expectedUrl": "dashboard", "timeout": "15000" } },
+    { "id": "n_newtab", "type": "workflowNode", "position": { "x": 80,  "y": 760 }, "data": { "nodeType": "openTab", "label": "Open New Tab", "url": "https://example.com/reports", "outputVariable": "reportTab" } },
+    { "id": "n_switch", "type": "workflowNode", "position": { "x": 80,  "y": 860 }, "data": { "nodeType": "switchTab", "label": "Switch Tab", "index": "{{reportTab}}" } },
+    { "id": "n_table",  "type": "workflowNode", "position": { "x": 80,  "y": 960 }, "data": { "nodeType": "extractTable", "label": "Extract Table", "selector": "table#report", "outputVariable": "rows" } },
+    { "id": "n_dl",     "type": "workflowNode", "position": { "x": 80,  "y": 1060 }, "data": { "nodeType": "downloadFile", "label": "Download File", "triggerSelector": "a.export-csv", "saveDirectory": "", "outputVariable": "csvPath", "waitForDownload": "30000" } },
+    { "id": "n_up",     "type": "workflowNode", "position": { "x": 80,  "y": 1160 }, "data": { "nodeType": "uploadFile", "label": "Upload File", "selector": "input[type=file]", "filePath": "{{csvPath}}" } },
+    { "id": "n_shot",   "type": "workflowNode", "position": { "x": 80,  "y": 1260 }, "data": { "nodeType": "takeScreenshot", "label": "Take Screenshot", "filePath": "", "fullPage": true, "outputVariable": "shot" } },
+    { "id": "n_close",  "type": "workflowNode", "position": { "x": 80,  "y": 1360 }, "data": { "nodeType": "closeTab", "label": "Close Tab" } },
+    { "id": "n_end",    "type": "workflowNode", "position": { "x": 80,  "y": 1460 }, "data": { "nodeType": "end", "label": "End", "autoCloseBrowser": true, "restoreWindow": true } }
+  ],
+  "edges": [
+    { "id": "e1",  "source": "n_start",  "target": "n_open" },
+    { "id": "e2",  "source": "n_open",   "target": "n_nav" },
+    { "id": "e3",  "source": "n_nav",    "target": "n_user" },
+    { "id": "e4",  "source": "n_user",   "target": "n_pass" },
+    { "id": "e5",  "source": "n_pass",   "target": "n_login" },
+    { "id": "e6",  "source": "n_login",  "target": "n_waiturl" },
+    { "id": "e7",  "source": "n_waiturl","target": "n_newtab" },
+    { "id": "e8",  "source": "n_newtab", "target": "n_switch" },
+    { "id": "e9",  "source": "n_switch", "target": "n_table" },
+    { "id": "e10", "source": "n_table",  "target": "n_dl" },
+    { "id": "e11", "source": "n_dl",     "target": "n_up" },
+    { "id": "e12", "source": "n_up",     "target": "n_shot" },
+    { "id": "e13", "source": "n_shot",   "target": "n_close" },
+    { "id": "e14", "source": "n_close",  "target": "n_end" }
+  ],
+  "viewport": { "x": 0, "y": 0, "zoom": 0.8 }
+}
