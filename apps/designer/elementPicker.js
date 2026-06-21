@@ -17,6 +17,7 @@
 'use strict';
 
 const { chromium } = require('playwright');
+const { defaultUserDataDir } = require('../../shared/utils/browserProfile');
 
 // ── Singleton ─────────────────────────────────────────────────
 // Kept alive between calls; closed only when the host app exits.
@@ -345,24 +346,35 @@ async function tryConnectCDP() {
   return null;
 }
 
-/** Launch a new browser (Chrome → Edge → bundled Chromium). */
+/**
+ * Launch the picker browser (Chrome → Edge → bundled Chromium).
+ *
+ * Uses a PERSISTENT context at the shared profile dir so the picker session
+ * carries the same cookies/logins as the Open Browser node's "user" mode —
+ * keeping captured selectors consistent with execution. (Priority 1 is still
+ * CDP-attach to the user's already-running Chrome; this is the fallback.)
+ *
+ * For a normal desktop chromium, ctx.browser() returns a real Browser, so the
+ * rest of the picker (isConnected/contexts/close/disconnected) keeps working.
+ */
 async function launchBrowser() {
-  const opts = { headless: false, args: ['--start-maximized'] };
+  const dir  = defaultUserDataDir();
+  const opts = { headless: false, viewport: null, args: ['--start-maximized'] };
   const channels = ['chrome', 'msedge'];
   for (const channel of channels) {
     try {
-      const browser = await chromium.launch({ ...opts, channel });
-      const ctx     = await browser.newContext({ viewport: null });
-      const page    = await ctx.newPage();
+      const ctx     = await chromium.launchPersistentContext(dir, { ...opts, channel });
+      const browser = ctx.browser();
+      const page    = ctx.pages()[0] || await ctx.newPage();
       return { browser, page, via: channel };
     } catch (_) {
       // Not installed — try next
     }
   }
   // Last resort: Playwright's bundled Chromium
-  const browser = await chromium.launch(opts);
-  const ctx     = await browser.newContext({ viewport: null });
-  const page    = await ctx.newPage();
+  const ctx     = await chromium.launchPersistentContext(dir, opts);
+  const browser = ctx.browser();
+  const page    = ctx.pages()[0] || await ctx.newPage();
   return { browser, page, via: 'chromium' };
 }
 

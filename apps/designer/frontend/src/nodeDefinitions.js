@@ -24,8 +24,12 @@ export const NODE_DEFINITIONS = [
     description: 'Launch a browser instance',
     iconKey: 'globe',
     color: '#2563EB',
-    defaults: { headless: false },
+    defaults: { headless: false, profileMode: 'isolated', userDataDir: '' },
     schema: [
+      { key: 'profileMode', label: 'Profile Mode', type: 'select', options: ['isolated', 'user'],
+        hint: 'isolated = fresh clean session. user = persistent profile (keeps logins, cookies, extensions).' },
+      { key: 'userDataDir', label: 'User Data Dir (optional)', type: 'text', placeholder: 'blank = managed profile',
+        hint: 'Only for "user" mode. Leave blank to use the app-managed profile.' },
       { key: 'headless', label: 'Headless Mode', type: 'boolean' },
     ],
     hasInput: true,
