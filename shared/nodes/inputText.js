@@ -30,15 +30,16 @@ module.exports = {
     if (!selector) throw new Error('Input Text: CSS Selector is required.');
 
     const value = interpolate(data.value ?? '', context.variables);
+    const scope = context.frame || context.page;   // iframe-aware (Switch Frame)
 
     engine.log('INFO', `Input text into "${selector}"`);
 
-    await context.page.waitForSelector(selector, { state: 'visible', timeout: 10000 });
+    await scope.waitForSelector(selector, { state: 'visible', timeout: 10000 });
 
     if (data.clearFirst !== false) {
-      await context.page.fill(selector, '');
+      await scope.fill(selector, '');
     }
-    await context.page.fill(selector, value);
+    await scope.fill(selector, value);
 
     engine.log('INFO', `Input complete: "${selector}"`);
   },

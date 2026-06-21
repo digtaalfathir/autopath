@@ -33,10 +33,12 @@ module.exports = {
     const outputVar = (data.outputVariable || 'text').trim();
     const timeout   = Math.max(1000, parseInt(interpolate(String(data.timeout || '10000'), context.variables), 10) || 10000);
 
+    const scope = context.frame || context.page;   // iframe-aware (Switch Frame)
+
     engine.log('INFO', `Getting text from: "${selector}"`);
 
-    await context.page.waitForSelector(selector, { state: 'visible', timeout });
-    const raw  = await context.page.textContent(selector);
+    await scope.waitForSelector(selector, { state: 'visible', timeout });
+    const raw  = await scope.textContent(selector);
     const text = (raw || '').trim();
 
     context.variables[outputVar] = text;

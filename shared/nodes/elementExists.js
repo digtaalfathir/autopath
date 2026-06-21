@@ -28,11 +28,12 @@ module.exports = {
     if (!selector) throw new Error('Element Exists: selector is required.');
 
     const outputVar = (data.outputVariable || 'elementExists').trim();
+    const scope = context.frame || context.page;   // iframe-aware (Switch Frame)
 
     // page.$() returns null if not found — never throws
     let exists = false;
     try {
-      const el = await context.page.$(selector);
+      const el = await scope.$(selector);
       exists = el !== null;
     } catch (_) {
       exists = false;

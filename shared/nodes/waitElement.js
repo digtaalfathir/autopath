@@ -35,9 +35,11 @@ module.exports = {
     const state   = VALID_STATES.includes(data.state) ? data.state : 'visible';
     const timeout = Math.max(1000, parseInt(interpolate(String(data.timeout || '10000'), context.variables), 10) || 10000);
 
+    const scope = context.frame || context.page;   // iframe-aware (Switch Frame)
+
     engine.log('INFO', `Waiting element: "${selector}" → ${state} (timeout: ${timeout}ms)`);
 
-    await context.page.waitForSelector(selector, { state, timeout });
+    await scope.waitForSelector(selector, { state, timeout });
 
     engine.log('INFO', `Element found: "${selector}" is ${state}`);
   },
