@@ -28,6 +28,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   // Run History / Reports
   listRuns:  (options) => ipcRenderer.invoke('history:list',   options || {}),
   getReport: (runId)   => ipcRenderer.invoke('history:report', { runId }),
+  getReportScreenshot: (runId) => ipcRenderer.invoke('history:screenshot', { runId }),
 
   // Scheduler
   listSchedules:  ()            => ipcRenderer.invoke('scheduler:list'),
@@ -55,6 +56,11 @@ contextBridge.exposeInMainWorld('electronAPI', {
   // Settings (F12)
   getSettings:  ()        => ipcRenderer.invoke('settings:get'),
   saveSettings: (updates) => ipcRenderer.invoke('settings:save', updates),
+
+  // Credential Vault
+  listCredentials:  ()     => ipcRenderer.invoke('credentials:list'),
+  saveCredential:   (cred) => ipcRenderer.invoke('credentials:save', cred),
+  deleteCredential: (name) => ipcRenderer.invoke('credentials:delete', { name }),
 
   // Audit Log (F15)
   listAudit: (options) => ipcRenderer.invoke('audit:list', options || {}),

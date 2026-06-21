@@ -1,0 +1,26 @@
+{
+  "name": "Demo Try Notify Email",
+  "nodes": [
+    { "id": "n_start", "type": "workflowNode", "position": { "x": 80,  "y": 60 },  "data": { "nodeType": "start", "label": "Start" } },
+    { "id": "n_open",  "type": "workflowNode", "position": { "x": 80,  "y": 160 }, "data": { "nodeType": "openBrowser", "label": "Open Browser", "headless": false } },
+    { "id": "n_try",   "type": "workflowNode", "position": { "x": 80,  "y": 260 }, "data": { "nodeType": "tryCatchNode", "label": "Try / Catch", "errorVariable": "lastError" } },
+
+    { "id": "n_nav",   "type": "workflowNode", "position": { "x": 360, "y": 360 }, "data": { "nodeType": "navigateUrl", "label": "Run Workflow", "url": "https://example.com/report" } },
+    { "id": "n_okmail","type": "workflowNode", "position": { "x": 360, "y": 460 }, "data": { "nodeType": "sendEmail", "label": "Send Email Success", "smtpHost": "smtp.gmail.com", "smtpPort": "587", "username": "bot@example.com", "password": "{{secret.Mail.password}}", "to": "ops@example.com", "subject": "Workflow OK", "bodyType": "html", "body": "<p>Run completed successfully.</p>" } },
+
+    { "id": "n_shot",  "type": "workflowNode", "position": { "x": 640, "y": 360 }, "data": { "nodeType": "takeScreenshot", "label": "Take Screenshot", "filePath": "", "fullPage": true, "outputVariable": "shot" } },
+    { "id": "n_failml","type": "workflowNode", "position": { "x": 640, "y": 460 }, "data": { "nodeType": "sendEmail", "label": "Send Email Failure", "smtpHost": "smtp.gmail.com", "smtpPort": "587", "username": "bot@example.com", "password": "{{secret.Mail.password}}", "to": "ops@example.com", "subject": "Workflow FAILED", "bodyType": "html", "body": "<p>Error: {{lastError}}</p>", "attachments": "{{shot}}" } },
+
+    { "id": "n_end",   "type": "workflowNode", "position": { "x": 80,  "y": 580 }, "data": { "nodeType": "end", "label": "End", "autoCloseBrowser": true } }
+  ],
+  "edges": [
+    { "id": "e1", "source": "n_start", "target": "n_open" },
+    { "id": "e2", "source": "n_open",  "target": "n_try" },
+    { "id": "e3", "source": "n_try",   "sourceHandle": "try",   "target": "n_nav" },
+    { "id": "e4", "source": "n_nav",   "target": "n_okmail" },
+    { "id": "e5", "source": "n_try",   "sourceHandle": "catch", "target": "n_shot" },
+    { "id": "e6", "source": "n_shot",  "target": "n_failml" },
+    { "id": "e7", "source": "n_try",   "target": "n_end" }
+  ],
+  "viewport": { "x": 0, "y": 0, "zoom": 0.85 }
+}

@@ -80,7 +80,18 @@ class ExecutionRepository {
       nodesFailed:     run.nodesFailed,
       error:           run.error || null,
       executionSource: run.executionSource || 'MANUAL',
+      errorScreenshot: run.errorScreenshot || null,
     };
+  }
+
+  // ── Resolve an error-screenshot file to a data URL (or null) ─
+  getScreenshotDataUrl(runId) {
+    const run = this._load().find(r => r.runId === runId);
+    if (!run || !run.errorScreenshot) return null;
+    const fp = path.join(this.historyDir, 'screenshots', run.errorScreenshot);
+    if (!fs.existsSync(fp)) return null;
+    try { return `data:image/jpeg;base64,${fs.readFileSync(fp).toString('base64')}`; }
+    catch (_) { return null; }
   }
 }
 

@@ -5,6 +5,7 @@ const { ControllerService }               = require('../../controller');
 const { startElementPicker, closePicker } = require('../elementPicker');
 const { AuditRepository }                 = require('../../../shared/audit/AuditRepository');
 const { SettingsRepository }              = require('../../../shared/settings/SettingsRepository');
+const { CredentialStore }                 = require('./CredentialStore');
 
 const isDev = process.env.NODE_ENV === 'development';
 
@@ -12,28 +13,41 @@ let mainWindow   = null;
 let controller   = null;
 let settingsRepo = null;
 let auditRepo    = null;
+let credStore    = null;
 let tray         = null;
 let forceQuit    = false;  // true only when user explicitly quits from tray
 let trayNotified = false;  // show "running in background" hint only once
 
+const APP_NAME = 'Manufactura Connect';
+
+// Resolve the branded app icon, preferring the pre-sized PNG for the target.
+// Falls back through sizes so the tray is never blank if one file is missing.
+function loadAppIcon(preferredSize) {
+  const assetsDir = path.join(__dirname, '..', '..', '..', 'assets');
+  const candidates = preferredSize
+    ? [`icon-${preferredSize}.png`, 'icon.png', 'icon-256.png', 'icon-32.png', 'icon-16.png']
+    : ['icon.png', 'icon-256.png'];
+  for (const file of candidates) {
+    try {
+      const img = nativeImage.createFromPath(path.join(assetsDir, file));
+      if (!img.isEmpty()) return img;
+    } catch (_) { /* try next */ }
+  }
+  return nativeImage.createEmpty();
+}
+
 // ── System Tray — keeps scheduler alive when window is closed ─────────
 function createTray() {
-  const iconPath = path.join(__dirname, '..', '..', '..', 'assets', 'icon.png');
-  let icon;
-  try {
-    icon = nativeImage.createFromPath(iconPath);
-    // Tray icon on Windows should be 16×16
-    if (!icon.isEmpty()) icon = icon.resize({ width: 16, height: 16 });
-  } catch (_) {
-    icon = nativeImage.createEmpty();
-  }
+  // Use a 32px source and let Electron scale down — sharper than a hard 16×16 resize
+  let icon = loadAppIcon(32);
+  if (!icon.isEmpty()) icon = icon.resize({ width: 16, height: 16, quality: 'best' });
 
   tray = new Tray(icon);
-  tray.setToolTip('Stechoq Cyclone Studio — Scheduler running');
+  tray.setToolTip(`${APP_NAME} — Scheduler running`);
 
   const buildMenu = () => Menu.buildFromTemplate([
     {
-      label: 'Show Cyclone Studio',
+      label: `Show ${APP_NAME}`,
       click: () => { mainWindow?.show(); mainWindow?.focus(); },
     },
     { type: 'separator' },
@@ -63,7 +77,7 @@ function hideToTray() {
     if (Notification.isSupported()) {
       try {
         new Notification({
-          title: 'Cyclone running in background',
+          title: `${APP_NAME} running in background`,
           body:  'Scheduler and automations continue. Click the tray icon to restore.',
         }).show();
       } catch (_) {}
@@ -77,16 +91,17 @@ function createWindow() {
     height:   900,
     minWidth: 1100,
     minHeight: 700,
-    title: 'Stechoq Cyclone Studio',
+    title: APP_NAME,
     backgroundColor: '#F5F6FA',
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
       nodeIntegration: false,
     },
-    icon: path.join(__dirname, '..', '..', '..', 'assets', 'icon.png'),
+    icon: loadAppIcon(256),
     frame: false,
     titleBarStyle: 'hidden',
+    show: false,   // shown on ready-to-show unless Start Minimized is enabled
   });
 
   if (isDev) {
@@ -95,13 +110,21 @@ function createWindow() {
     mainWindow.loadFile(path.join(__dirname, '..', 'frontend', 'dist', 'index.html'));
   }
 
-  // Intercept native close (Alt+F4, taskbar close on Windows)
-  // → hide to tray instead of quit, so the scheduler keeps running.
+  // Start Minimized To Tray — stay hidden on launch (great for robot/scheduler).
+  const startMinimized = !!getSystemSettings().startMinimized || process.argv.includes('--hidden');
+  mainWindow.once('ready-to-show', () => {
+    if (!startMinimized) { mainWindow.show(); mainWindow.focus(); }
+    else console.log('[main] Started minimized to tray.');
+  });
+
+  // Intercept native close (Alt+F4, taskbar close on Windows).
+  // Close To Tray (default ON) → hide so the scheduler keeps running.
+  // When disabled → quit the app entirely.
   mainWindow.on('close', (e) => {
-    if (!forceQuit) {
-      e.preventDefault();
-      hideToTray();
-    }
+    if (forceQuit) return;
+    const closeToTray = getSystemSettings().closeToTray !== false;
+    if (closeToTray) { e.preventDefault(); hideToTray(); }
+    else { forceQuit = true; }   // allow the close to proceed → app quits
   });
 
   mainWindow.on('closed', () => { mainWindow = null; });
@@ -185,30 +208,57 @@ function handleJobNotification(data, isScheduled) {
   const wfId     = data.workflowId || data.jobId || '';
 
   if (success && settings.desktopOnSuccess)
-    sendDesktopNotification('Cyclone — Run Complete', `${label} "${wfId}" completed successfully.`);
+    sendDesktopNotification(`${APP_NAME} — Run Complete`, `${label} "${wfId}" completed successfully.`);
   if (!success && settings.desktopOnFailure)
-    sendDesktopNotification('Cyclone — Run Failed', `${label} "${wfId}" failed: ${data.error || 'unknown error'}`);
+    sendDesktopNotification(`${APP_NAME} — Run Failed`, `${label} "${wfId}" failed: ${data.error || 'unknown error'}`);
 
   if (settings.emailEnabled && settings.smtp?.host) {
     const smtp = settings.smtp;
     if (success && settings.emailOnSuccess)
-      sendEmail(smtp, `[Cyclone] Run Complete — ${wfId}`, `${label} "${wfId}" completed successfully.\n\nTimestamp: ${new Date().toISOString()}`);
+      sendEmail(smtp, `[Manufactura Connect] Run Complete — ${wfId}`, `${label} "${wfId}" completed successfully.\n\nTimestamp: ${new Date().toISOString()}`);
     if (!success && settings.emailOnFailure)
-      sendEmail(smtp, `[Cyclone] Run Failed — ${wfId}`, `${label} "${wfId}" failed.\n\nError: ${data.error}\nTimestamp: ${new Date().toISOString()}`);
+      sendEmail(smtp, `[Manufactura Connect] Run Failed — ${wfId}`, `${label} "${wfId}" failed.\n\nError: ${data.error}\nTimestamp: ${new Date().toISOString()}`);
   }
+}
+
+// ── Repositories (created early so window/tray can read system settings) ──
+function ensureRepos() {
+  if (settingsRepo) return;
+  const baseDir = getDataDir();
+  settingsRepo = new SettingsRepository({ settingsFile: path.join(baseDir, 'settings', 'settings.json') });
+  auditRepo    = new AuditRepository   ({ auditFile:    path.join(baseDir, 'audit',    'audit.jsonl')   });
+  credStore    = new CredentialStore   ({ file:         path.join(baseDir, 'credentials', 'credentials.json') });
+  settingsRepo.ensureRobotToken();
+}
+
+function getSystemSettings() {
+  try { return settingsRepo?.get()?.system || {}; } catch { return {}; }
+}
+
+// Register/unregister OS login-item (auto start). No-op in dev.
+function applyAutoStart() {
+  if (isDev) return;
+  const s = getSystemSettings();
+  try {
+    app.setLoginItemSettings({
+      openAtLogin:  !!s.autoStart,
+      openAsHidden: !!s.startMinimized,          // macOS
+      args:         s.startMinimized ? ['--hidden'] : [],
+    });
+  } catch (err) { console.error('[main] setLoginItemSettings failed:', err.message); }
 }
 
 // ── Start the Controller (owns all repos + robot + scheduler) ─────────
 function startController() {
+  ensureRepos();
   const baseDir = getDataDir();
-
-  settingsRepo = new SettingsRepository({ settingsFile: path.join(baseDir, 'settings', 'settings.json') });
-  auditRepo    = new AuditRepository   ({ auditFile:    path.join(baseDir, 'audit',    'audit.jsonl')   });
-  settingsRepo.ensureRobotToken();
 
   controller = new ControllerService({
     baseDir,
     auditRepo,
+    // Resolve credentials + execution guards lazily, per run
+    getSecrets:         () => { try { return credStore.decryptAll(); }           catch { return {}; } },
+    getExecutionConfig: () => { try { return settingsRepo.get().execution || {}; } catch { return {}; } },
     onLog:                  log  => mainWindow?.webContents.send('engine:log',           log),
     onNodeStart:            id   => mainWindow?.webContents.send('engine:node-start',    id),
     onNodeComplete:         id   => mainWindow?.webContents.send('engine:node-complete', id),
@@ -234,8 +284,12 @@ ipcMain.on('window:minimize', () => mainWindow?.minimize());
 ipcMain.on('window:maximize', () => {
   mainWindow?.isMaximized() ? mainWindow.unmaximize() : mainWindow?.maximize();
 });
-// Close button → hide to tray (not quit), so scheduler keeps running in background
-ipcMain.on('window:close', () => hideToTray());
+// Custom titlebar X → respect Close To Tray (default ON keeps scheduler alive)
+ipcMain.on('window:close', () => {
+  const closeToTray = getSystemSettings().closeToTray !== false;
+  if (closeToTray) hideToTray();
+  else { forceQuit = true; app.quit(); }
+});
 // Explicit quit from tray or Ctrl+Q
 ipcMain.on('app:quit', () => { forceQuit = true; app.quit(); });
 
@@ -388,6 +442,14 @@ ipcMain.handle('history:report', async (_e, { runId }) => {
   }
 });
 
+ipcMain.handle('history:screenshot', async (_e, { runId }) => {
+  try {
+    return { success: true, dataUrl: controller.getReportScreenshot(runId) };
+  } catch (err) {
+    return { success: false, error: err.message, dataUrl: null };
+  }
+});
+
 // ── Scheduler ─────────────────────────────────────────────────────────
 ipcMain.handle('scheduler:list', async () => {
   try {
@@ -480,7 +542,32 @@ ipcMain.handle('settings:save', async (_e, updates) => {
       controller.stopRobotApiServer();
     }
 
+    // Sync OS auto-start entry when System settings change
+    if (JSON.stringify(prev.system) !== JSON.stringify(saved.system)) applyAutoStart();
+
     return { success: true, settings: saved };
+  } catch (err) { return { success: false, error: err.message }; }
+});
+
+// ── Credential Vault ─────────────────────────────────────────────────
+ipcMain.handle('credentials:list', async () => {
+  try { return { success: true, credentials: credStore.list(), encryptionAvailable: credStore.encryptionAvailable() }; }
+  catch (err) { return { success: false, error: err.message, credentials: [] }; }
+});
+
+ipcMain.handle('credentials:save', async (_e, cred) => {
+  try {
+    const r = credStore.save(cred);
+    auditRepo.log({ action: 'credential.save', details: { name: cred?.name } });
+    return r;
+  } catch (err) { return { success: false, error: err.message }; }
+});
+
+ipcMain.handle('credentials:delete', async (_e, { name }) => {
+  try {
+    const r = credStore.delete(name);
+    auditRepo.log({ action: 'credential.delete', details: { name } });
+    return r;
   } catch (err) { return { success: false, error: err.message }; }
 });
 
@@ -518,7 +605,7 @@ ipcMain.handle('report:export-excel', async (_e, { runs, filename }) => {
 
     const ExcelJS = require('exceljs');
     const wb = new ExcelJS.Workbook();
-    wb.creator = 'Cyclone Studio';
+    wb.creator = 'Manufactura Connect';
     wb.created = new Date();
 
     const ws = wb.addWorksheet('Run History');
@@ -586,7 +673,7 @@ ipcMain.handle('picker:start', async (_e, { url }) => {
   try {
     const result = await startElementPicker(url || null, mainWindow);
     if (result.canceled) return { success: false, canceled: true };
-    return { success: true, selector: result.selector, info: result.info };
+    return { success: true, selector: result.selector, info: result.info, fallbacks: result.fallbacks || [] };
   } catch (err) {
     return { success: false, error: err.message };
   }
@@ -594,10 +681,15 @@ ipcMain.handle('picker:start', async (_e, { url }) => {
 
 // ── App lifecycle ─────────────────────────────────────────────────────
 app.whenReady().then(() => {
+  // Windows: makes desktop notifications + taskbar group use the branded name/icon
+  app.setAppUserModelId('com.manufactura.connect');
+  app.setName(APP_NAME);
+  ensureRepos();        // settings available before window/tray decisions
   seedInitialData();
   createWindow();
   createTray();
   startController();
+  applyAutoStart();     // sync OS login-item with saved settings
 });
 
 // Don't quit when all windows closed — stay alive in tray so scheduler keeps running.

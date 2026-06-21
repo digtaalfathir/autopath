@@ -22,6 +22,25 @@ const DEFAULTS = {
     port:    3456,
     token:   '',
   },
+  execution: {
+    workflowTimeoutMs: 1800000,  // 30 min total cap; 0 = disabled
+    nodeTimeoutMs:     0,        // per-node cap; 0 = disabled (avoids breaking long delays)
+    maxSteps:          100000,   // runaway-loop safety net; 0 = disabled
+  },
+  general: {
+    theme:    'light',           // 'light' | 'dark'
+    language: 'en',              // 'en' | 'id'
+  },
+  system: {
+    autoStart:      false,       // launch when the OS user logs in
+    startMinimized: false,       // start hidden in the tray
+    closeToTray:    true,        // X button hides to tray instead of quitting
+  },
+  communication: {
+    // Reusable connection profiles for reference / copy into email nodes.
+    smtp: { host: '', port: 587, secure: false, user: '', from: '' },
+    imap: { host: '', port: 993, secure: true,  user: '' },
+  },
 };
 
 function deepMerge(defaults, overrides) {

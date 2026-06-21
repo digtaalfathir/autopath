@@ -1,9 +1,9 @@
 {
-  "name": "cyclone-lokalpride",
+  "name": "manufactura-connect",
   "version": "1.0.0",
-  "description": "Cyclone LokalPride - Visual RPA Workflow Designer & Automation Engine",
+  "description": "Manufactura Connect - Visual RPA Workflow Designer & Automation Engine",
   "main": "apps/designer/electron/main.js",
-  "author": "LokalPride",
+  "author": "Manufactura",
   "license": "MIT",
   "scripts": {
     "dev:frontend": "cd apps/designer/frontend && npx vite --port 5173",
@@ -16,6 +16,8 @@
   },
   "dependencies": {
     "exceljs": "^4.4.0",
+    "imapflow": "^1.4.2",
+    "mailparser": "^3.9.11",
     "nodemailer": "^6.10.1",
     "playwright": "^1.40.0",
     "sql.js": "^1.14.1"
@@ -27,8 +29,8 @@
     "electron-builder": "^24.13.3"
   },
   "build": {
-    "appId": "com.lokalpride.cyclone",
-    "productName": "Cyclone LokalPride",
+    "appId": "com.manufactura.connect",
+    "productName": "Manufactura Connect",
     "directories": {
       "output": "dist"
     },
@@ -40,6 +42,7 @@
       "apps/robot/**/*",
       "shared/**/*",
       "flows/**/*",
+      "assets/**/*",
       "node_modules/**/*",
       "package.json"
     ],
@@ -61,8 +64,8 @@
           ]
         }
       ],
-      "icon": "assets/icon.png",
-      "publisherName": "LokalPride",
+      "icon": "assets/icon.ico",
+      "publisherName": "Manufactura",
       "signingHashAlgorithms": [
         "sha256"
       ],
@@ -72,7 +75,12 @@
       "oneClick": false,
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true,
-      "createStartMenuShortcut": true
+      "createStartMenuShortcut": true,
+      "shortcutName": "Manufactura Connect"
+    },
+    "linux": {
+      "icon": "assets/icon.png",
+      "category": "Utility"
     }
   }
 }

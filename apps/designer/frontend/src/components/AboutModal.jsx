@@ -12,14 +12,25 @@ export function AboutModal({ onClose }) {
         <div className="about-body">
           <div className="about-logo">
             <svg viewBox="0 0 48 48" fill="none" width="48" height="48">
-              <rect width="48" height="48" rx="10" fill="#2563EB"/>
-              <path d="M13 26V22C13 17.6 16 15 20 15C22.4 15 24.4 16 25.6 17.4L23.2 19.8C22.4 18.8 21.3 18.2 20 18.2C17.6 18.2 16.2 19.8 16.2 22V26C16.2 28.2 17.6 29.8 20 29.8C21.3 29.8 22.4 29.2 23.2 28.2L25.6 30.6C24.4 32 22.4 33 20 33C16 33 13 30.4 13 26Z" fill="white"/>
-              <path d="M29 15H32L27 23V33H23.8V23L19 15H22L25 20.8L29 15Z" fill="white"/>
+              <rect width="48" height="48" rx="11" fill="#2563EB"/>
+              <path d="M38 24 L31 36.1 L17 36.1 L10 24 L17 11.9 L31 11.9 Z"
+                    fill="none" stroke="#FFFFFF" strokeWidth="2.8"
+                    strokeLinejoin="round" strokeLinecap="round"/>
+              <g stroke="#FFFFFF" strokeWidth="1.9" strokeLinecap="round">
+                <line x1="24" y1="17.8" x2="18.5" y2="28.1"/>
+                <line x1="24" y1="17.8" x2="29.5" y2="28.1"/>
+                <line x1="18.5" y1="28.1" x2="29.5" y2="28.1"/>
+              </g>
+              <g fill="#FFFFFF">
+                <circle cx="24" cy="17.8" r="2.8"/>
+                <circle cx="18.5" cy="28.1" r="2.8"/>
+                <circle cx="29.5" cy="28.1" r="2.8"/>
+              </g>
             </svg>
           </div>
           <div className="about-product">
-            <span className="about-brand">Stechoq</span>
-            <span className="about-name">Cyclone Studio</span>
+            <span className="about-brand">Manufactura</span>
+            <span className="about-name">Connect</span>
             <span className="about-version">Version 1.0.0</span>
           </div>
           <p className="about-desc">
@@ -33,7 +44,7 @@ export function AboutModal({ onClose }) {
             </div>
             <div className="about-meta__row">
               <span>Author</span>
-              <strong>Stechoq / LokalPride</strong>
+              <strong>Manufactura</strong>
             </div>
             <div className="about-meta__row">
               <span>License</span>

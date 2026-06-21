@@ -25,18 +25,19 @@ import DebugToolbar from './components/DebugToolbar';
 import { AuditModal } from './components/AuditModal';
 import { RobotManagerModal } from './components/RobotManagerModal';
 import { SettingsModal } from './components/SettingsModal';
+import { CredentialsModal } from './components/CredentialsModal';
 import { AboutModal } from './components/AboutModal';
 import { Tooltip } from './components/Tooltip';
 import { BreakpointContext } from './contexts/BreakpointContext';
 import { getNodeDefinition } from './nodeDefinitions';
 import {
   LogoMark,
-  IconFolderOpen, IconSave, IconDocument, IconSettings,
+  IconFolderOpen, IconSave, IconDocument, IconTools, IconSliders,
   IconPlay, IconStopSquare, IconTerminal, IconTrash,
   IconProperties, IconMinimize, IconMaximize, IconClose,
   IconPanelBottom, IconChevronUp, IconChevronDown,
   IconPublish, IconHistory, IconScheduler, IconDashboard,
-  IconUndo, IconRedo, IconAudit, IconRobotNetwork, IconBell,
+  IconUndo, IconRedo, IconAudit, IconRobotNetwork, IconBell, IconKey,
 } from './components/Icons';
 
 const api = window.electronAPI || null;
@@ -78,6 +79,31 @@ function validateWorkflow(nodes, edges) {
       .forEach(n => warnings.push(`"${n.data?.label || n.data?.nodeType}" is not connected to any other node.`));
   }
 
+  // Cycle detection — a back-edge means an infinite loop at runtime.
+  // (ForEach/TryCatch loop internally, so the graph itself must be acyclic.)
+  {
+    const adj = new Map(nodes.map(n => [n.id, []]));
+    edges.forEach(e => { if (adj.has(e.source)) adj.get(e.source).push(e.target); });
+    const WHITE = 0, GRAY = 1, BLACK = 2;
+    const color = new Map(nodes.map(n => [n.id, WHITE]));
+    const stack = [];
+    let cyclePath = null;
+    const visit = (u) => {
+      color.set(u, GRAY); stack.push(u);
+      for (const v of (adj.get(u) || [])) {
+        if (!color.has(v)) continue;
+        if (color.get(v) === GRAY) { cyclePath = stack.slice(stack.indexOf(v)).concat(v); return true; }
+        if (color.get(v) === WHITE && visit(v)) return true;
+      }
+      stack.pop(); color.set(u, BLACK); return false;
+    };
+    for (const n of nodes) { if (color.get(n.id) === WHITE && visit(n.id)) break; }
+    if (cyclePath) {
+      const labelOf = id => nodes.find(n => n.id === id)?.data?.label || nodes.find(n => n.id === id)?.data?.nodeType || id;
+      errors.push(`Workflow contains a loop (cycle): ${cyclePath.map(labelOf).join(' → ')}. Remove the back-connection — use a For Each node to repeat steps.`);
+    }
+  }
+
   for (const node of nodes) {
     const nt  = node.data?.nodeType;
     const lbl = node.data?.label || nt;
@@ -94,7 +120,7 @@ function validateWorkflow(nodes, edges) {
 }
 
 // ── Toolbar overflow "More" menu ──────────────────────────────────────
-function MoreMenu({ onScheduler, onDashboard, onRobots, onAudit, onSettings }) {
+function MoreMenu({ onScheduler, onDashboard, onRobots, onAudit, onCredentials, onSettings }) {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
 
@@ -118,7 +144,7 @@ function MoreMenu({ onScheduler, onDashboard, onRobots, onAudit, onSettings }) {
           className={`toolbar__btn more-menu__trigger${open ? ' more-menu__trigger--open' : ''}`}
           onClick={() => setOpen(o => !o)}
         >
-          <IconSettings size={13} /> Tools ▾
+          <IconTools size={13} /> Tools <IconChevronDown size={11} />
         </button>
       </Tooltip>
       {open && (
@@ -130,6 +156,9 @@ function MoreMenu({ onScheduler, onDashboard, onRobots, onAudit, onSettings }) {
           <div className="more-menu__section-label">Robots & Infra</div>
           {item(<IconRobotNetwork size={14} />, 'Robot Manager', onRobots)}
           {item(<IconAudit size={14} />,       'Audit Log',     onAudit)}
+          <div className="more-menu__divider" />
+          <div className="more-menu__section-label">Security</div>
+          {item(<IconKey size={14} />,          'Credential Vault', onCredentials)}
           <div className="more-menu__divider" />
           {item(<IconBell size={14} />,         'Notifications & Settings', onSettings)}
         </div>
@@ -331,6 +360,7 @@ export default function App() {
   const [auditOpen,        setAuditOpen]        = useState(false);
   const [robotMgrOpen,     setRobotMgrOpen]     = useState(false);
   const [settingsOpen,     setSettingsOpen]      = useState(false);
+  const [credentialsOpen,  setCredentialsOpen]  = useState(false);
   // UI polish
   const [aboutOpen,        setAboutOpen]        = useState(false);
   const [isDirty,          setIsDirty]          = useState(false);
@@ -696,7 +726,8 @@ export default function App() {
       {/* ── Title Bar ──────────────────────────────────────────── */}
       <header className="title-bar">
         <div className="title-bar__brand">
-          <span className="title-bar__name"><em>Stechoq</em> Cyclone Studio</span>
+          <span className="title-bar__brandmark"><LogoMark size={16} /></span>
+          <span className="title-bar__name"><em>Manufactura</em> Connect</span>
         </div>
         <div className="title-bar__divider" />
         <span className="title-bar__flow">
@@ -797,7 +828,7 @@ export default function App() {
               onClick={handleRunWithParams}
               disabled={engineStatus === 'running' || engineStatus === 'pending'}
             >
-              ⚡ Params
+              <IconSliders size={13} /> Params
             </button>
           </Tooltip>
           {(engineStatus === 'running' || engineStatus === 'pending' || debugState) && (
@@ -837,6 +868,7 @@ export default function App() {
           onDashboard={() => setDashboardOpen(true)}
           onRobots={() => setRobotMgrOpen(true)}
           onAudit={() => setAuditOpen(true)}
+          onCredentials={() => setCredentialsOpen(true)}
           onSettings={() => setSettingsOpen(true)}
         />}
 
@@ -1047,6 +1079,7 @@ export default function App() {
       {auditOpen    && <AuditModal        onClose={() => setAuditOpen(false)} />}
       {robotMgrOpen && <RobotManagerModal onClose={() => setRobotMgrOpen(false)} />}
       {settingsOpen && <SettingsModal     onClose={() => setSettingsOpen(false)} />}
+      {credentialsOpen && <CredentialsModal onClose={() => setCredentialsOpen(false)} />}
       {aboutOpen    && <AboutModal        onClose={() => setAboutOpen(false)} />}
 
       {/* ── Publish Toast ─────────────────────────────────────── */}
@@ -1074,7 +1107,7 @@ export default function App() {
         </div>
         <div className="status-bar__right">
           <button className="status-bar__about-btn" onClick={() => setAboutOpen(true)}>
-            Stechoq Cyclone Studio v1.0
+            Manufactura Connect v1.0
           </button>
         </div>
       </footer>

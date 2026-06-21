@@ -111,6 +111,11 @@ export default function PropertyPanel({ selectedNode, onNodeUpdate, nodes }) {
       const result = await api.pickElement(url);
       if (result.success && result.selector) {
         handleChange(fieldKey, result.selector);
+        // Resilient selectors: store fallbacks captured by the picker so the
+        // engine can recover if the primary selector breaks on a UI change.
+        if (fieldKey === 'selector' && Array.isArray(result.fallbacks)) {
+          handleChange('selectorFallbacks', result.fallbacks);
+        }
       }
     } catch (err) {
       console.error('Picker error:', err);
@@ -186,6 +191,20 @@ export default function PropertyPanel({ selectedNode, onNodeUpdate, nodes }) {
                 rows={4}
                 spellCheck={false}
               />
+              {field.hint && <div className="prop-helper">{field.hint}</div>}
+            </>
+          ) : field.type === 'select' ? (
+            <>
+              <select
+                id={`prop-${field.key}`}
+                className="prop-input"
+                value={selectedNode.data?.[field.key] ?? (field.options?.[0] || '')}
+                onChange={e => handleChange(field.key, e.target.value)}
+              >
+                {(field.options || []).map(opt => (
+                  <option key={opt} value={opt}>{opt}</option>
+                ))}
+              </select>
               {field.hint && <div className="prop-helper">{field.hint}</div>}
             </>
           ) : field.isSelector ? (

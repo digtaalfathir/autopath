@@ -31,9 +31,14 @@ function ensureDir(dir) {
 class ControllerService extends EventEmitter {
   // baseDir  — root of the data directories (project root in dev, resourcesPath in prod)
   // callbacks — IPC forwarding functions injected by main.js
-  constructor({ baseDir, auditRepo, onLog, onNodeStart, onNodeComplete, onNodeError,
+  constructor({ baseDir, auditRepo, getSecrets, getExecutionConfig,
+                onLog, onNodeStart, onNodeComplete, onNodeError,
                 onJobComplete, onJobQueued, onSchedulerJobComplete, onDebugPaused }) {
     super();
+
+    // Lazy providers injected from main.js (credential vault + execution guards)
+    this._getSecrets         = getSecrets         || (() => ({}));
+    this._getExecutionConfig = getExecutionConfig || (() => ({}));
 
     // ── Data directories ─────────────────────────────────────
     const releases  = ensureDir(path.join(baseDir, 'releases'));
@@ -98,11 +103,13 @@ class ControllerService extends EventEmitter {
   _startRobotAgent() {
     try {
       this._robotAgent = new RobotAgent({
-        robotId:         'robot_local',
-        jobQueue:        this._jobQueue,
-        workflowRepo:    this._workflowRepo,
-        execRepo:        this._execRepo,
-        registry:        this._registry,
+        robotId:            'robot_local',
+        jobQueue:           this._jobQueue,
+        workflowRepo:       this._workflowRepo,
+        execRepo:           this._execRepo,
+        registry:           this._registry,
+        getSecrets:         this._getSecrets,
+        getExecutionConfig: this._getExecutionConfig,
         onLog:           log  => this._cb.onLog(log),
         onNodeStart:     id   => this._cb.onNodeStart(id),
         onNodeComplete:  id   => this._cb.onNodeComplete(id),
@@ -278,6 +285,10 @@ class ControllerService extends EventEmitter {
 
   getReport(runId) {
     return this._execRepo.generateReport(runId);
+  }
+
+  getReportScreenshot(runId) {
+    return this._execRepo.getScreenshotDataUrl(runId);
   }
 
   // ── Dashboard Snapshot ────────────────────────────────────────
