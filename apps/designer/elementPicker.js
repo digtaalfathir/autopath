@@ -17,7 +17,7 @@
 'use strict';
 
 const { chromium } = require('playwright');
-const { defaultUserDataDir } = require('../../shared/utils/browserProfile');
+const { defaultUserDataDir, systemChromeUserDataDir } = require('../../shared/utils/browserProfile');
 
 // ── Singleton ─────────────────────────────────────────────────
 // Kept alive between calls; closed only when the host app exits.
@@ -358,24 +358,29 @@ async function tryConnectCDP() {
  * rest of the picker (isConnected/contexts/close/disconnected) keeps working.
  */
 async function launchBrowser() {
-  const dir  = defaultUserDataDir();
-  const opts = { headless: false, viewport: null, args: ['--start-maximized'] };
-  const channels = ['chrome', 'msedge'];
-  for (const channel of channels) {
+  const base = { headless: false, viewport: null, args: ['--start-maximized'] };
+
+  // 1) Real Chrome profile — matches Open Browser "user" mode (only when Chrome
+  //    is closed; the profile is locked while it runs).
+  try {
+    const ctx = await chromium.launchPersistentContext(systemChromeUserDataDir(), {
+      ...base, channel: 'chrome', args: [...base.args, '--profile-directory=Default'],
+    });
+    return { browser: ctx.browser(), page: ctx.pages()[0] || await ctx.newPage(), via: 'chrome-user' };
+  } catch (_) { /* Chrome running/locked or not installed — fall back */ }
+
+  // 2) App-managed persistent profile (works even while Chrome is open).
+  const dir = defaultUserDataDir();
+  for (const channel of ['chrome', 'msedge']) {
     try {
-      const ctx     = await chromium.launchPersistentContext(dir, { ...opts, channel });
-      const browser = ctx.browser();
-      const page    = ctx.pages()[0] || await ctx.newPage();
-      return { browser, page, via: channel };
-    } catch (_) {
-      // Not installed — try next
-    }
+      const ctx = await chromium.launchPersistentContext(dir, { ...base, channel });
+      return { browser: ctx.browser(), page: ctx.pages()[0] || await ctx.newPage(), via: channel };
+    } catch (_) { /* try next */ }
   }
-  // Last resort: Playwright's bundled Chromium
-  const ctx     = await chromium.launchPersistentContext(dir, opts);
-  const browser = ctx.browser();
-  const page    = ctx.pages()[0] || await ctx.newPage();
-  return { browser, page, via: 'chromium' };
+
+  // 3) Last resort: Playwright's bundled Chromium (persistent managed dir).
+  const ctx = await chromium.launchPersistentContext(dir, base);
+  return { browser: ctx.browser(), page: ctx.pages()[0] || await ctx.newPage(), via: 'chromium' };
 }
 
 /**
