@@ -1,5 +1,270 @@
 [
   {
+    "id": "job_1783017671546_25upg",
+    "workflowId": "Demo Desktop Shell",
+    "workflowVersion": null,
+    "source": "MANUAL",
+    "status": "SUCCESS",
+    "flowData": {
+      "name": "Demo Desktop Shell",
+      "version": null,
+      "nodes": [
+        {
+          "id": "n_start",
+          "type": "workflowNode",
+          "position": {
+            "x": 120,
+            "y": 60
+          },
+          "data": {
+            "nodeType": "start",
+            "label": "Start"
+          },
+          "width": 196,
+          "height": 49,
+          "positionAbsolute": {
+            "x": 120,
+            "y": 60
+          }
+        },
+        {
+          "id": "n_folder",
+          "type": "workflowNode",
+          "position": {
+            "x": 120,
+            "y": 160
+          },
+          "data": {
+            "nodeType": "openFolder",
+            "label": "Open File Manager",
+            "path": "C:\\"
+          },
+          "width": 196,
+          "height": 49,
+          "positionAbsolute": {
+            "x": 120,
+            "y": 160
+          }
+        },
+        {
+          "id": "n_run",
+          "type": "workflowNode",
+          "position": {
+            "x": 120,
+            "y": 260
+          },
+          "data": {
+            "nodeType": "runProgram",
+            "label": "Launch Notepad",
+            "programPath": "C:\\Windows\\notepad.exe",
+            "args": "",
+            "waitForExit": false,
+            "outputVariable": "pid"
+          },
+          "width": 196,
+          "height": 49,
+          "positionAbsolute": {
+            "x": 120,
+            "y": 260
+          }
+        },
+        {
+          "id": "n_log",
+          "type": "workflowNode",
+          "position": {
+            "x": 120,
+            "y": 360
+          },
+          "data": {
+            "nodeType": "logMessage",
+            "label": "Log PID",
+            "message": "Notepad launched with PID {{pid}}"
+          },
+          "width": 196,
+          "height": 49,
+          "positionAbsolute": {
+            "x": 120,
+            "y": 360
+          }
+        },
+        {
+          "id": "n_cmd",
+          "type": "workflowNode",
+          "position": {
+            "x": 120,
+            "y": 460
+          },
+          "data": {
+            "nodeType": "runCommand",
+            "label": "Whoami",
+            "command": "whoami",
+            "shell": "cmd",
+            "outputVariable": "user"
+          },
+          "width": 196,
+          "height": 49,
+          "selected": true,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 120,
+            "y": 460
+          }
+        },
+        {
+          "id": "n_log2",
+          "type": "workflowNode",
+          "position": {
+            "x": 120,
+            "y": 560
+          },
+          "data": {
+            "nodeType": "logMessage",
+            "label": "Log User",
+            "message": "Running as {{user}}"
+          },
+          "width": 196,
+          "height": 49,
+          "positionAbsolute": {
+            "x": 120,
+            "y": 560
+          }
+        },
+        {
+          "id": "n_wait",
+          "type": "workflowNode",
+          "position": {
+            "x": 120,
+            "y": 660
+          },
+          "data": {
+            "nodeType": "waitProcess",
+            "label": "Wait Notepad Closed",
+            "name": "notepad.exe",
+            "state": "notRunning",
+            "timeout": "60000",
+            "interval": "1000"
+          },
+          "width": 196,
+          "height": 49,
+          "positionAbsolute": {
+            "x": 120,
+            "y": 660
+          }
+        },
+        {
+          "id": "n_end",
+          "type": "workflowNode",
+          "position": {
+            "x": 120,
+            "y": 760
+          },
+          "data": {
+            "nodeType": "end",
+            "label": "End",
+            "autoCloseBrowser": true
+          },
+          "width": 196,
+          "height": 49,
+          "positionAbsolute": {
+            "x": 120,
+            "y": 760
+          }
+        }
+      ],
+      "edges": [
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e1",
+          "source": "n_start",
+          "target": "n_folder"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e2",
+          "source": "n_folder",
+          "target": "n_run"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e3",
+          "source": "n_run",
+          "target": "n_log"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e4",
+          "source": "n_log",
+          "target": "n_cmd"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e5",
+          "source": "n_cmd",
+          "target": "n_log2"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e6",
+          "source": "n_log2",
+          "target": "n_wait"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e7",
+          "source": "n_wait",
+          "target": "n_end"
+        }
+      ],
+      "viewport": {
+        "x": 263.4614354825219,
+        "y": -27.50309387418571,
+        "zoom": 0.8285153031997434
+      }
+    },
+    "metadata": {},
+    "createdAt": "2026-07-02T18:41:11.546Z",
+    "startedAt": "2026-07-02T18:41:12.607Z",
+    "completedAt": "2026-07-02T18:41:54.186Z",
+    "robotId": "robot_local",
+    "runId": "run_1783017672606_3v41j",
+    "error": null
+  },
+  {
     "id": "job_1782068763187_ltozm",
     "workflowId": "Demo Login Simple",
     "workflowVersion": null,
