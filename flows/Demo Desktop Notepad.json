@@ -1,0 +1,21 @@
+{
+  "name": "Demo Desktop Notepad",
+  "nodes": [
+    { "id": "n_start", "type": "workflowNode", "position": { "x": 120, "y": 60 },  "data": { "nodeType": "start", "label": "Start" } },
+    { "id": "n_run",   "type": "workflowNode", "position": { "x": 120, "y": 160 }, "data": { "nodeType": "runProgram", "label": "Open Notepad", "programPath": "notepad.exe", "waitForExit": false, "outputVariable": "pid" } },
+    { "id": "n_wait",  "type": "workflowNode", "position": { "x": 120, "y": 260 }, "data": { "nodeType": "delay", "label": "Wait 1.5s", "milliseconds": "1500" } },
+    { "id": "n_type",  "type": "workflowNode", "position": { "x": 120, "y": 360 }, "data": { "nodeType": "typeText", "label": "Type Text", "text": "Manufactura Connect — Desktop Tier 2 works!\nLine 2 typed by automation.", "pressEnter": false } },
+    { "id": "n_all",   "type": "workflowNode", "position": { "x": 120, "y": 460 }, "data": { "nodeType": "sendHotkey", "label": "Select All", "keys": "Control+A", "repeat": "1" } },
+    { "id": "n_copy",  "type": "workflowNode", "position": { "x": 120, "y": 560 }, "data": { "nodeType": "sendHotkey", "label": "Copy", "keys": "Control+C", "repeat": "1" } },
+    { "id": "n_end",   "type": "workflowNode", "position": { "x": 120, "y": 660 }, "data": { "nodeType": "end", "label": "End", "autoCloseBrowser": true } }
+  ],
+  "edges": [
+    { "id": "e1", "source": "n_start", "target": "n_run" },
+    { "id": "e2", "source": "n_run",   "target": "n_wait" },
+    { "id": "e3", "source": "n_wait",  "target": "n_type" },
+    { "id": "e4", "source": "n_type",  "target": "n_all" },
+    { "id": "e5", "source": "n_all",   "target": "n_copy" },
+    { "id": "e6", "source": "n_copy",  "target": "n_end" }
+  ],
+  "viewport": { "x": 0, "y": 0, "zoom": 0.9 }
+}

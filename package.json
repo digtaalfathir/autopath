@@ -15,6 +15,7 @@
     "install:frontend": "cd apps/designer/frontend && npm install"
   },
   "dependencies": {
+    "@nut-tree-fork/nut-js": "^4.2.6",
     "exceljs": "^4.4.0",
     "imapflow": "^1.4.2",
     "mailparser": "^3.9.11",

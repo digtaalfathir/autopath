@@ -1256,6 +1256,75 @@ export const NODE_DEFINITIONS = [
     ],
     hasInput: true, hasOutput: true,
   },
+
+  // ══ Desktop Automation — Tier 2: Global Keyboard & Mouse ═══════
+  {
+    type: 'sendHotkey', label: 'Send Hotkey', category: 'Desktop',
+    description: 'Press a key or combo globally (Ctrl+A, Win+E, Enter)', iconKey: 'type', color: '#0F766E',
+    defaults: { keys: 'Enter', repeat: '1' },
+    schema: [
+      { key: 'keys',   label: 'Keys / Combo', type: 'text', placeholder: 'Control+A / Win+E / Alt+F4 / Enter',
+        hint: 'Combine with + . Sent to the focused window. Supports {{variable}}.' },
+      { key: 'repeat', label: 'Repeat', type: 'text', placeholder: '1' },
+    ],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'typeText', label: 'Type Text', category: 'Desktop',
+    description: 'Type text into the focused window', iconKey: 'type', color: '#0F766E',
+    defaults: { text: '', autoDelayMs: '', pressEnter: false },
+    schema: [
+      { key: 'text',        label: 'Text', type: 'textarea', placeholder: 'Hello {{name}}', hint: 'Sent to the focused window. Supports {{variable}}.' },
+      { key: 'autoDelayMs', label: 'Per-key Delay (ms, optional)', type: 'text', placeholder: '20' },
+      { key: 'pressEnter',  label: 'Press Enter After', type: 'boolean' },
+    ],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'mouseClick', label: 'Mouse Click', category: 'Desktop',
+    description: 'Click at screen coordinates (or current position)', iconKey: 'mouse', color: '#0F766E',
+    defaults: { x: '', y: '', button: 'left', double: false },
+    schema: [
+      { key: 'x',      label: 'X (blank = current)', type: 'text', placeholder: '640' },
+      { key: 'y',      label: 'Y (blank = current)', type: 'text', placeholder: '360' },
+      { key: 'button', label: 'Button', type: 'select', options: ['left', 'right', 'middle'] },
+      { key: 'double', label: 'Double Click', type: 'boolean' },
+    ],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'mouseMove', label: 'Mouse Move', category: 'Desktop',
+    description: 'Move the mouse to screen coordinates', iconKey: 'mouse', color: '#0F766E',
+    defaults: { x: '', y: '', smooth: true },
+    schema: [
+      { key: 'x',      label: 'X', type: 'text', placeholder: '640' },
+      { key: 'y',      label: 'Y', type: 'text', placeholder: '360' },
+      { key: 'smooth', label: 'Smooth Move', type: 'boolean' },
+    ],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'mouseScroll', label: 'Mouse Scroll', category: 'Desktop',
+    description: 'Scroll the wheel up or down', iconKey: 'mouse', color: '#0F766E',
+    defaults: { direction: 'down', amount: '5' },
+    schema: [
+      { key: 'direction', label: 'Direction', type: 'select', options: ['down', 'up'] },
+      { key: 'amount',    label: 'Amount (steps)', type: 'text', placeholder: '5' },
+    ],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'mouseDrag', label: 'Mouse Drag', category: 'Desktop',
+    description: 'Drag from one coordinate to another', iconKey: 'mouse', color: '#0F766E',
+    defaults: { fromX: '', fromY: '', toX: '', toY: '' },
+    schema: [
+      { key: 'fromX', label: 'From X', type: 'text', placeholder: '100' },
+      { key: 'fromY', label: 'From Y', type: 'text', placeholder: '100' },
+      { key: 'toX',   label: 'To X',   type: 'text', placeholder: '400' },
+      { key: 'toY',   label: 'To Y',   type: 'text', placeholder: '300' },
+    ],
+    hasInput: true, hasOutput: true,
+  },
 ];
 
 export function getNodesByCategory() {
