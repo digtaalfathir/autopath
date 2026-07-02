@@ -84,8 +84,11 @@ export default function PropertyPanel({ selectedNode, onNodeUpdate, nodes }) {
   const def = getNodeDefinition(selectedNode.data?.nodeType);
   if (!def) return null;
 
+  // Send only the changed key — onNodeUpdate() already merges into node.data.
+  // (Spreading the whole stale selectedNode.data here caused the picker's
+  //  second write — selectorFallbacks — to clobber the just-set selector.)
   const handleChange = (key, value) => {
-    onNodeUpdate(selectedNode.id, { ...selectedNode.data, [key]: value });
+    onNodeUpdate(selectedNode.id, { [key]: value });
   };
 
   const findNavigateUrl = () => {
