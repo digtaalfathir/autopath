@@ -1,5 +1,5624 @@
 [
   {
+    "id": "job_1782068763187_ltozm",
+    "workflowId": "Demo Login Simple",
+    "workflowVersion": null,
+    "source": "MANUAL",
+    "status": "FAILED",
+    "flowData": {
+      "name": "Demo Login Simple",
+      "version": null,
+      "nodes": [
+        {
+          "id": "node_start_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 48
+          },
+          "data": {
+            "nodeType": "start",
+            "label": "Start"
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 48
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_browser_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 300,
+            "y": 170
+          },
+          "data": {
+            "nodeType": "openBrowser",
+            "label": "Open Browser",
+            "headless": false,
+            "profileMode": "user"
+          },
+          "width": 196,
+          "height": 49,
+          "selected": true,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 300,
+            "y": 170
+          }
+        },
+        {
+          "id": "node_navigate_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 272,
+            "y": 304
+          },
+          "data": {
+            "nodeType": "navigateUrl",
+            "label": "Navigate to Login Page",
+            "url": "https://practicetestautomation.com/practice-test-login/"
+          },
+          "width": 240,
+          "height": 54,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 272,
+            "y": 304
+          }
+        },
+        {
+          "id": "node_end_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 752
+          },
+          "data": {
+            "nodeType": "end",
+            "label": "End",
+            "autoCloseBrowser": true,
+            "restoreWindow": true
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 752
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697444146_0",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 416
+          },
+          "data": {
+            "nodeType": "inputText",
+            "label": "Input Text",
+            "selector": "#username",
+            "value": "student",
+            "clearFirst": true
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 416
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697467802_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 528
+          },
+          "data": {
+            "nodeType": "inputText",
+            "label": "Input Text",
+            "selector": "#password",
+            "value": "Password123",
+            "clearFirst": true
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 528
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697484627_2",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 640
+          },
+          "data": {
+            "nodeType": "clickElement",
+            "label": "Click Element",
+            "selector": "#submit",
+            "doubleClick": false,
+            "waitNavigation": false
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 640
+          }
+        }
+      ],
+      "edges": [
+        {
+          "animated": true,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e1",
+          "source": "node_start_1",
+          "target": "node_browser_1"
+        },
+        {
+          "animated": true,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e2",
+          "source": "node_browser_1",
+          "target": "node_navigate_1"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_navigate_1",
+          "sourceHandle": null,
+          "target": "node_1781697444146_0",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_navigate_1-node_1781697444146_0"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697444146_0",
+          "sourceHandle": null,
+          "target": "node_1781697467802_1",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697444146_0-node_1781697467802_1"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697467802_1",
+          "sourceHandle": null,
+          "target": "node_1781697484627_2",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697467802_1-node_1781697484627_2"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697484627_2",
+          "sourceHandle": null,
+          "target": "node_end_1",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697484627_2-node_end_1"
+        }
+      ],
+      "viewport": {
+        "x": 162.4565978510202,
+        "y": -7.222383194494739,
+        "zoom": 0.6978148014004587
+      }
+    },
+    "metadata": {},
+    "createdAt": "2026-06-21T19:06:03.187Z",
+    "startedAt": "2026-06-21T19:06:03.396Z",
+    "completedAt": "2026-06-21T19:06:03.581Z",
+    "robotId": "robot_local",
+    "runId": "run_1782068763395_uabex",
+    "error": "Cannot open your Chrome profile — Chrome appears to be already running (it locks the profile). Close ALL Chrome windows and run again, or use Profile Mode = isolated."
+  },
+  {
+    "id": "job_1782068747516_1l7cw",
+    "workflowId": "Demo Login Simple",
+    "workflowVersion": null,
+    "source": "MANUAL",
+    "status": "FAILED",
+    "flowData": {
+      "name": "Demo Login Simple",
+      "version": null,
+      "nodes": [
+        {
+          "id": "node_start_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 48
+          },
+          "data": {
+            "nodeType": "start",
+            "label": "Start"
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 48
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_browser_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 300,
+            "y": 170
+          },
+          "data": {
+            "nodeType": "openBrowser",
+            "label": "Open Browser",
+            "headless": false,
+            "profileMode": "user"
+          },
+          "width": 196,
+          "height": 49,
+          "selected": true,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 300,
+            "y": 170
+          }
+        },
+        {
+          "id": "node_navigate_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 272,
+            "y": 304
+          },
+          "data": {
+            "nodeType": "navigateUrl",
+            "label": "Navigate to Login Page",
+            "url": "https://practicetestautomation.com/practice-test-login/"
+          },
+          "width": 240,
+          "height": 54,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 272,
+            "y": 304
+          }
+        },
+        {
+          "id": "node_end_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 752
+          },
+          "data": {
+            "nodeType": "end",
+            "label": "End",
+            "autoCloseBrowser": true,
+            "restoreWindow": true
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 752
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697444146_0",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 416
+          },
+          "data": {
+            "nodeType": "inputText",
+            "label": "Input Text",
+            "selector": "#username",
+            "value": "student",
+            "clearFirst": true
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 416
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697467802_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 528
+          },
+          "data": {
+            "nodeType": "inputText",
+            "label": "Input Text",
+            "selector": "#password",
+            "value": "Password123",
+            "clearFirst": true
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 528
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697484627_2",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 640
+          },
+          "data": {
+            "nodeType": "clickElement",
+            "label": "Click Element",
+            "selector": "#submit",
+            "doubleClick": false,
+            "waitNavigation": false
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 640
+          }
+        }
+      ],
+      "edges": [
+        {
+          "animated": true,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e1",
+          "source": "node_start_1",
+          "target": "node_browser_1"
+        },
+        {
+          "animated": true,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e2",
+          "source": "node_browser_1",
+          "target": "node_navigate_1"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_navigate_1",
+          "sourceHandle": null,
+          "target": "node_1781697444146_0",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_navigate_1-node_1781697444146_0"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697444146_0",
+          "sourceHandle": null,
+          "target": "node_1781697467802_1",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697444146_0-node_1781697467802_1"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697467802_1",
+          "sourceHandle": null,
+          "target": "node_1781697484627_2",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697467802_1-node_1781697484627_2"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697484627_2",
+          "sourceHandle": null,
+          "target": "node_end_1",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697484627_2-node_end_1"
+        }
+      ],
+      "viewport": {
+        "x": 162.4565978510202,
+        "y": -7.222383194494739,
+        "zoom": 0.6978148014004587
+      }
+    },
+    "metadata": {},
+    "createdAt": "2026-06-21T19:05:47.516Z",
+    "startedAt": "2026-06-21T19:05:48.395Z",
+    "completedAt": "2026-06-21T19:05:48.665Z",
+    "robotId": "robot_local",
+    "runId": "run_1782068748393_2ev6f",
+    "error": "Cannot open your Chrome profile — Chrome appears to be already running (it locks the profile). Close ALL Chrome windows and run again, or use Profile Mode = isolated."
+  },
+  {
+    "id": "job_1782068537161_o8vu5",
+    "workflowId": "Demo Login Simple",
+    "workflowVersion": null,
+    "source": "MANUAL",
+    "status": "FAILED",
+    "flowData": {
+      "name": "Demo Login Simple",
+      "version": null,
+      "nodes": [
+        {
+          "id": "node_start_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 48
+          },
+          "data": {
+            "nodeType": "start",
+            "label": "Start"
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 48
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_browser_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 300,
+            "y": 170
+          },
+          "data": {
+            "nodeType": "openBrowser",
+            "label": "Open Browser",
+            "headless": false,
+            "profileMode": "user"
+          },
+          "width": 196,
+          "height": 49,
+          "selected": true,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 300,
+            "y": 170
+          }
+        },
+        {
+          "id": "node_navigate_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 272,
+            "y": 304
+          },
+          "data": {
+            "nodeType": "navigateUrl",
+            "label": "Navigate to Login Page",
+            "url": "https://practicetestautomation.com/practice-test-login/"
+          },
+          "width": 240,
+          "height": 54,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 272,
+            "y": 304
+          }
+        },
+        {
+          "id": "node_end_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 752
+          },
+          "data": {
+            "nodeType": "end",
+            "label": "End",
+            "autoCloseBrowser": false,
+            "restoreWindow": true
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 752
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697444146_0",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 416
+          },
+          "data": {
+            "nodeType": "inputText",
+            "label": "Input Text",
+            "selector": "#username",
+            "value": "student",
+            "clearFirst": true
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 416
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697467802_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 528
+          },
+          "data": {
+            "nodeType": "inputText",
+            "label": "Input Text",
+            "selector": "#password",
+            "value": "Password123",
+            "clearFirst": true
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 528
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697484627_2",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 640
+          },
+          "data": {
+            "nodeType": "clickElement",
+            "label": "Click Element",
+            "selector": "#submit",
+            "doubleClick": false,
+            "waitNavigation": false
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 640
+          }
+        }
+      ],
+      "edges": [
+        {
+          "animated": true,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e1",
+          "source": "node_start_1",
+          "target": "node_browser_1"
+        },
+        {
+          "animated": true,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e2",
+          "source": "node_browser_1",
+          "target": "node_navigate_1"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_navigate_1",
+          "sourceHandle": null,
+          "target": "node_1781697444146_0",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_navigate_1-node_1781697444146_0"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697444146_0",
+          "sourceHandle": null,
+          "target": "node_1781697467802_1",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697444146_0-node_1781697467802_1"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697467802_1",
+          "sourceHandle": null,
+          "target": "node_1781697484627_2",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697467802_1-node_1781697484627_2"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697484627_2",
+          "sourceHandle": null,
+          "target": "node_end_1",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697484627_2-node_end_1"
+        }
+      ],
+      "viewport": {
+        "x": 145.4565978510202,
+        "y": -22.22238319449474,
+        "zoom": 0.6978148014004587
+      }
+    },
+    "metadata": {},
+    "createdAt": "2026-06-21T19:02:17.161Z",
+    "startedAt": "2026-06-21T19:02:19.944Z",
+    "completedAt": "2026-06-21T19:03:30.846Z",
+    "robotId": "robot_local",
+    "runId": "run_1782068539943_0nogt",
+    "error": "Cannot open your Chrome profile because Chrome is already running. Close all Chrome windows and run again — or use Profile Mode = isolated."
+  },
+  {
+    "id": "job_1782068465703_hin25",
+    "workflowId": "Demo Login Simple",
+    "workflowVersion": null,
+    "source": "MANUAL",
+    "status": "SUCCESS",
+    "flowData": {
+      "name": "Demo Login Simple",
+      "version": null,
+      "nodes": [
+        {
+          "id": "node_start_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 48
+          },
+          "data": {
+            "nodeType": "start",
+            "label": "Start"
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 48
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_browser_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 300,
+            "y": 170
+          },
+          "data": {
+            "nodeType": "openBrowser",
+            "label": "Open Browser",
+            "headless": false,
+            "profileMode": "isolated"
+          },
+          "width": 196,
+          "height": 49,
+          "selected": true,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 300,
+            "y": 170
+          }
+        },
+        {
+          "id": "node_navigate_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 272,
+            "y": 304
+          },
+          "data": {
+            "nodeType": "navigateUrl",
+            "label": "Navigate to Login Page",
+            "url": "https://practicetestautomation.com/practice-test-login/"
+          },
+          "width": 240,
+          "height": 54,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 272,
+            "y": 304
+          }
+        },
+        {
+          "id": "node_end_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 752
+          },
+          "data": {
+            "nodeType": "end",
+            "label": "End",
+            "autoCloseBrowser": false,
+            "restoreWindow": true
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 752
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697444146_0",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 416
+          },
+          "data": {
+            "nodeType": "inputText",
+            "label": "Input Text",
+            "selector": "#username",
+            "value": "student",
+            "clearFirst": true
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 416
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697467802_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 528
+          },
+          "data": {
+            "nodeType": "inputText",
+            "label": "Input Text",
+            "selector": "#password",
+            "value": "Password123",
+            "clearFirst": true
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 528
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697484627_2",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 640
+          },
+          "data": {
+            "nodeType": "clickElement",
+            "label": "Click Element",
+            "selector": "#submit",
+            "doubleClick": false,
+            "waitNavigation": false
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 640
+          }
+        }
+      ],
+      "edges": [
+        {
+          "animated": true,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e1",
+          "source": "node_start_1",
+          "target": "node_browser_1"
+        },
+        {
+          "animated": true,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e2",
+          "source": "node_browser_1",
+          "target": "node_navigate_1"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_navigate_1",
+          "sourceHandle": null,
+          "target": "node_1781697444146_0",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_navigate_1-node_1781697444146_0"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697444146_0",
+          "sourceHandle": null,
+          "target": "node_1781697467802_1",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697444146_0-node_1781697467802_1"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697467802_1",
+          "sourceHandle": null,
+          "target": "node_1781697484627_2",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697467802_1-node_1781697484627_2"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697484627_2",
+          "sourceHandle": null,
+          "target": "node_end_1",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697484627_2-node_end_1"
+        }
+      ],
+      "viewport": {
+        "x": 145.4565978510202,
+        "y": -22.22238319449474,
+        "zoom": 0.6978148014004587
+      }
+    },
+    "metadata": {},
+    "createdAt": "2026-06-21T19:01:05.703Z",
+    "startedAt": "2026-06-21T19:01:07.868Z",
+    "completedAt": "2026-06-21T19:01:12.597Z",
+    "robotId": "robot_local",
+    "runId": "run_1782068467867_jcpxe",
+    "error": null
+  },
+  {
+    "id": "job_1782068449691_5drjr",
+    "workflowId": "Demo Login Simple",
+    "workflowVersion": null,
+    "source": "MANUAL",
+    "status": "FAILED",
+    "flowData": {
+      "name": "Demo Login Simple",
+      "version": null,
+      "nodes": [
+        {
+          "id": "node_start_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 48
+          },
+          "data": {
+            "nodeType": "start",
+            "label": "Start"
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 48
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_browser_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 300,
+            "y": 170
+          },
+          "data": {
+            "nodeType": "openBrowser",
+            "label": "Open Browser",
+            "headless": false,
+            "profileMode": "user"
+          },
+          "width": 196,
+          "height": 49,
+          "selected": true,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 300,
+            "y": 170
+          }
+        },
+        {
+          "id": "node_navigate_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 272,
+            "y": 304
+          },
+          "data": {
+            "nodeType": "navigateUrl",
+            "label": "Navigate to Login Page",
+            "url": "https://practicetestautomation.com/practice-test-login/"
+          },
+          "width": 240,
+          "height": 54,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 272,
+            "y": 304
+          }
+        },
+        {
+          "id": "node_end_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 752
+          },
+          "data": {
+            "nodeType": "end",
+            "label": "End",
+            "autoCloseBrowser": false,
+            "restoreWindow": true
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 752
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697444146_0",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 416
+          },
+          "data": {
+            "nodeType": "inputText",
+            "label": "Input Text",
+            "selector": "#username",
+            "value": "student",
+            "clearFirst": true
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 416
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697467802_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 528
+          },
+          "data": {
+            "nodeType": "inputText",
+            "label": "Input Text",
+            "selector": "#password",
+            "value": "Password123",
+            "clearFirst": true
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 528
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697484627_2",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 640
+          },
+          "data": {
+            "nodeType": "clickElement",
+            "label": "Click Element",
+            "selector": "#submit",
+            "doubleClick": false,
+            "waitNavigation": false
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 640
+          }
+        }
+      ],
+      "edges": [
+        {
+          "animated": true,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e1",
+          "source": "node_start_1",
+          "target": "node_browser_1"
+        },
+        {
+          "animated": true,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e2",
+          "source": "node_browser_1",
+          "target": "node_navigate_1"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_navigate_1",
+          "sourceHandle": null,
+          "target": "node_1781697444146_0",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_navigate_1-node_1781697444146_0"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697444146_0",
+          "sourceHandle": null,
+          "target": "node_1781697467802_1",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697444146_0-node_1781697467802_1"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697467802_1",
+          "sourceHandle": null,
+          "target": "node_1781697484627_2",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697467802_1-node_1781697484627_2"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697484627_2",
+          "sourceHandle": null,
+          "target": "node_end_1",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697484627_2-node_end_1"
+        }
+      ],
+      "viewport": {
+        "x": 145.4565978510202,
+        "y": -22.22238319449474,
+        "zoom": 0.6978148014004587
+      }
+    },
+    "metadata": {},
+    "createdAt": "2026-06-21T19:00:49.691Z",
+    "startedAt": "2026-06-21T19:00:49.841Z",
+    "completedAt": "2026-06-21T19:01:02.208Z",
+    "robotId": "robot_local",
+    "runId": "run_1782068449840_lutzi",
+    "error": "Cannot open your Chrome profile because Chrome is already running. Close all Chrome windows and run again — or use Profile Mode = isolated."
+  },
+  {
+    "id": "job_1782068384914_9ywvv",
+    "workflowId": "Demo Login Simple",
+    "workflowVersion": null,
+    "source": "MANUAL",
+    "status": "FAILED",
+    "flowData": {
+      "name": "Demo Login Simple",
+      "version": null,
+      "nodes": [
+        {
+          "id": "node_start_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 48
+          },
+          "data": {
+            "nodeType": "start",
+            "label": "Start"
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 48
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_browser_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 300,
+            "y": 170
+          },
+          "data": {
+            "nodeType": "openBrowser",
+            "label": "Open Browser",
+            "headless": false,
+            "profileMode": "user"
+          },
+          "width": 196,
+          "height": 49,
+          "selected": true,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 300,
+            "y": 170
+          }
+        },
+        {
+          "id": "node_navigate_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 272,
+            "y": 304
+          },
+          "data": {
+            "nodeType": "navigateUrl",
+            "label": "Navigate to Login Page",
+            "url": "https://practicetestautomation.com/practice-test-login/"
+          },
+          "width": 240,
+          "height": 54,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 272,
+            "y": 304
+          }
+        },
+        {
+          "id": "node_end_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 752
+          },
+          "data": {
+            "nodeType": "end",
+            "label": "End",
+            "autoCloseBrowser": false,
+            "restoreWindow": true
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 752
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697444146_0",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 416
+          },
+          "data": {
+            "nodeType": "inputText",
+            "label": "Input Text",
+            "selector": "#username",
+            "value": "student",
+            "clearFirst": true
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 416
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697467802_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 528
+          },
+          "data": {
+            "nodeType": "inputText",
+            "label": "Input Text",
+            "selector": "#password",
+            "value": "Password123",
+            "clearFirst": true
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 528
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697484627_2",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 640
+          },
+          "data": {
+            "nodeType": "clickElement",
+            "label": "Click Element",
+            "selector": "#submit",
+            "doubleClick": false,
+            "waitNavigation": false
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 640
+          }
+        }
+      ],
+      "edges": [
+        {
+          "animated": true,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e1",
+          "source": "node_start_1",
+          "target": "node_browser_1"
+        },
+        {
+          "animated": true,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e2",
+          "source": "node_browser_1",
+          "target": "node_navigate_1"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_navigate_1",
+          "sourceHandle": null,
+          "target": "node_1781697444146_0",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_navigate_1-node_1781697444146_0"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697444146_0",
+          "sourceHandle": null,
+          "target": "node_1781697467802_1",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697444146_0-node_1781697467802_1"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697467802_1",
+          "sourceHandle": null,
+          "target": "node_1781697484627_2",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697467802_1-node_1781697484627_2"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697484627_2",
+          "sourceHandle": null,
+          "target": "node_end_1",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697484627_2-node_end_1"
+        }
+      ],
+      "viewport": {
+        "x": 145.4565978510202,
+        "y": -22.22238319449474,
+        "zoom": 0.6978148014004587
+      }
+    },
+    "metadata": {},
+    "createdAt": "2026-06-21T18:59:44.914Z",
+    "startedAt": "2026-06-21T18:59:46.799Z",
+    "completedAt": "2026-06-21T19:00:37.352Z",
+    "robotId": "robot_local",
+    "runId": "run_1782068386798_lveu5",
+    "error": "Cannot open your Chrome profile because Chrome is already running. Close all Chrome windows and run again — or use Profile Mode = isolated."
+  },
+  {
+    "id": "job_1782068363415_a34y9",
+    "workflowId": "Demo Login Simple",
+    "workflowVersion": null,
+    "source": "MANUAL",
+    "status": "FAILED",
+    "flowData": {
+      "name": "Demo Login Simple",
+      "version": null,
+      "nodes": [
+        {
+          "id": "node_start_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 48
+          },
+          "data": {
+            "nodeType": "start",
+            "label": "Start"
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 48
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_browser_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 300,
+            "y": 170
+          },
+          "data": {
+            "nodeType": "openBrowser",
+            "label": "Open Browser",
+            "headless": false,
+            "profileMode": "user"
+          },
+          "width": 196,
+          "height": 49,
+          "selected": true,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 300,
+            "y": 170
+          }
+        },
+        {
+          "id": "node_navigate_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 272,
+            "y": 304
+          },
+          "data": {
+            "nodeType": "navigateUrl",
+            "label": "Navigate to Login Page",
+            "url": "https://practicetestautomation.com/practice-test-login/"
+          },
+          "width": 240,
+          "height": 54,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 272,
+            "y": 304
+          }
+        },
+        {
+          "id": "node_end_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 752
+          },
+          "data": {
+            "nodeType": "end",
+            "label": "End",
+            "autoCloseBrowser": false,
+            "restoreWindow": true
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 752
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697444146_0",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 416
+          },
+          "data": {
+            "nodeType": "inputText",
+            "label": "Input Text",
+            "selector": "#username",
+            "value": "student",
+            "clearFirst": true
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 416
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697467802_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 528
+          },
+          "data": {
+            "nodeType": "inputText",
+            "label": "Input Text",
+            "selector": "#password",
+            "value": "Password123",
+            "clearFirst": true
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 528
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697484627_2",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 640
+          },
+          "data": {
+            "nodeType": "clickElement",
+            "label": "Click Element",
+            "selector": "#submit",
+            "doubleClick": false,
+            "waitNavigation": false
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 640
+          }
+        }
+      ],
+      "edges": [
+        {
+          "animated": true,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e1",
+          "source": "node_start_1",
+          "target": "node_browser_1"
+        },
+        {
+          "animated": true,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e2",
+          "source": "node_browser_1",
+          "target": "node_navigate_1"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_navigate_1",
+          "sourceHandle": null,
+          "target": "node_1781697444146_0",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_navigate_1-node_1781697444146_0"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697444146_0",
+          "sourceHandle": null,
+          "target": "node_1781697467802_1",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697444146_0-node_1781697467802_1"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697467802_1",
+          "sourceHandle": null,
+          "target": "node_1781697484627_2",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697467802_1-node_1781697484627_2"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697484627_2",
+          "sourceHandle": null,
+          "target": "node_end_1",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697484627_2-node_end_1"
+        }
+      ],
+      "viewport": {
+        "x": 145.4565978510202,
+        "y": -22.22238319449474,
+        "zoom": 0.6978148014004587
+      }
+    },
+    "metadata": {},
+    "createdAt": "2026-06-21T18:59:23.415Z",
+    "startedAt": "2026-06-21T18:59:25.801Z",
+    "completedAt": "2026-06-21T18:59:26.037Z",
+    "robotId": "robot_local",
+    "runId": "run_1782068365799_tozst",
+    "error": "Cannot open your Chrome profile because Chrome is already running. Close all Chrome windows and run again — or use Profile Mode = isolated."
+  },
+  {
+    "id": "job_1782068101952_k6iqd",
+    "workflowId": "Demo Login Simple",
+    "workflowVersion": null,
+    "source": "MANUAL",
+    "status": "FAILED",
+    "flowData": {
+      "name": "Demo Login Simple",
+      "version": null,
+      "nodes": [
+        {
+          "id": "node_start_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 48
+          },
+          "data": {
+            "nodeType": "start",
+            "label": "Start"
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 48
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_browser_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 176
+          },
+          "data": {
+            "nodeType": "openBrowser",
+            "label": "Open Browser",
+            "headless": false,
+            "profileMode": "user"
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 176
+          }
+        },
+        {
+          "id": "node_navigate_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 272,
+            "y": 304
+          },
+          "data": {
+            "nodeType": "navigateUrl",
+            "label": "Navigate to Login Page",
+            "url": "https://practicetestautomation.com/practice-test-login/"
+          },
+          "width": 240,
+          "height": 54,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 272,
+            "y": 304
+          }
+        },
+        {
+          "id": "node_end_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 752
+          },
+          "data": {
+            "nodeType": "end",
+            "label": "End",
+            "autoCloseBrowser": false,
+            "restoreWindow": true
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 752
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697444146_0",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 416
+          },
+          "data": {
+            "nodeType": "inputText",
+            "label": "Input Text",
+            "selector": "#username",
+            "value": "student",
+            "clearFirst": true
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 416
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697467802_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 528
+          },
+          "data": {
+            "nodeType": "inputText",
+            "label": "Input Text",
+            "selector": "#password",
+            "value": "Password123",
+            "clearFirst": true
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 528
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697484627_2",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 640
+          },
+          "data": {
+            "nodeType": "clickElement",
+            "label": "Click Element",
+            "selector": "#submit",
+            "doubleClick": false,
+            "waitNavigation": false
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 640
+          }
+        }
+      ],
+      "edges": [
+        {
+          "animated": true,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e1",
+          "source": "node_start_1",
+          "target": "node_browser_1"
+        },
+        {
+          "animated": true,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e2",
+          "source": "node_browser_1",
+          "target": "node_navigate_1"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_navigate_1",
+          "sourceHandle": null,
+          "target": "node_1781697444146_0",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_navigate_1-node_1781697444146_0"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697444146_0",
+          "sourceHandle": null,
+          "target": "node_1781697467802_1",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697444146_0-node_1781697467802_1"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697467802_1",
+          "sourceHandle": null,
+          "target": "node_1781697484627_2",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697467802_1-node_1781697484627_2"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697484627_2",
+          "sourceHandle": null,
+          "target": "node_end_1",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697484627_2-node_end_1"
+        }
+      ],
+      "viewport": {
+        "x": 162.4565978510202,
+        "y": -7.222383194494739,
+        "zoom": 0.6978148014004587
+      }
+    },
+    "metadata": {},
+    "createdAt": "2026-06-21T18:55:01.952Z",
+    "startedAt": "2026-06-21T18:55:04.157Z",
+    "completedAt": "2026-06-21T18:56:35.839Z",
+    "robotId": "robot_local",
+    "runId": "run_1782068104155_x2g4n",
+    "error": "Cannot open your Chrome profile because Chrome is already running. Close all Chrome windows and run again — or use Profile Mode = isolated."
+  },
+  {
+    "id": "job_1782068045764_a9rrk",
+    "workflowId": "Demo Login Simple",
+    "workflowVersion": null,
+    "source": "MANUAL",
+    "status": "FAILED",
+    "flowData": {
+      "name": "Demo Login Simple",
+      "version": null,
+      "nodes": [
+        {
+          "id": "node_start_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 48
+          },
+          "data": {
+            "nodeType": "start",
+            "label": "Start"
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 48
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_browser_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 176
+          },
+          "data": {
+            "nodeType": "openBrowser",
+            "label": "Open Browser",
+            "headless": false,
+            "profileMode": "user"
+          },
+          "width": 196,
+          "height": 49,
+          "selected": true,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 176
+          }
+        },
+        {
+          "id": "node_navigate_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 272,
+            "y": 304
+          },
+          "data": {
+            "nodeType": "navigateUrl",
+            "label": "Navigate to Login Page",
+            "url": "https://practicetestautomation.com/practice-test-login/"
+          },
+          "width": 240,
+          "height": 54,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 272,
+            "y": 304
+          }
+        },
+        {
+          "id": "node_end_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 752
+          },
+          "data": {
+            "nodeType": "end",
+            "label": "End",
+            "autoCloseBrowser": false,
+            "restoreWindow": true
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 752
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697444146_0",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 416
+          },
+          "data": {
+            "nodeType": "inputText",
+            "label": "Input Text",
+            "selector": "#username",
+            "value": "student",
+            "clearFirst": true
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 416
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697467802_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 528
+          },
+          "data": {
+            "nodeType": "inputText",
+            "label": "Input Text",
+            "selector": "#password",
+            "value": "Password123",
+            "clearFirst": true
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 528
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697484627_2",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 640
+          },
+          "data": {
+            "nodeType": "clickElement",
+            "label": "Click Element",
+            "selector": "#submit",
+            "doubleClick": false,
+            "waitNavigation": false
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 640
+          }
+        }
+      ],
+      "edges": [
+        {
+          "animated": true,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e1",
+          "source": "node_start_1",
+          "target": "node_browser_1"
+        },
+        {
+          "animated": true,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e2",
+          "source": "node_browser_1",
+          "target": "node_navigate_1"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_navigate_1",
+          "sourceHandle": null,
+          "target": "node_1781697444146_0",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_navigate_1-node_1781697444146_0"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697444146_0",
+          "sourceHandle": null,
+          "target": "node_1781697467802_1",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697444146_0-node_1781697467802_1"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697467802_1",
+          "sourceHandle": null,
+          "target": "node_1781697484627_2",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697467802_1-node_1781697484627_2"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697484627_2",
+          "sourceHandle": null,
+          "target": "node_end_1",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697484627_2-node_end_1"
+        }
+      ],
+      "viewport": {
+        "x": 162.4565978510202,
+        "y": -7.222383194494739,
+        "zoom": 0.6978148014004587
+      }
+    },
+    "metadata": {},
+    "createdAt": "2026-06-21T18:54:05.764Z",
+    "startedAt": "2026-06-21T18:54:13.111Z",
+    "completedAt": "2026-06-21T18:54:17.025Z",
+    "robotId": "robot_local",
+    "runId": "run_1782068053110_vulwy",
+    "error": "Cannot open your Chrome profile because Chrome is already running. Close all Chrome windows and run again — or use Profile Mode = isolated."
+  },
+  {
+    "id": "job_1782068035895_z3lfl",
+    "workflowId": "Demo Login Simple",
+    "workflowVersion": null,
+    "source": "MANUAL",
+    "status": "FAILED",
+    "flowData": {
+      "name": "Demo Login Simple",
+      "version": null,
+      "nodes": [
+        {
+          "id": "node_start_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 48
+          },
+          "data": {
+            "nodeType": "start",
+            "label": "Start"
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 48
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_browser_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 176
+          },
+          "data": {
+            "nodeType": "openBrowser",
+            "label": "Open Browser",
+            "headless": false,
+            "profileMode": "user"
+          },
+          "width": 196,
+          "height": 49,
+          "selected": true,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 176
+          }
+        },
+        {
+          "id": "node_navigate_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 272,
+            "y": 304
+          },
+          "data": {
+            "nodeType": "navigateUrl",
+            "label": "Navigate to Login Page",
+            "url": "https://practicetestautomation.com/practice-test-login/"
+          },
+          "width": 240,
+          "height": 54,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 272,
+            "y": 304
+          }
+        },
+        {
+          "id": "node_end_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 752
+          },
+          "data": {
+            "nodeType": "end",
+            "label": "End",
+            "autoCloseBrowser": false,
+            "restoreWindow": true
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 752
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697444146_0",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 416
+          },
+          "data": {
+            "nodeType": "inputText",
+            "label": "Input Text",
+            "selector": "#username",
+            "value": "student",
+            "clearFirst": true
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 416
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697467802_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 528
+          },
+          "data": {
+            "nodeType": "inputText",
+            "label": "Input Text",
+            "selector": "#password",
+            "value": "Password123",
+            "clearFirst": true
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 528
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697484627_2",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 640
+          },
+          "data": {
+            "nodeType": "clickElement",
+            "label": "Click Element",
+            "selector": "#submit",
+            "doubleClick": false,
+            "waitNavigation": false
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 640
+          }
+        }
+      ],
+      "edges": [
+        {
+          "animated": true,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e1",
+          "source": "node_start_1",
+          "target": "node_browser_1"
+        },
+        {
+          "animated": true,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e2",
+          "source": "node_browser_1",
+          "target": "node_navigate_1"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_navigate_1",
+          "sourceHandle": null,
+          "target": "node_1781697444146_0",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_navigate_1-node_1781697444146_0"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697444146_0",
+          "sourceHandle": null,
+          "target": "node_1781697467802_1",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697444146_0-node_1781697467802_1"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697467802_1",
+          "sourceHandle": null,
+          "target": "node_1781697484627_2",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697467802_1-node_1781697484627_2"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697484627_2",
+          "sourceHandle": null,
+          "target": "node_end_1",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697484627_2-node_end_1"
+        }
+      ],
+      "viewport": {
+        "x": 162.4565978510202,
+        "y": -7.222383194494739,
+        "zoom": 0.6978148014004587
+      }
+    },
+    "metadata": {},
+    "createdAt": "2026-06-21T18:53:55.895Z",
+    "startedAt": "2026-06-21T18:54:19.117Z",
+    "completedAt": "2026-06-21T18:54:44.274Z",
+    "robotId": "robot_local",
+    "runId": "run_1782068059116_kpmsy",
+    "error": "Cannot open your Chrome profile because Chrome is already running. Close all Chrome windows and run again — or use Profile Mode = isolated."
+  },
+  {
+    "id": "job_1782067998543_fjjtr",
+    "workflowId": "Demo Login Simple",
+    "workflowVersion": null,
+    "source": "MANUAL",
+    "status": "FAILED",
+    "flowData": {
+      "name": "Demo Login Simple",
+      "version": null,
+      "nodes": [
+        {
+          "id": "node_start_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 48
+          },
+          "data": {
+            "nodeType": "start",
+            "label": "Start"
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 48
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_browser_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 176
+          },
+          "data": {
+            "nodeType": "openBrowser",
+            "label": "Open Browser",
+            "headless": false,
+            "profileMode": "user"
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 176
+          }
+        },
+        {
+          "id": "node_navigate_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 272,
+            "y": 304
+          },
+          "data": {
+            "nodeType": "navigateUrl",
+            "label": "Navigate to Login Page",
+            "url": "https://practicetestautomation.com/practice-test-login/"
+          },
+          "width": 240,
+          "height": 54,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 272,
+            "y": 304
+          }
+        },
+        {
+          "id": "node_end_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 752
+          },
+          "data": {
+            "nodeType": "end",
+            "label": "End",
+            "autoCloseBrowser": false,
+            "restoreWindow": true
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 752
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697444146_0",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 416
+          },
+          "data": {
+            "nodeType": "inputText",
+            "label": "Input Text",
+            "selector": "#username",
+            "value": "student",
+            "clearFirst": true
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 416
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697467802_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 528
+          },
+          "data": {
+            "nodeType": "inputText",
+            "label": "Input Text",
+            "selector": "#password",
+            "value": "Password123",
+            "clearFirst": true
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 528
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697484627_2",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 640
+          },
+          "data": {
+            "nodeType": "clickElement",
+            "label": "Click Element",
+            "selector": "#submit",
+            "doubleClick": false,
+            "waitNavigation": false
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 640
+          }
+        }
+      ],
+      "edges": [
+        {
+          "animated": true,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e1",
+          "source": "node_start_1",
+          "target": "node_browser_1"
+        },
+        {
+          "animated": true,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e2",
+          "source": "node_browser_1",
+          "target": "node_navigate_1"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_navigate_1",
+          "sourceHandle": null,
+          "target": "node_1781697444146_0",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_navigate_1-node_1781697444146_0"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697444146_0",
+          "sourceHandle": null,
+          "target": "node_1781697467802_1",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697444146_0-node_1781697467802_1"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697467802_1",
+          "sourceHandle": null,
+          "target": "node_1781697484627_2",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697467802_1-node_1781697484627_2"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697484627_2",
+          "sourceHandle": null,
+          "target": "node_end_1",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697484627_2-node_end_1"
+        }
+      ],
+      "viewport": {
+        "x": 162.4565978510202,
+        "y": -7.222383194494739,
+        "zoom": 0.6978148014004587
+      }
+    },
+    "metadata": {},
+    "createdAt": "2026-06-21T18:53:18.543Z",
+    "startedAt": "2026-06-21T18:53:19.071Z",
+    "completedAt": "2026-06-21T18:54:11.643Z",
+    "robotId": "robot_local",
+    "runId": "run_1782067999069_4mdvn",
+    "error": "Cannot open your Chrome profile because Chrome is already running. Close all Chrome windows and run again — or use Profile Mode = isolated."
+  },
+  {
+    "id": "job_1782067928087_p7ycq",
+    "workflowId": "Demo Login Simple",
+    "workflowVersion": null,
+    "source": "MANUAL",
+    "status": "SUCCESS",
+    "flowData": {
+      "name": "Demo Login Simple",
+      "version": null,
+      "nodes": [
+        {
+          "id": "node_start_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 48
+          },
+          "data": {
+            "nodeType": "start",
+            "label": "Start"
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 48
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_browser_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 300,
+            "y": 170
+          },
+          "data": {
+            "nodeType": "openBrowser",
+            "label": "Open Browser",
+            "headless": false
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 300,
+            "y": 170
+          }
+        },
+        {
+          "id": "node_navigate_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 272,
+            "y": 304
+          },
+          "data": {
+            "nodeType": "navigateUrl",
+            "label": "Navigate to Login Page",
+            "url": "https://practicetestautomation.com/practice-test-login/"
+          },
+          "width": 240,
+          "height": 54,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 272,
+            "y": 304
+          }
+        },
+        {
+          "id": "node_end_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 752
+          },
+          "data": {
+            "nodeType": "end",
+            "label": "End",
+            "autoCloseBrowser": false,
+            "restoreWindow": true
+          },
+          "width": 196,
+          "height": 49,
+          "selected": true,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 752
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697444146_0",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 416
+          },
+          "data": {
+            "nodeType": "inputText",
+            "label": "Input Text",
+            "selector": "#username",
+            "value": "student",
+            "clearFirst": true
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 416
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697467802_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 528
+          },
+          "data": {
+            "nodeType": "inputText",
+            "label": "Input Text",
+            "selector": "#password",
+            "value": "Password123",
+            "clearFirst": true
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 528
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697484627_2",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 640
+          },
+          "data": {
+            "nodeType": "clickElement",
+            "label": "Click Element",
+            "selector": "#submit",
+            "doubleClick": false,
+            "waitNavigation": false
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 640
+          }
+        }
+      ],
+      "edges": [
+        {
+          "animated": true,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e1",
+          "source": "node_start_1",
+          "target": "node_browser_1"
+        },
+        {
+          "animated": true,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e2",
+          "source": "node_browser_1",
+          "target": "node_navigate_1"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_navigate_1",
+          "sourceHandle": null,
+          "target": "node_1781697444146_0",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_navigate_1-node_1781697444146_0"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697444146_0",
+          "sourceHandle": null,
+          "target": "node_1781697467802_1",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697444146_0-node_1781697467802_1"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697467802_1",
+          "sourceHandle": null,
+          "target": "node_1781697484627_2",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697467802_1-node_1781697484627_2"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697484627_2",
+          "sourceHandle": null,
+          "target": "node_end_1",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697484627_2-node_end_1"
+        }
+      ],
+      "viewport": {
+        "x": 162.4565978510202,
+        "y": -7.222383194494739,
+        "zoom": 0.6978148014004587
+      }
+    },
+    "metadata": {},
+    "createdAt": "2026-06-21T18:52:08.087Z",
+    "startedAt": "2026-06-21T18:52:10.006Z",
+    "completedAt": "2026-06-21T18:52:15.518Z",
+    "robotId": "robot_local",
+    "runId": "run_1782067930005_shlfi",
+    "error": null
+  },
+  {
+    "id": "job_1782067914686_11tsj",
+    "workflowId": "Demo Login Simple",
+    "workflowVersion": null,
+    "source": "MANUAL",
+    "status": "SUCCESS",
+    "flowData": {
+      "name": "Demo Login Simple",
+      "version": null,
+      "nodes": [
+        {
+          "id": "node_start_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 48
+          },
+          "data": {
+            "nodeType": "start",
+            "label": "Start"
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 48
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_browser_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 300,
+            "y": 170
+          },
+          "data": {
+            "nodeType": "openBrowser",
+            "label": "Open Browser",
+            "headless": false
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 300,
+            "y": 170
+          }
+        },
+        {
+          "id": "node_navigate_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 272,
+            "y": 304
+          },
+          "data": {
+            "nodeType": "navigateUrl",
+            "label": "Navigate to Login Page",
+            "url": "https://practicetestautomation.com/practice-test-login/"
+          },
+          "width": 240,
+          "height": 54,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 272,
+            "y": 304
+          }
+        },
+        {
+          "id": "node_end_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 752
+          },
+          "data": {
+            "nodeType": "end",
+            "label": "End",
+            "autoCloseBrowser": true,
+            "restoreWindow": true
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 752
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697444146_0",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 416
+          },
+          "data": {
+            "nodeType": "inputText",
+            "label": "Input Text",
+            "selector": "#username",
+            "value": "student",
+            "clearFirst": true
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 416
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697467802_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 528
+          },
+          "data": {
+            "nodeType": "inputText",
+            "label": "Input Text",
+            "selector": "#password",
+            "value": "Password123",
+            "clearFirst": true
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 528
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697484627_2",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 640
+          },
+          "data": {
+            "nodeType": "clickElement",
+            "label": "Click Element",
+            "selector": "#submit",
+            "doubleClick": false,
+            "waitNavigation": false
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 640
+          }
+        }
+      ],
+      "edges": [
+        {
+          "animated": true,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e1",
+          "source": "node_start_1",
+          "target": "node_browser_1"
+        },
+        {
+          "animated": true,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e2",
+          "source": "node_browser_1",
+          "target": "node_navigate_1"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_navigate_1",
+          "sourceHandle": null,
+          "target": "node_1781697444146_0",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_navigate_1-node_1781697444146_0"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697444146_0",
+          "sourceHandle": null,
+          "target": "node_1781697467802_1",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697444146_0-node_1781697467802_1"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697467802_1",
+          "sourceHandle": null,
+          "target": "node_1781697484627_2",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697467802_1-node_1781697484627_2"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697484627_2",
+          "sourceHandle": null,
+          "target": "node_end_1",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697484627_2-node_end_1"
+        }
+      ],
+      "viewport": {
+        "x": 162.4565978510202,
+        "y": -7.222383194494739,
+        "zoom": 0.6978148014004587
+      }
+    },
+    "metadata": {},
+    "createdAt": "2026-06-21T18:51:54.686Z",
+    "startedAt": "2026-06-21T18:51:54.989Z",
+    "completedAt": "2026-06-21T18:51:59.273Z",
+    "robotId": "robot_local",
+    "runId": "run_1782067914988_s3gsd",
+    "error": null
+  },
+  {
+    "id": "job_1782067861854_he344",
+    "workflowId": "Demo Login Simple",
+    "workflowVersion": null,
+    "source": "MANUAL",
+    "status": "SUCCESS",
+    "flowData": {
+      "name": "Demo Login Simple",
+      "version": null,
+      "nodes": [
+        {
+          "id": "node_start_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 48
+          },
+          "data": {
+            "nodeType": "start",
+            "label": "Start"
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 48
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_browser_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 300,
+            "y": 170
+          },
+          "data": {
+            "nodeType": "openBrowser",
+            "label": "Open Browser",
+            "headless": false
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 300,
+            "y": 170
+          }
+        },
+        {
+          "id": "node_navigate_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 272,
+            "y": 304
+          },
+          "data": {
+            "nodeType": "navigateUrl",
+            "label": "Navigate to Login Page",
+            "url": "https://practicetestautomation.com/practice-test-login/"
+          },
+          "width": 240,
+          "height": 54,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 272,
+            "y": 304
+          }
+        },
+        {
+          "id": "node_end_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 752
+          },
+          "data": {
+            "nodeType": "end",
+            "label": "End",
+            "autoCloseBrowser": false,
+            "restoreWindow": true
+          },
+          "width": 196,
+          "height": 49,
+          "selected": true,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 752
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697444146_0",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 416
+          },
+          "data": {
+            "nodeType": "inputText",
+            "label": "Input Text",
+            "selector": "#username",
+            "value": "student",
+            "clearFirst": true
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 416
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697467802_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 528
+          },
+          "data": {
+            "nodeType": "inputText",
+            "label": "Input Text",
+            "selector": "#password",
+            "value": "Password123",
+            "clearFirst": true
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 528
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697484627_2",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 640
+          },
+          "data": {
+            "nodeType": "clickElement",
+            "label": "Click Element",
+            "selector": "#submit",
+            "doubleClick": false,
+            "waitNavigation": false
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 640
+          }
+        }
+      ],
+      "edges": [
+        {
+          "animated": true,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e1",
+          "source": "node_start_1",
+          "target": "node_browser_1"
+        },
+        {
+          "animated": true,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e2",
+          "source": "node_browser_1",
+          "target": "node_navigate_1"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_navigate_1",
+          "sourceHandle": null,
+          "target": "node_1781697444146_0",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_navigate_1-node_1781697444146_0"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697444146_0",
+          "sourceHandle": null,
+          "target": "node_1781697467802_1",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697444146_0-node_1781697467802_1"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697467802_1",
+          "sourceHandle": null,
+          "target": "node_1781697484627_2",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697467802_1-node_1781697484627_2"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697484627_2",
+          "sourceHandle": null,
+          "target": "node_end_1",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697484627_2-node_end_1"
+        }
+      ],
+      "viewport": {
+        "x": 160.45659785102015,
+        "y": -10.22238319449474,
+        "zoom": 0.6978148014004587
+      }
+    },
+    "metadata": {},
+    "createdAt": "2026-06-21T18:51:01.854Z",
+    "startedAt": "2026-06-21T18:51:04.305Z",
+    "completedAt": "2026-06-21T18:51:09.238Z",
+    "robotId": "robot_local",
+    "runId": "run_1782067864304_aa8s9",
+    "error": null
+  },
+  {
+    "id": "job_1782067841226_4939p",
+    "workflowId": "Demo Login Simple",
+    "workflowVersion": null,
+    "source": "MANUAL",
+    "status": "SUCCESS",
+    "flowData": {
+      "name": "Demo Login Simple",
+      "version": null,
+      "nodes": [
+        {
+          "id": "node_start_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 48
+          },
+          "data": {
+            "nodeType": "start",
+            "label": "Start"
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 48
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_browser_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 300,
+            "y": 170
+          },
+          "data": {
+            "nodeType": "openBrowser",
+            "label": "Open Browser",
+            "headless": false
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 300,
+            "y": 170
+          }
+        },
+        {
+          "id": "node_navigate_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 272,
+            "y": 304
+          },
+          "data": {
+            "nodeType": "navigateUrl",
+            "label": "Navigate to Login Page",
+            "url": "https://practicetestautomation.com/practice-test-login/"
+          },
+          "width": 240,
+          "height": 54,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 272,
+            "y": 304
+          }
+        },
+        {
+          "id": "node_end_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 752
+          },
+          "data": {
+            "nodeType": "end",
+            "label": "End",
+            "autoCloseBrowser": false,
+            "restoreWindow": true
+          },
+          "width": 196,
+          "height": 49,
+          "selected": true,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 752
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697444146_0",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 416
+          },
+          "data": {
+            "nodeType": "inputText",
+            "label": "Input Text",
+            "selector": "#username",
+            "value": "student",
+            "clearFirst": true
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 416
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697467802_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 528
+          },
+          "data": {
+            "nodeType": "inputText",
+            "label": "Input Text",
+            "selector": "#password",
+            "value": "Password123",
+            "clearFirst": true
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 528
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697484627_2",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 640
+          },
+          "data": {
+            "nodeType": "clickElement",
+            "label": "Click Element",
+            "selector": "#submit",
+            "doubleClick": false,
+            "waitNavigation": false
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 640
+          }
+        }
+      ],
+      "edges": [
+        {
+          "animated": true,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e1",
+          "source": "node_start_1",
+          "target": "node_browser_1"
+        },
+        {
+          "animated": true,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e2",
+          "source": "node_browser_1",
+          "target": "node_navigate_1"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_navigate_1",
+          "sourceHandle": null,
+          "target": "node_1781697444146_0",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_navigate_1-node_1781697444146_0"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697444146_0",
+          "sourceHandle": null,
+          "target": "node_1781697467802_1",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697444146_0-node_1781697467802_1"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697467802_1",
+          "sourceHandle": null,
+          "target": "node_1781697484627_2",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697467802_1-node_1781697484627_2"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697484627_2",
+          "sourceHandle": null,
+          "target": "node_end_1",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697484627_2-node_end_1"
+        }
+      ],
+      "viewport": {
+        "x": 160.45659785102015,
+        "y": -10.22238319449474,
+        "zoom": 0.6978148014004587
+      }
+    },
+    "metadata": {},
+    "createdAt": "2026-06-21T18:50:41.226Z",
+    "startedAt": "2026-06-21T18:50:43.294Z",
+    "completedAt": "2026-06-21T18:50:49.678Z",
+    "robotId": "robot_local",
+    "runId": "run_1782067843293_9ce4n",
+    "error": null
+  },
+  {
+    "id": "job_1782067824476_pnax9",
+    "workflowId": "Demo Login Simple",
+    "workflowVersion": null,
+    "source": "MANUAL",
+    "status": "SUCCESS",
+    "flowData": {
+      "name": "Demo Login Simple",
+      "version": null,
+      "nodes": [
+        {
+          "id": "node_start_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 48
+          },
+          "data": {
+            "nodeType": "start",
+            "label": "Start"
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 48
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_browser_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 300,
+            "y": 170
+          },
+          "data": {
+            "nodeType": "openBrowser",
+            "label": "Open Browser",
+            "headless": false
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 300,
+            "y": 170
+          }
+        },
+        {
+          "id": "node_navigate_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 272,
+            "y": 304
+          },
+          "data": {
+            "nodeType": "navigateUrl",
+            "label": "Navigate to Login Page",
+            "url": "https://practicetestautomation.com/practice-test-login/"
+          },
+          "width": 240,
+          "height": 54,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 272,
+            "y": 304
+          }
+        },
+        {
+          "id": "node_end_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 752
+          },
+          "data": {
+            "nodeType": "end",
+            "label": "End",
+            "autoCloseBrowser": true,
+            "restoreWindow": true
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 752
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697444146_0",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 416
+          },
+          "data": {
+            "nodeType": "inputText",
+            "label": "Input Text",
+            "selector": "#username",
+            "value": "student",
+            "clearFirst": true
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 416
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697467802_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 528
+          },
+          "data": {
+            "nodeType": "inputText",
+            "label": "Input Text",
+            "selector": "#password",
+            "value": "Password123",
+            "clearFirst": true
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 528
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697484627_2",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 640
+          },
+          "data": {
+            "nodeType": "clickElement",
+            "label": "Click Element",
+            "selector": "#submit",
+            "doubleClick": false,
+            "waitNavigation": false
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 640
+          }
+        }
+      ],
+      "edges": [
+        {
+          "animated": true,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e1",
+          "source": "node_start_1",
+          "target": "node_browser_1"
+        },
+        {
+          "animated": true,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e2",
+          "source": "node_browser_1",
+          "target": "node_navigate_1"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_navigate_1",
+          "sourceHandle": null,
+          "target": "node_1781697444146_0",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_navigate_1-node_1781697444146_0"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697444146_0",
+          "sourceHandle": null,
+          "target": "node_1781697467802_1",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697444146_0-node_1781697467802_1"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697467802_1",
+          "sourceHandle": null,
+          "target": "node_1781697484627_2",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697467802_1-node_1781697484627_2"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697484627_2",
+          "sourceHandle": null,
+          "target": "node_end_1",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697484627_2-node_end_1"
+        }
+      ],
+      "viewport": {
+        "x": 162.4565978510202,
+        "y": -7.222383194494739,
+        "zoom": 0.6978148014004587
+      }
+    },
+    "metadata": {},
+    "createdAt": "2026-06-21T18:50:24.476Z",
+    "startedAt": "2026-06-21T18:50:25.280Z",
+    "completedAt": "2026-06-21T18:50:30.881Z",
+    "robotId": "robot_local",
+    "runId": "run_1782067825279_xfi7t",
+    "error": null
+  },
+  {
+    "id": "job_1782066608874_naurt",
+    "workflowId": "Demo Login Simple",
+    "workflowVersion": null,
+    "source": "MANUAL",
+    "status": "SUCCESS",
+    "flowData": {
+      "name": "Demo Login Simple",
+      "version": null,
+      "nodes": [
+        {
+          "id": "node_start_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 48
+          },
+          "data": {
+            "nodeType": "start",
+            "label": "Start"
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 48
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_browser_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 300,
+            "y": 170
+          },
+          "data": {
+            "nodeType": "openBrowser",
+            "label": "Open Browser",
+            "headless": false
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 300,
+            "y": 170
+          }
+        },
+        {
+          "id": "node_navigate_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 272,
+            "y": 304
+          },
+          "data": {
+            "nodeType": "navigateUrl",
+            "label": "Navigate to Login Page",
+            "url": "https://practicetestautomation.com/practice-test-login/"
+          },
+          "width": 240,
+          "height": 54,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 272,
+            "y": 304
+          }
+        },
+        {
+          "id": "node_end_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 752
+          },
+          "data": {
+            "nodeType": "end",
+            "label": "End",
+            "autoCloseBrowser": false,
+            "restoreWindow": false
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 752
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697444146_0",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 416
+          },
+          "data": {
+            "nodeType": "inputText",
+            "label": "Input Text",
+            "selector": "#username",
+            "value": "student",
+            "clearFirst": true
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 416
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697467802_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 528
+          },
+          "data": {
+            "nodeType": "inputText",
+            "label": "Input Text",
+            "selector": "#password",
+            "value": "Password123",
+            "clearFirst": true
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 528
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697484627_2",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 640
+          },
+          "data": {
+            "nodeType": "clickElement",
+            "label": "Click Element",
+            "selector": "#submit",
+            "doubleClick": false,
+            "waitNavigation": false
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 640
+          }
+        }
+      ],
+      "edges": [
+        {
+          "animated": true,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e1",
+          "source": "node_start_1",
+          "target": "node_browser_1"
+        },
+        {
+          "animated": true,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e2",
+          "source": "node_browser_1",
+          "target": "node_navigate_1"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_navigate_1",
+          "sourceHandle": null,
+          "target": "node_1781697444146_0",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_navigate_1-node_1781697444146_0"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697444146_0",
+          "sourceHandle": null,
+          "target": "node_1781697467802_1",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697444146_0-node_1781697467802_1"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697467802_1",
+          "sourceHandle": null,
+          "target": "node_1781697484627_2",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697467802_1-node_1781697484627_2"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697484627_2",
+          "sourceHandle": null,
+          "target": "node_end_1",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697484627_2-node_end_1"
+        }
+      ],
+      "viewport": {
+        "x": 162.4565978510202,
+        "y": -7.222383194494739,
+        "zoom": 0.6978148014004587
+      }
+    },
+    "metadata": {},
+    "createdAt": "2026-06-21T18:30:08.874Z",
+    "startedAt": "2026-06-21T18:30:10.445Z",
+    "completedAt": "2026-06-21T18:30:15.930Z",
+    "robotId": "robot_local",
+    "runId": "run_1782066610445_3byxm",
+    "error": null
+  },
+  {
+    "id": "job_1782066585709_0jnsr",
+    "workflowId": "Demo Login Simple",
+    "workflowVersion": null,
+    "source": "MANUAL",
+    "status": "SUCCESS",
+    "flowData": {
+      "name": "Demo Login Simple",
+      "version": null,
+      "nodes": [
+        {
+          "id": "node_start_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 48
+          },
+          "data": {
+            "nodeType": "start",
+            "label": "Start"
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 48
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_browser_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 300,
+            "y": 170
+          },
+          "data": {
+            "nodeType": "openBrowser",
+            "label": "Open Browser",
+            "headless": false
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 300,
+            "y": 170
+          }
+        },
+        {
+          "id": "node_navigate_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 272,
+            "y": 304
+          },
+          "data": {
+            "nodeType": "navigateUrl",
+            "label": "Navigate to Login Page",
+            "url": "https://practicetestautomation.com/practice-test-login/"
+          },
+          "width": 240,
+          "height": 54,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 272,
+            "y": 304
+          }
+        },
+        {
+          "id": "node_end_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 752
+          },
+          "data": {
+            "nodeType": "end",
+            "label": "End",
+            "autoCloseBrowser": false,
+            "restoreWindow": false
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 752
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697444146_0",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 416
+          },
+          "data": {
+            "nodeType": "inputText",
+            "label": "Input Text",
+            "selector": "#username",
+            "value": "student",
+            "clearFirst": true
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 416
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697467802_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 528
+          },
+          "data": {
+            "nodeType": "inputText",
+            "label": "Input Text",
+            "selector": "#password",
+            "value": "Password123",
+            "clearFirst": true
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 528
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697484627_2",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 640
+          },
+          "data": {
+            "nodeType": "clickElement",
+            "label": "Click Element",
+            "selector": "#submit",
+            "doubleClick": false,
+            "waitNavigation": false
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 640
+          }
+        }
+      ],
+      "edges": [
+        {
+          "animated": true,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e1",
+          "source": "node_start_1",
+          "target": "node_browser_1"
+        },
+        {
+          "animated": true,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e2",
+          "source": "node_browser_1",
+          "target": "node_navigate_1"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_navigate_1",
+          "sourceHandle": null,
+          "target": "node_1781697444146_0",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_navigate_1-node_1781697444146_0"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697444146_0",
+          "sourceHandle": null,
+          "target": "node_1781697467802_1",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697444146_0-node_1781697467802_1"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697467802_1",
+          "sourceHandle": null,
+          "target": "node_1781697484627_2",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697467802_1-node_1781697484627_2"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697484627_2",
+          "sourceHandle": null,
+          "target": "node_end_1",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697484627_2-node_end_1"
+        }
+      ],
+      "viewport": {
+        "x": 162.4565978510202,
+        "y": -7.222383194494739,
+        "zoom": 0.6978148014004587
+      }
+    },
+    "metadata": {},
+    "createdAt": "2026-06-21T18:29:45.709Z",
+    "startedAt": "2026-06-21T18:29:46.420Z",
+    "completedAt": "2026-06-21T18:29:52.537Z",
+    "robotId": "robot_local",
+    "runId": "run_1782066586418_lfi0f",
+    "error": null
+  },
+  {
+    "id": "job_1782044745216_yfpyn",
+    "workflowId": "Demo Login Simple",
+    "workflowVersion": null,
+    "source": "MANUAL",
+    "status": "FAILED",
+    "flowData": {
+      "name": "Demo Login Simple",
+      "version": null,
+      "nodes": [
+        {
+          "id": "node_start_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 48
+          },
+          "data": {
+            "nodeType": "start",
+            "label": "Start"
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 48
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_browser_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 300,
+            "y": 170
+          },
+          "data": {
+            "nodeType": "openBrowser",
+            "label": "Open Browser",
+            "headless": false
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 300,
+            "y": 170
+          }
+        },
+        {
+          "id": "node_navigate_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 272,
+            "y": 304
+          },
+          "data": {
+            "nodeType": "navigateUrl",
+            "label": "Navigate to Login Page",
+            "url": "https://portal.htop.stechoq.com/auth/login"
+          },
+          "width": 240,
+          "height": 54,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 272,
+            "y": 304
+          }
+        },
+        {
+          "id": "node_end_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 752
+          },
+          "data": {
+            "nodeType": "end",
+            "label": "End",
+            "autoCloseBrowser": true,
+            "restoreWindow": true
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 752
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697444146_0",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 416
+          },
+          "data": {
+            "nodeType": "inputText",
+            "label": "Input Text",
+            "selector": "#input",
+            "value": "student",
+            "clearFirst": true,
+            "selectorFallbacks": [
+              "/html/body[1]/div[1]/div[1]/div[2]"
+            ]
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 416
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697467802_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 528
+          },
+          "data": {
+            "nodeType": "inputText",
+            "label": "Input Text",
+            "selector": "#password",
+            "value": "Password123",
+            "clearFirst": true
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 528
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697484627_2",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 640
+          },
+          "data": {
+            "nodeType": "clickElement",
+            "label": "Click Element",
+            "selector": "#submit",
+            "doubleClick": false,
+            "waitNavigation": false
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 640
+          }
+        }
+      ],
+      "edges": [
+        {
+          "animated": true,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e1",
+          "source": "node_start_1",
+          "target": "node_browser_1"
+        },
+        {
+          "animated": true,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e2",
+          "source": "node_browser_1",
+          "target": "node_navigate_1"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_navigate_1",
+          "sourceHandle": null,
+          "target": "node_1781697444146_0",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_navigate_1-node_1781697444146_0"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697444146_0",
+          "sourceHandle": null,
+          "target": "node_1781697467802_1",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697444146_0-node_1781697467802_1"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697467802_1",
+          "sourceHandle": null,
+          "target": "node_1781697484627_2",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697467802_1-node_1781697484627_2"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697484627_2",
+          "sourceHandle": null,
+          "target": "node_end_1",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697484627_2-node_end_1"
+        }
+      ],
+      "viewport": {
+        "x": 171.4565978510202,
+        "y": -7.222383194494739,
+        "zoom": 0.6978148014004587
+      }
+    },
+    "metadata": {},
+    "createdAt": "2026-06-21T12:25:45.216Z",
+    "startedAt": "2026-06-21T12:25:47.890Z",
+    "completedAt": "2026-06-21T12:25:54.640Z",
+    "robotId": "robot_local",
+    "runId": "run_1782044747889_fxqa6",
+    "error": "page.waitForSelector: Target page, context or browser has been closed\nCall log:\n\u001b[2m  - waiting for locator('#input') to be visible\u001b[22m\n"
+  },
+  {
+    "id": "job_1782044731837_ijxw0",
+    "workflowId": "Demo Login Simple",
+    "workflowVersion": null,
+    "source": "MANUAL",
+    "status": "FAILED",
+    "flowData": {
+      "name": "Demo Login Simple",
+      "version": null,
+      "nodes": [
+        {
+          "id": "node_start_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 48
+          },
+          "data": {
+            "nodeType": "start",
+            "label": "Start"
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 48
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_browser_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 300,
+            "y": 170
+          },
+          "data": {
+            "nodeType": "openBrowser",
+            "label": "Open Browser",
+            "headless": false
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 300,
+            "y": 170
+          }
+        },
+        {
+          "id": "node_navigate_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 272,
+            "y": 304
+          },
+          "data": {
+            "nodeType": "navigateUrl",
+            "label": "Navigate to Login Page",
+            "url": "https://portal.htop.stechoq.com/auth/login"
+          },
+          "width": 240,
+          "height": 54,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 272,
+            "y": 304
+          }
+        },
+        {
+          "id": "node_end_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 752
+          },
+          "data": {
+            "nodeType": "end",
+            "label": "End",
+            "autoCloseBrowser": true,
+            "restoreWindow": true
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 752
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697444146_0",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 416
+          },
+          "data": {
+            "nodeType": "inputText",
+            "label": "Input Text",
+            "selector": "input",
+            "value": "student",
+            "clearFirst": true,
+            "selectorFallbacks": [
+              "/html/body[1]/div[1]/div[1]/div[2]"
+            ]
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 416
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697467802_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 528
+          },
+          "data": {
+            "nodeType": "inputText",
+            "label": "Input Text",
+            "selector": "#password",
+            "value": "Password123",
+            "clearFirst": true
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 528
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697484627_2",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 640
+          },
+          "data": {
+            "nodeType": "clickElement",
+            "label": "Click Element",
+            "selector": "#submit",
+            "doubleClick": false,
+            "waitNavigation": false
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 640
+          }
+        }
+      ],
+      "edges": [
+        {
+          "animated": true,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e1",
+          "source": "node_start_1",
+          "target": "node_browser_1"
+        },
+        {
+          "animated": true,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e2",
+          "source": "node_browser_1",
+          "target": "node_navigate_1"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_navigate_1",
+          "sourceHandle": null,
+          "target": "node_1781697444146_0",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_navigate_1-node_1781697444146_0"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697444146_0",
+          "sourceHandle": null,
+          "target": "node_1781697467802_1",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697444146_0-node_1781697467802_1"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697467802_1",
+          "sourceHandle": null,
+          "target": "node_1781697484627_2",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697467802_1-node_1781697484627_2"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697484627_2",
+          "sourceHandle": null,
+          "target": "node_end_1",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697484627_2-node_end_1"
+        }
+      ],
+      "viewport": {
+        "x": 171.4565978510202,
+        "y": -7.222383194494739,
+        "zoom": 0.6978148014004587
+      }
+    },
+    "metadata": {},
+    "createdAt": "2026-06-21T12:25:31.837Z",
+    "startedAt": "2026-06-21T12:25:32.873Z",
+    "completedAt": "2026-06-21T12:25:36.412Z",
+    "robotId": "robot_local",
+    "runId": "run_1782044732871_8as4q",
+    "error": "page.fill: Error: Cannot type text into input[type=number]\nCall log:\n\u001b[2m  - waiting for locator('input')\u001b[22m\n\u001b[2m    - locator resolved to 2 elements. Proceeding with the first one: <input type=\"number\" class=\"input\" data-v-7e3f0eb6=\"\" placeholder=\"Masukkan ID karyawan\"/>\u001b[22m\n\u001b[2m    - fill(\"student\")\u001b[22m\n\u001b[2m  - attempting fill action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and editable\u001b[22m\n"
+  },
+  {
+    "id": "job_1782044689413_t4ztb",
+    "workflowId": "Demo Login Simple",
+    "workflowVersion": null,
+    "source": "MANUAL",
+    "status": "FAILED",
+    "flowData": {
+      "name": "Demo Login Simple",
+      "version": null,
+      "nodes": [
+        {
+          "id": "node_start_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 48
+          },
+          "data": {
+            "nodeType": "start",
+            "label": "Start"
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 48
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_browser_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 300,
+            "y": 170
+          },
+          "data": {
+            "nodeType": "openBrowser",
+            "label": "Open Browser",
+            "headless": false
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 300,
+            "y": 170
+          }
+        },
+        {
+          "id": "node_navigate_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 272,
+            "y": 304
+          },
+          "data": {
+            "nodeType": "navigateUrl",
+            "label": "Navigate to Login Page",
+            "url": "https://portal.htop.stechoq.com/auth/login"
+          },
+          "width": 240,
+          "height": 54,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 272,
+            "y": 304
+          }
+        },
+        {
+          "id": "node_end_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 752
+          },
+          "data": {
+            "nodeType": "end",
+            "label": "End",
+            "autoCloseBrowser": true,
+            "restoreWindow": true
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 752
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697444146_0",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 416
+          },
+          "data": {
+            "nodeType": "inputText",
+            "label": "Input Text",
+            "selector": "#username",
+            "value": "student",
+            "clearFirst": true,
+            "selectorFallbacks": [
+              "input[name=\"password\"]",
+              "//*[@id=\"password\"]"
+            ]
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 416
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697467802_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 528
+          },
+          "data": {
+            "nodeType": "inputText",
+            "label": "Input Text",
+            "selector": "#password",
+            "value": "Password123",
+            "clearFirst": true
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 528
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697484627_2",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 640
+          },
+          "data": {
+            "nodeType": "clickElement",
+            "label": "Click Element",
+            "selector": "#submit",
+            "doubleClick": false,
+            "waitNavigation": false
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 640
+          }
+        }
+      ],
+      "edges": [
+        {
+          "animated": true,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e1",
+          "source": "node_start_1",
+          "target": "node_browser_1"
+        },
+        {
+          "animated": true,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e2",
+          "source": "node_browser_1",
+          "target": "node_navigate_1"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_navigate_1",
+          "sourceHandle": null,
+          "target": "node_1781697444146_0",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_navigate_1-node_1781697444146_0"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697444146_0",
+          "sourceHandle": null,
+          "target": "node_1781697467802_1",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697444146_0-node_1781697467802_1"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697467802_1",
+          "sourceHandle": null,
+          "target": "node_1781697484627_2",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697467802_1-node_1781697484627_2"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697484627_2",
+          "sourceHandle": null,
+          "target": "node_end_1",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697484627_2-node_end_1"
+        }
+      ],
+      "viewport": {
+        "x": 171.4565978510202,
+        "y": -7.222383194494739,
+        "zoom": 0.6978148014004587
+      }
+    },
+    "metadata": {},
+    "createdAt": "2026-06-21T12:24:49.413Z",
+    "startedAt": "2026-06-21T12:24:50.863Z",
+    "completedAt": "2026-06-21T12:24:58.004Z",
+    "robotId": "robot_local",
+    "runId": "run_1782044690861_fkfk7",
+    "error": "page.waitForSelector: Target page, context or browser has been closed\nCall log:\n\u001b[2m  - waiting for locator('#username') to be visible\u001b[22m\n"
+  },
+  {
+    "id": "job_1782044538710_4zws3",
+    "workflowId": "Demo Login Simple",
+    "workflowVersion": null,
+    "source": "MANUAL",
+    "status": "FAILED",
+    "flowData": {
+      "name": "Demo Login Simple",
+      "version": null,
+      "nodes": [
+        {
+          "id": "node_start_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 48
+          },
+          "data": {
+            "nodeType": "start",
+            "label": "Start"
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 48
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_browser_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 300,
+            "y": 170
+          },
+          "data": {
+            "nodeType": "openBrowser",
+            "label": "Open Browser",
+            "headless": false
+          },
+          "width": 196,
+          "height": 49,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 300,
+            "y": 170
+          }
+        },
+        {
+          "id": "node_navigate_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 272,
+            "y": 304
+          },
+          "data": {
+            "nodeType": "navigateUrl",
+            "label": "Navigate to Login Page",
+            "url": "https://portal.htop.stechoq.com/auth/login"
+          },
+          "width": 240,
+          "height": 54,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 272,
+            "y": 304
+          }
+        },
+        {
+          "id": "node_end_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 752
+          },
+          "data": {
+            "nodeType": "end",
+            "label": "End",
+            "autoCloseBrowser": false,
+            "restoreWindow": false
+          },
+          "width": 196,
+          "height": 49,
+          "selected": true,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 752
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697444146_0",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 416
+          },
+          "data": {
+            "nodeType": "inputText",
+            "label": "Input Text",
+            "selector": "#username",
+            "value": "2501099",
+            "clearFirst": true,
+            "selectorFallbacks": [
+              "/html/body[1]/div[1]/div[1]/div[2]/div[1]/form[1]/div[1]/div[1]/input[1]"
+            ]
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 416
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697467802_1",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 528
+          },
+          "data": {
+            "nodeType": "inputText",
+            "label": "Input Text",
+            "selector": "#password",
+            "value": "Password123",
+            "clearFirst": true,
+            "selectorFallbacks": [
+              "/html/body[1]/div[1]/div[1]/div[2]/div[1]/form[1]/div[1]/div[2]/div[1]/input[1]"
+            ]
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 528
+          },
+          "dragging": false
+        },
+        {
+          "id": "node_1781697484627_2",
+          "type": "workflowNode",
+          "position": {
+            "x": 304,
+            "y": 640
+          },
+          "data": {
+            "nodeType": "clickElement",
+            "label": "Click Element",
+            "selector": "#submit",
+            "doubleClick": false,
+            "waitNavigation": false,
+            "selectorFallbacks": [
+              "text=LOG IN",
+              "/html/body[1]/div[1]/div[1]/div[2]/div[1]/form[1]/div[2]/div[2]/button[1]"
+            ]
+          },
+          "width": 196,
+          "height": 54,
+          "selected": false,
+          "dragging": false,
+          "positionAbsolute": {
+            "x": 304,
+            "y": 640
+          }
+        }
+      ],
+      "edges": [
+        {
+          "animated": true,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e1",
+          "source": "node_start_1",
+          "target": "node_browser_1"
+        },
+        {
+          "animated": true,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "id": "e2",
+          "source": "node_browser_1",
+          "target": "node_navigate_1"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_navigate_1",
+          "sourceHandle": null,
+          "target": "node_1781697444146_0",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_navigate_1-node_1781697444146_0"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697444146_0",
+          "sourceHandle": null,
+          "target": "node_1781697467802_1",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697444146_0-node_1781697467802_1"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697467802_1",
+          "sourceHandle": null,
+          "target": "node_1781697484627_2",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697467802_1-node_1781697484627_2"
+        },
+        {
+          "animated": false,
+          "style": {
+            "stroke": "#9CA3AF",
+            "strokeWidth": 1.5
+          },
+          "type": "smoothstep",
+          "source": "node_1781697484627_2",
+          "sourceHandle": null,
+          "target": "node_end_1",
+          "targetHandle": null,
+          "id": "reactflow__edge-node_1781697484627_2-node_end_1"
+        }
+      ],
+      "viewport": {
+        "x": 162.4565978510202,
+        "y": -7.222383194494739,
+        "zoom": 0.6978148014004587
+      }
+    },
+    "metadata": {},
+    "createdAt": "2026-06-21T12:22:18.710Z",
+    "startedAt": "2026-06-21T12:22:20.782Z",
+    "completedAt": "2026-06-21T12:22:34.767Z",
+    "robotId": "robot_local",
+    "runId": "run_1782044540780_0qrvr",
+    "error": "page.waitForSelector: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#username') to be visible\u001b[22m\n"
+  },
+  {
     "id": "job_1782036190223_30l4h",
     "workflowId": "06 Iframe Workflow",
     "workflowVersion": null,
