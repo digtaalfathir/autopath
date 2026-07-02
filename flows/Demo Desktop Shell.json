@@ -1,0 +1,23 @@
+{
+  "name": "Demo Desktop Shell",
+  "nodes": [
+    { "id": "n_start", "type": "workflowNode", "position": { "x": 120, "y": 60 },  "data": { "nodeType": "start", "label": "Start" } },
+    { "id": "n_folder","type": "workflowNode", "position": { "x": 120, "y": 160 }, "data": { "nodeType": "openFolder", "label": "Open File Manager", "path": "C:\\" } },
+    { "id": "n_run",   "type": "workflowNode", "position": { "x": 120, "y": 260 }, "data": { "nodeType": "runProgram", "label": "Launch Notepad", "programPath": "C:\\Windows\\notepad.exe", "args": "", "waitForExit": false, "outputVariable": "pid" } },
+    { "id": "n_log",   "type": "workflowNode", "position": { "x": 120, "y": 360 }, "data": { "nodeType": "logMessage", "label": "Log PID", "message": "Notepad launched with PID {{pid}}" } },
+    { "id": "n_cmd",   "type": "workflowNode", "position": { "x": 120, "y": 460 }, "data": { "nodeType": "runCommand", "label": "Whoami", "command": "whoami", "shell": "cmd", "outputVariable": "user" } },
+    { "id": "n_log2",  "type": "workflowNode", "position": { "x": 120, "y": 560 }, "data": { "nodeType": "logMessage", "label": "Log User", "message": "Running as {{user}}" } },
+    { "id": "n_wait",  "type": "workflowNode", "position": { "x": 120, "y": 660 }, "data": { "nodeType": "waitProcess", "label": "Wait Notepad Closed", "name": "notepad.exe", "state": "notRunning", "timeout": "60000", "interval": "1000" } },
+    { "id": "n_end",   "type": "workflowNode", "position": { "x": 120, "y": 760 }, "data": { "nodeType": "end", "label": "End", "autoCloseBrowser": true } }
+  ],
+  "edges": [
+    { "id": "e1", "source": "n_start",  "target": "n_folder" },
+    { "id": "e2", "source": "n_folder", "target": "n_run" },
+    { "id": "e3", "source": "n_run",    "target": "n_log" },
+    { "id": "e4", "source": "n_log",    "target": "n_cmd" },
+    { "id": "e5", "source": "n_cmd",    "target": "n_log2" },
+    { "id": "e6", "source": "n_log2",   "target": "n_wait" },
+    { "id": "e7", "source": "n_wait",   "target": "n_end" }
+  ],
+  "viewport": { "x": 0, "y": 0, "zoom": 0.9 }
+}

@@ -1189,6 +1189,73 @@ export const NODE_DEFINITIONS = [
     schema: [{ key: 'emailId', label: 'Email Id (uid)', type: 'text', placeholder: '{{item.id}}' }],
     hasInput: true, hasOutput: true,
   },
+
+  // ══ Desktop Automation — Tier 1: Shell & Launch ════════════════
+  {
+    type: 'runProgram', label: 'Run Program', category: 'Desktop',
+    description: 'Launch an application/exe by path', iconKey: 'play', color: '#0F766E',
+    defaults: { programPath: '', args: '', workingDir: '', waitForExit: false, outputVariable: 'pid' },
+    schema: [
+      { key: 'programPath',    label: 'Program Path', type: 'text', placeholder: 'C:\\Windows\\notepad.exe' },
+      { key: 'args',           label: 'Arguments (one per line)', type: 'textarea', placeholder: 'C:\\file.txt' },
+      { key: 'workingDir',     label: 'Working Directory (optional)', type: 'text', placeholder: 'C:\\' },
+      { key: 'waitForExit',    label: 'Wait for Exit', type: 'boolean', hint: 'Block until the program closes.' },
+      { key: 'outputVariable', label: 'PID / Exit Variable', type: 'text', placeholder: 'pid' },
+    ],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'openFile', label: 'Open File', category: 'Desktop',
+    description: 'Open a file with its default application', iconKey: 'readFile', color: '#0F766E',
+    defaults: { path: '' },
+    schema: [{ key: 'path', label: 'File Path', type: 'text', placeholder: 'C:\\Reports\\report.pdf' }],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'openFolder', label: 'Open Folder', category: 'Desktop',
+    description: 'Open a folder in the file manager', iconKey: 'createDir', color: '#0F766E',
+    defaults: { path: '' },
+    schema: [{ key: 'path', label: 'Folder Path', type: 'text', placeholder: 'C:\\Reports (blank = default)' }],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'runCommand', label: 'Run Command', category: 'Desktop',
+    description: 'Run a shell command / script and capture output', iconKey: 'log', color: '#0F766E',
+    defaults: { command: '', shell: 'default', workingDir: '', timeout: '60000', failOnError: true, outputVariable: 'stdout' },
+    schema: [
+      { key: 'command',        label: 'Command', type: 'textarea', placeholder: 'echo hello  /  Get-Service', hint: 'Supports {{variable}}.' },
+      { key: 'shell',          label: 'Shell', type: 'select', options: ['default', 'cmd', 'powershell'] },
+      { key: 'workingDir',     label: 'Working Directory (optional)', type: 'text', placeholder: 'C:\\' },
+      { key: 'timeout',        label: 'Timeout (ms)', type: 'text', placeholder: '60000' },
+      { key: 'failOnError',    label: 'Fail on Non-zero Exit', type: 'boolean' },
+      { key: 'outputVariable', label: 'Output Variable (stdout)', type: 'text', placeholder: 'stdout',
+        hint: 'Also sets {{name_code}} and {{name_stderr}}.' },
+    ],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'killProcess', label: 'Kill Process', category: 'Desktop',
+    description: 'Terminate a process by name or PID', iconKey: 'stop', color: '#DC2626',
+    defaults: { target: '', matchBy: 'name', ignoreNotFound: true },
+    schema: [
+      { key: 'target',         label: 'Process (name or PID)', type: 'text', placeholder: 'notepad.exe or 12345' },
+      { key: 'matchBy',        label: 'Match By', type: 'select', options: ['name', 'pid'] },
+      { key: 'ignoreNotFound', label: 'Ignore If Not Running', type: 'boolean' },
+    ],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'waitProcess', label: 'Wait Process', category: 'Desktop',
+    description: 'Wait until a process is running or has stopped', iconKey: 'clock', color: '#0F766E',
+    defaults: { name: '', state: 'running', timeout: '30000', interval: '1000' },
+    schema: [
+      { key: 'name',     label: 'Process Name', type: 'text', placeholder: 'notepad.exe' },
+      { key: 'state',    label: 'Wait For', type: 'select', options: ['running', 'notRunning'] },
+      { key: 'timeout',  label: 'Timeout (ms)', type: 'text', placeholder: '30000' },
+      { key: 'interval', label: 'Poll Interval (ms)', type: 'text', placeholder: '1000' },
+    ],
+    hasInput: true, hasOutput: true,
+  },
 ];
 
 export function getNodesByCategory() {
