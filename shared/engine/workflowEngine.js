@@ -159,6 +159,7 @@ class WorkflowEngine extends EventEmitter {
       require('../nodes/web/scraping'),
       require('../nodes/comm/email'),
       require('../nodes/desktop/shell'),   // Desktop Tier 1 — Shell & Launch
+      require('../nodes/desktop/input'),   // Desktop Tier 2 — Keyboard & Mouse
     ];
     for (const group of webGroups) {
       for (const handler of group.handlers) {
