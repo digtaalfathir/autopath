@@ -162,6 +162,7 @@ class WorkflowEngine extends EventEmitter {
       require('../nodes/desktop/input'),   // Desktop Tier 2 — Keyboard & Mouse
       require('../nodes/desktop/window'),  // Desktop Tier 3 — Window Management
       require('../nodes/desktop/uia'),     // Desktop Tier 4 — Element-based (UIA)
+      require('../nodes/vision/vision'),   // Tier 5 — Vision / Surface (Citrix/RDP/VNC)
     ];
     for (const group of webGroups) {
       for (const handler of group.handlers) {
