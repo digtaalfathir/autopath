@@ -1387,6 +1387,87 @@ export const NODE_DEFINITIONS = [
     ],
     hasInput: true, hasOutput: true,
   },
+
+  // ══ Desktop Automation — Tier 4: Element-based (UIA / Win32) ═══
+  {
+    type: 'uiaLaunch', label: 'UIA Launch App', category: 'Desktop',
+    description: 'Launch an app and attach the UIA engine (element-based)', iconKey: 'play', color: '#4338CA',
+    defaults: { path: '', args: '', timeout: '15000' },
+    schema: [
+      { key: 'path',    label: 'Program Path', type: 'text', placeholder: 'notepad.exe' },
+      { key: 'args',    label: 'Arguments', type: 'text', placeholder: '' },
+      { key: 'timeout', label: 'Timeout (ms)', type: 'text', placeholder: '15000' },
+    ],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'uiaAttach', label: 'UIA Attach App', category: 'Desktop',
+    description: 'Attach the UIA engine to a running app', iconKey: 'globe', color: '#4338CA',
+    defaults: { process: '', pid: '', title: '' },
+    schema: [
+      { key: 'process', label: 'Process Name', type: 'text', placeholder: 'notepad.exe' },
+      { key: 'pid',     label: 'PID (optional)', type: 'text', placeholder: '' },
+      { key: 'title',   label: 'Window Title (optional)', type: 'text', placeholder: 'Untitled - Notepad' },
+    ],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'uiaClick', label: 'UIA Click', category: 'Desktop',
+    description: 'Click an element by AutomationId/Name/ControlType', iconKey: 'mouse', color: '#4338CA',
+    defaults: { selector: '', button: 'left', double: false, timeout: '10000' },
+    schema: [
+      { key: 'selector', label: 'UIA Selector', type: 'text', placeholder: 'automationId:okBtn / name:OK', isSelector: true,
+        hint: 'automationId: / name: / controlType: / class: , optional #index, chain with " > ".' },
+      { key: 'button',   label: 'Button', type: 'select', options: ['left', 'right'] },
+      { key: 'double',   label: 'Double Click', type: 'boolean' },
+      { key: 'timeout',  label: 'Timeout (ms)', type: 'text', placeholder: '10000' },
+    ],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'uiaSetText', label: 'UIA Set Text', category: 'Desktop',
+    description: 'Set the value/text of an element', iconKey: 'type', color: '#4338CA',
+    defaults: { selector: '', text: '', timeout: '10000' },
+    schema: [
+      { key: 'selector', label: 'UIA Selector', type: 'text', placeholder: 'controlType:Edit / automationId:field', isSelector: true },
+      { key: 'text',     label: 'Text', type: 'textarea', placeholder: 'Hello {{name}}', hint: 'Supports {{variable}}.' },
+      { key: 'timeout',  label: 'Timeout (ms)', type: 'text', placeholder: '10000' },
+    ],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'uiaGetText', label: 'UIA Get Text', category: 'Desktop',
+    description: 'Read an element value/text into a variable', iconKey: 'getText', color: '#4338CA',
+    defaults: { selector: '', outputVariable: 'uiaText', timeout: '10000' },
+    schema: [
+      { key: 'selector',       label: 'UIA Selector', type: 'text', placeholder: 'name:Status', isSelector: true },
+      { key: 'outputVariable', label: 'Output Variable', type: 'text', placeholder: 'uiaText' },
+      { key: 'timeout',        label: 'Timeout (ms)', type: 'text', placeholder: '10000' },
+    ],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'uiaExists', label: 'UIA Element Exists', category: 'Desktop',
+    description: 'Check whether an element exists (boolean)', iconKey: 'exists', color: '#4338CA',
+    defaults: { selector: '', outputVariable: 'uiaExists', timeout: '3000' },
+    schema: [
+      { key: 'selector',       label: 'UIA Selector', type: 'text', placeholder: 'automationId:dialog', isSelector: true },
+      { key: 'outputVariable', label: 'Output Variable', type: 'text', placeholder: 'uiaExists' },
+      { key: 'timeout',        label: 'Timeout (ms)', type: 'text', placeholder: '3000' },
+    ],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'uiaWait', label: 'UIA Wait Element', category: 'Desktop',
+    description: 'Wait until an element is visible or hidden', iconKey: 'waitEl', color: '#4338CA',
+    defaults: { selector: '', state: 'visible', timeout: '15000' },
+    schema: [
+      { key: 'selector', label: 'UIA Selector', type: 'text', placeholder: 'name:OK', isSelector: true },
+      { key: 'state',    label: 'State', type: 'select', options: ['visible', 'hidden'] },
+      { key: 'timeout',  label: 'Timeout (ms)', type: 'text', placeholder: '15000' },
+    ],
+    hasInput: true, hasOutput: true,
+  },
 ];
 
 export function getNodesByCategory() {

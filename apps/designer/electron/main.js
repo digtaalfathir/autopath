@@ -150,34 +150,34 @@ function getFlowsDir() {
 }
 
 // ── Initial data seeding ──────────────────────────────────────────────
-// On first install: copy demo flows from resources/flows/ → userData/flows/.
-// Uses a version marker so new demo flows added in future releases are seeded too.
-// Never overwrites files the user has already created/modified.
-const SEED_VERSION = '1.0.0';
-
+// Copy bundled demo flows from resources/flows/ → userData/flows/ on EVERY
+// launch, but only files that don't already exist (copy-if-not-exists). This
+// guarantees new demo flows shipped in an update appear after install, without
+// ever overwriting flows the user created or edited.
+// (Previously gated by a version marker, so flows added after the first 1.0.0
+//  install were never seeded — that's the bug being fixed here.)
 function seedInitialData() {
   if (isDev) return;   // dev uses project root directly — no seeding needed
 
-  const userDataDir = app.getPath('userData');
-  const markerFile  = path.join(userDataDir, `.seeded-v${SEED_VERSION}`);
-
-  if (fs.existsSync(markerFile)) return;   // already seeded this version
-
   const srcFlows = path.join(process.resourcesPath, 'flows');
-  const dstFlows = path.join(userDataDir, 'flows');
+  const dstFlows = path.join(app.getPath('userData'), 'flows');
 
-  if (fs.existsSync(srcFlows)) {
+  try {
+    if (!fs.existsSync(srcFlows)) return;
     if (!fs.existsSync(dstFlows)) fs.mkdirSync(dstFlows, { recursive: true });
+
+    let copied = 0;
     for (const file of fs.readdirSync(srcFlows)) {
       const src = path.join(srcFlows, file);
       const dst = path.join(dstFlows, file);
-      if (!fs.existsSync(dst)) {         // never overwrite user's existing files
-        try { fs.copyFileSync(src, dst); } catch (_) {}
+      if (!fs.existsSync(dst)) {          // never overwrite user's existing files
+        try { fs.copyFileSync(src, dst); copied++; } catch (_) {}
       }
     }
+    if (copied) console.log(`[seed] Added ${copied} demo flow(s) to ${dstFlows}`);
+  } catch (err) {
+    console.error('[seed] Failed:', err.message);
   }
-
-  fs.writeFileSync(markerFile, new Date().toISOString(), 'utf-8');
 }
 
 // ── Notifications (F12) ───────────────────────────────────────────────
