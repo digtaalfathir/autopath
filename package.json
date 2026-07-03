@@ -54,6 +54,13 @@
         "filter": [
           "**/*"
         ]
+      },
+      {
+        "from": "sidecar/dist",
+        "to": "sidecar",
+        "filter": [
+          "**/*"
+        ]
       }
     ],
     "win": {

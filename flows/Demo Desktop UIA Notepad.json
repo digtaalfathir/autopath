@@ -1,0 +1,21 @@
+{
+  "name": "Demo Desktop UIA Notepad",
+  "nodes": [
+    { "id": "n_start", "type": "workflowNode", "position": { "x": 120, "y": 60 },  "data": { "nodeType": "start", "label": "Start" } },
+    { "id": "n_launch","type": "workflowNode", "position": { "x": 120, "y": 160 }, "data": { "nodeType": "uiaLaunch", "label": "UIA Launch Notepad", "path": "notepad.exe", "args": "", "timeout": "15000" } },
+    { "id": "n_wait",  "type": "workflowNode", "position": { "x": 120, "y": 260 }, "data": { "nodeType": "uiaWait", "label": "Wait Editor", "selector": "controlType:Edit", "state": "visible", "timeout": "10000" } },
+    { "id": "n_set",   "type": "workflowNode", "position": { "x": 120, "y": 360 }, "data": { "nodeType": "uiaSetText", "label": "Set Editor Text", "selector": "controlType:Edit", "text": "Tier 4 UIA: element-based, no coordinates.", "timeout": "10000" } },
+    { "id": "n_get",   "type": "workflowNode", "position": { "x": 120, "y": 460 }, "data": { "nodeType": "uiaGetText", "label": "Read Back", "selector": "controlType:Edit", "outputVariable": "editorText", "timeout": "10000" } },
+    { "id": "n_log",   "type": "workflowNode", "position": { "x": 120, "y": 560 }, "data": { "nodeType": "logMessage", "label": "Log", "message": "Editor now contains: {{editorText}}" } },
+    { "id": "n_end",   "type": "workflowNode", "position": { "x": 120, "y": 660 }, "data": { "nodeType": "end", "label": "End", "autoCloseBrowser": true } }
+  ],
+  "edges": [
+    { "id": "e1", "source": "n_start",  "target": "n_launch" },
+    { "id": "e2", "source": "n_launch", "target": "n_wait" },
+    { "id": "e3", "source": "n_wait",   "target": "n_set" },
+    { "id": "e4", "source": "n_set",    "target": "n_get" },
+    { "id": "e5", "source": "n_get",    "target": "n_log" },
+    { "id": "e6", "source": "n_log",    "target": "n_end" }
+  ],
+  "viewport": { "x": 0, "y": 0, "zoom": 0.9 }
+}
