@@ -1325,6 +1325,68 @@ export const NODE_DEFINITIONS = [
     ],
     hasInput: true, hasOutput: true,
   },
+
+  // ══ Desktop Automation — Tier 3: Window Management ═════════════
+  {
+    type: 'attachWindow', label: 'Attach Window', category: 'Desktop',
+    description: 'Find a window by title and make it the active target', iconKey: 'globe', color: '#0F766E',
+    defaults: { title: '', matchMode: 'contains', focus: true, outputVariable: 'windowTitle' },
+    schema: [
+      { key: 'title',          label: 'Window Title', type: 'text', placeholder: 'Notepad / SAP Logon' },
+      { key: 'matchMode',      label: 'Match', type: 'select', options: ['contains', 'exact'] },
+      { key: 'focus',          label: 'Focus After Attach', type: 'boolean' },
+      { key: 'outputVariable', label: 'Title Variable', type: 'text', placeholder: 'windowTitle' },
+    ],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'waitWindow', label: 'Wait Window', category: 'Desktop',
+    description: 'Wait for a window to appear or disappear', iconKey: 'waitLoad', color: '#0F766E',
+    defaults: { title: '', matchMode: 'contains', state: 'appear', timeout: '30000', interval: '750', focus: true },
+    schema: [
+      { key: 'title',     label: 'Window Title', type: 'text', placeholder: 'Notepad' },
+      { key: 'matchMode', label: 'Match', type: 'select', options: ['contains', 'exact'] },
+      { key: 'state',     label: 'Wait For', type: 'select', options: ['appear', 'disappear'] },
+      { key: 'timeout',   label: 'Timeout (ms)', type: 'text', placeholder: '30000' },
+      { key: 'interval',  label: 'Poll Interval (ms)', type: 'text', placeholder: '750' },
+      { key: 'focus',     label: 'Focus On Appear', type: 'boolean' },
+    ],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'focusWindow', label: 'Focus Window', category: 'Desktop',
+    description: 'Bring a window to the front (by title, or attached)', iconKey: 'globe', color: '#0F766E',
+    defaults: { title: '', matchMode: 'contains' },
+    schema: [
+      { key: 'title',     label: 'Window Title (blank = attached)', type: 'text', placeholder: 'Notepad' },
+      { key: 'matchMode', label: 'Match', type: 'select', options: ['contains', 'exact'] },
+    ],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'setWindowState', label: 'Set Window State', category: 'Desktop',
+    description: 'Maximize / minimize / restore / move / resize a window', iconKey: 'globe', color: '#0F766E',
+    defaults: { title: '', matchMode: 'contains', state: 'maximize', x: '0', y: '0', width: '1024', height: '768' },
+    schema: [
+      { key: 'title',     label: 'Window Title (blank = attached)', type: 'text', placeholder: 'Notepad' },
+      { key: 'matchMode', label: 'Match', type: 'select', options: ['contains', 'exact'] },
+      { key: 'state',     label: 'State', type: 'select', options: ['maximize', 'minimize', 'restore', 'move', 'resize'] },
+      { key: 'x',         label: 'X (move)', type: 'text', placeholder: '0' },
+      { key: 'y',         label: 'Y (move)', type: 'text', placeholder: '0' },
+      { key: 'width',     label: 'Width (resize)', type: 'text', placeholder: '1024' },
+      { key: 'height',    label: 'Height (resize)', type: 'text', placeholder: '768' },
+    ],
+    hasInput: true, hasOutput: true,
+  },
+  {
+    type: 'getActiveWindow', label: 'Get Active Window', category: 'Desktop',
+    description: 'Read the title of the focused window into a variable', iconKey: 'getText', color: '#0F766E',
+    defaults: { outputVariable: 'activeWindow' },
+    schema: [
+      { key: 'outputVariable', label: 'Output Variable', type: 'text', placeholder: 'activeWindow' },
+    ],
+    hasInput: true, hasOutput: true,
+  },
 ];
 
 export function getNodesByCategory() {

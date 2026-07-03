@@ -1,0 +1,23 @@
+{
+  "name": "Demo Desktop Window Control",
+  "nodes": [
+    { "id": "n_start", "type": "workflowNode", "position": { "x": 120, "y": 40 },  "data": { "nodeType": "start", "label": "Start" } },
+    { "id": "n_run",   "type": "workflowNode", "position": { "x": 120, "y": 140 }, "data": { "nodeType": "runProgram", "label": "Open Notepad", "programPath": "notepad.exe", "waitForExit": false, "outputVariable": "pid" } },
+    { "id": "n_wait",  "type": "workflowNode", "position": { "x": 120, "y": 240 }, "data": { "nodeType": "waitWindow", "label": "Wait Notepad Window", "title": "Notepad", "matchMode": "contains", "state": "appear", "timeout": "15000", "interval": "500", "focus": true } },
+    { "id": "n_max",   "type": "workflowNode", "position": { "x": 120, "y": 340 }, "data": { "nodeType": "setWindowState", "label": "Maximize", "title": "", "state": "maximize" } },
+    { "id": "n_type",  "type": "workflowNode", "position": { "x": 120, "y": 440 }, "data": { "nodeType": "typeText", "label": "Type Text", "text": "Tier 3 window control: attached + focused + maximized.", "pressEnter": false } },
+    { "id": "n_act",   "type": "workflowNode", "position": { "x": 120, "y": 540 }, "data": { "nodeType": "getActiveWindow", "label": "Read Active Title", "outputVariable": "activeWindow" } },
+    { "id": "n_log",   "type": "workflowNode", "position": { "x": 120, "y": 640 }, "data": { "nodeType": "logMessage", "label": "Log Title", "message": "Active window is: {{activeWindow}}" } },
+    { "id": "n_end",   "type": "workflowNode", "position": { "x": 120, "y": 740 }, "data": { "nodeType": "end", "label": "End", "autoCloseBrowser": true } }
+  ],
+  "edges": [
+    { "id": "e1", "source": "n_start", "target": "n_run" },
+    { "id": "e2", "source": "n_run",   "target": "n_wait" },
+    { "id": "e3", "source": "n_wait",  "target": "n_max" },
+    { "id": "e4", "source": "n_max",   "target": "n_type" },
+    { "id": "e5", "source": "n_type",  "target": "n_act" },
+    { "id": "e6", "source": "n_act",   "target": "n_log" },
+    { "id": "e7", "source": "n_log",   "target": "n_end" }
+  ],
+  "viewport": { "x": 0, "y": 0, "zoom": 0.9 }
+}
