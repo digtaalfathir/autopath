@@ -13,14 +13,14 @@ Requires the **.NET 8 SDK** (https://dotnet.microsoft.com/download).
 powershell -ExecutionPolicy Bypass -File sidecar\build.ps1
 ```
 
-Output: `sidecar\dist\Manufactura.Sidecar.exe` (self-contained single .exe — the
+Output: `sidecar\out\Manufactura.Sidecar.exe` (self-contained single .exe — the
 target machine needs no .NET runtime). electron-builder ships this via
 `extraResources`.
 
 ## Run manually (debug)
 
 ```powershell
-sidecar\dist\Manufactura.Sidecar.exe
+sidecar\out\Manufactura.Sidecar.exe
 # then type a JSON line:
 {"id":1,"cmd":"health"}
 {"id":2,"cmd":"launch","params":{"path":"notepad.exe"}}
@@ -58,6 +58,6 @@ Examples: `automationId:okButton` · `name:OK` · `controlType:Edit#2` ·
 `DesktopProvider` looks up, in order:
 1. `process.env.MC_SIDECAR_PATH`
 2. packaged: `<resources>/sidecar/Manufactura.Sidecar.exe`
-3. dev: `sidecar/dist/Manufactura.Sidecar.exe`
+3. dev: `sidecar/out/Manufactura.Sidecar.exe`
 
 If none exists (or non-Windows), desktop UIA nodes fail with a clear message.
