@@ -37,6 +37,11 @@
     "directories": {
       "output": "dist"
     },
+    "npmRebuild": false,
+    "asarUnpack": [
+      "**/*.node",
+      "**/@nut-tree-fork/**"
+    ],
     "files": [
       "apps/designer/electron/**/*",
       "apps/designer/elementPicker.js",
