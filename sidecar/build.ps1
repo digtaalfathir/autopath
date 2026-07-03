@@ -3,11 +3,11 @@
 #   powershell -ExecutionPolicy Bypass -File sidecar\build.ps1
 #
 # Produces a self-contained single .exe (no .NET runtime needed on the target)
-# at sidecar\dist\Manufactura.Sidecar.exe — this is what electron-builder ships.
+# at sidecar\out\Manufactura.Sidecar.exe — this is what electron-builder ships.
 
 $ErrorActionPreference = "Stop"
 $here = Split-Path -Parent $MyInvocation.MyCommand.Path
-$out  = Join-Path $here "dist"
+$out  = Join-Path $here "out"
 
 Write-Host "Building UIA sidecar (net8.0-windows, self-contained win-x64)..."
 dotnet publish (Join-Path $here "Manufactura.Sidecar.csproj") `

@@ -17,7 +17,7 @@ function resolveSidecarPath() {
   const candidates = [];
   if (process.env.MC_SIDECAR_PATH) candidates.push(process.env.MC_SIDECAR_PATH);
   if (process.resourcesPath) candidates.push(path.join(process.resourcesPath, 'sidecar', 'Manufactura.Sidecar.exe'));
-  candidates.push(path.join(__dirname, '..', '..', 'sidecar', 'dist', 'Manufactura.Sidecar.exe'));
+  candidates.push(path.join(__dirname, '..', '..', 'sidecar', 'out', 'Manufactura.Sidecar.exe'));
   return candidates.find(p => { try { return fs.existsSync(p); } catch { return false; } }) || null;
 }
 

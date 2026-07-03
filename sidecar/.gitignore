@@ -1,4 +1,4 @@
 bin/
 obj/
-dist/*
-!dist/.gitkeep
+out/*
+!out/.gitkeep

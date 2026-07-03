@@ -63,7 +63,7 @@
         ]
       },
       {
-        "from": "sidecar/dist",
+        "from": "sidecar/out",
         "to": "sidecar",
         "filter": [
           "**/*"
