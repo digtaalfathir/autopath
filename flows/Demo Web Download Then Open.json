@@ -1,0 +1,153 @@
+{
+  "name": "Demo Web Download Then Open",
+  "nodes": [
+    {
+      "id": "s",
+      "type": "workflowNode",
+      "position": {
+        "x": 140,
+        "y": 90
+      },
+      "data": {
+        "nodeType": "start",
+        "label": "start"
+      }
+    },
+    {
+      "id": "mk",
+      "type": "workflowNode",
+      "position": {
+        "x": 140,
+        "y": 180
+      },
+      "data": {
+        "nodeType": "createDirectory",
+        "label": "Ensure Folder",
+        "directoryPath": "C:\\mc-demo"
+      }
+    },
+    {
+      "id": "ob",
+      "type": "workflowNode",
+      "position": {
+        "x": 140,
+        "y": 270
+      },
+      "data": {
+        "nodeType": "openBrowser",
+        "label": "Open Browser",
+        "headless": false,
+        "profileMode": "isolated"
+      }
+    },
+    {
+      "id": "nav",
+      "type": "workflowNode",
+      "position": {
+        "x": 140,
+        "y": 360
+      },
+      "data": {
+        "nodeType": "navigateUrl",
+        "label": "Go to Download Page",
+        "url": "http://localhost:4000/download"
+      }
+    },
+    {
+      "id": "dl",
+      "type": "workflowNode",
+      "position": {
+        "x": 140,
+        "y": 450
+      },
+      "data": {
+        "nodeType": "downloadFile",
+        "label": "Download CSV",
+        "triggerSelector": "#download-btn",
+        "saveDirectory": "C:\\mc-demo",
+        "outputVariable": "csvPath",
+        "waitForDownload": "30000"
+      }
+    },
+    {
+      "id": "open",
+      "type": "workflowNode",
+      "position": {
+        "x": 140,
+        "y": 540
+      },
+      "data": {
+        "nodeType": "openFile",
+        "label": "Open Downloaded File",
+        "path": "{{csvPath}}"
+      }
+    },
+    {
+      "id": "log",
+      "type": "workflowNode",
+      "position": {
+        "x": 140,
+        "y": 630
+      },
+      "data": {
+        "nodeType": "logMessage",
+        "label": "Log",
+        "message": "Downloaded + opened: {{csvPath}}"
+      }
+    },
+    {
+      "id": "e",
+      "type": "workflowNode",
+      "position": {
+        "x": 140,
+        "y": 720
+      },
+      "data": {
+        "nodeType": "end",
+        "label": "end"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e0",
+      "source": "s",
+      "target": "mk"
+    },
+    {
+      "id": "e1",
+      "source": "mk",
+      "target": "ob"
+    },
+    {
+      "id": "e2",
+      "source": "ob",
+      "target": "nav"
+    },
+    {
+      "id": "e3",
+      "source": "nav",
+      "target": "dl"
+    },
+    {
+      "id": "e4",
+      "source": "dl",
+      "target": "open"
+    },
+    {
+      "id": "e5",
+      "source": "open",
+      "target": "log"
+    },
+    {
+      "id": "e6",
+      "source": "log",
+      "target": "e"
+    }
+  ],
+  "viewport": {
+    "x": 0,
+    "y": 0,
+    "zoom": 0.85
+  }
+}

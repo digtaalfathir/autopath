@@ -1,0 +1,138 @@
+{
+  "name": "Demo Excel Users ForEach",
+  "nodes": [
+    {
+      "id": "s",
+      "type": "workflowNode",
+      "position": {
+        "x": 140,
+        "y": 90
+      },
+      "data": {
+        "nodeType": "start",
+        "label": "start"
+      }
+    },
+    {
+      "id": "op",
+      "type": "workflowNode",
+      "position": {
+        "x": 140,
+        "y": 180
+      },
+      "data": {
+        "nodeType": "openExcel",
+        "label": "Open sample.xlsx",
+        "filePath": "qa-lab/data/sample.xlsx",
+        "outputVariable": "wb"
+      }
+    },
+    {
+      "id": "rd",
+      "type": "workflowNode",
+      "position": {
+        "x": 140,
+        "y": 270
+      },
+      "data": {
+        "nodeType": "readRange",
+        "label": "Read Users",
+        "workbookId": "{{wb}}",
+        "sheetName": "Users",
+        "range": "A2:D11",
+        "outputVariable": "rows"
+      }
+    },
+    {
+      "id": "fe",
+      "type": "workflowNode",
+      "position": {
+        "x": 140,
+        "y": 360
+      },
+      "data": {
+        "nodeType": "forEachNode",
+        "label": "For Each User",
+        "collection": "{{rows}}",
+        "itemVariable": "row"
+      }
+    },
+    {
+      "id": "lg",
+      "type": "workflowNode",
+      "position": {
+        "x": 140,
+        "y": 450
+      },
+      "data": {
+        "nodeType": "logMessage",
+        "label": "Log User",
+        "message": "User {{row.1}} <{{row.2}}> role={{row.3}}"
+      }
+    },
+    {
+      "id": "done",
+      "type": "workflowNode",
+      "position": {
+        "x": 140,
+        "y": 540
+      },
+      "data": {
+        "nodeType": "logMessage",
+        "label": "Done",
+        "message": "Processed {{rows.length}} users"
+      }
+    },
+    {
+      "id": "e",
+      "type": "workflowNode",
+      "position": {
+        "x": 140,
+        "y": 630
+      },
+      "data": {
+        "nodeType": "end",
+        "label": "end"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e0",
+      "source": "s",
+      "target": "op"
+    },
+    {
+      "id": "e1",
+      "source": "op",
+      "target": "rd"
+    },
+    {
+      "id": "e2",
+      "source": "rd",
+      "target": "fe"
+    },
+    {
+      "id": "e3",
+      "source": "fe",
+      "sourceHandle": "body",
+      "target": "lg"
+    },
+    {
+      "id": "e4",
+      "source": "fe",
+      "sourceHandle": "done",
+      "target": "done"
+    },
+    {
+      "id": "e5",
+      "source": "done",
+      "target": "e"
+    }
+  ],
+  "viewport": {
+    "x": 0,
+    "y": 0,
+    "zoom": 0.85
+  }
+}

@@ -1,0 +1,134 @@
+{
+  "name": "Demo Desktop File Organizer",
+  "nodes": [
+    {
+      "id": "s",
+      "type": "workflowNode",
+      "position": {
+        "x": 140,
+        "y": 90
+      },
+      "data": {
+        "nodeType": "start",
+        "label": "start"
+      }
+    },
+    {
+      "id": "mk",
+      "type": "workflowNode",
+      "position": {
+        "x": 140,
+        "y": 180
+      },
+      "data": {
+        "nodeType": "createDirectory",
+        "label": "Make Folder",
+        "directoryPath": "C:\\mc-demo"
+      }
+    },
+    {
+      "id": "wr",
+      "type": "workflowNode",
+      "position": {
+        "x": 140,
+        "y": 270
+      },
+      "data": {
+        "nodeType": "writeFile",
+        "label": "Write Note",
+        "filePath": "C:\\mc-demo\\note.txt",
+        "content": "Created by Manufactura Connect at {{[1]}}"
+      }
+    },
+    {
+      "id": "cmd",
+      "type": "workflowNode",
+      "position": {
+        "x": 140,
+        "y": 360
+      },
+      "data": {
+        "nodeType": "runCommand",
+        "label": "List Folder",
+        "command": "Get-ChildItem C:\\mc-demo | Select-Object Name,Length",
+        "shell": "powershell",
+        "outputVariable": "listing"
+      }
+    },
+    {
+      "id": "log",
+      "type": "workflowNode",
+      "position": {
+        "x": 140,
+        "y": 450
+      },
+      "data": {
+        "nodeType": "logMessage",
+        "label": "Log",
+        "message": "Folder contents:\\n{{listing}}"
+      }
+    },
+    {
+      "id": "open",
+      "type": "workflowNode",
+      "position": {
+        "x": 140,
+        "y": 540
+      },
+      "data": {
+        "nodeType": "openFolder",
+        "label": "Open in Explorer",
+        "path": "C:\\mc-demo"
+      }
+    },
+    {
+      "id": "e",
+      "type": "workflowNode",
+      "position": {
+        "x": 140,
+        "y": 630
+      },
+      "data": {
+        "nodeType": "end",
+        "label": "end"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e0",
+      "source": "s",
+      "target": "mk"
+    },
+    {
+      "id": "e1",
+      "source": "mk",
+      "target": "wr"
+    },
+    {
+      "id": "e2",
+      "source": "wr",
+      "target": "cmd"
+    },
+    {
+      "id": "e3",
+      "source": "cmd",
+      "target": "log"
+    },
+    {
+      "id": "e4",
+      "source": "log",
+      "target": "open"
+    },
+    {
+      "id": "e5",
+      "source": "open",
+      "target": "e"
+    }
+  ],
+  "viewport": {
+    "x": 0,
+    "y": 0,
+    "zoom": 0.85
+  }
+}
