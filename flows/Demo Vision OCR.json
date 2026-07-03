@@ -1,0 +1,17 @@
+{
+  "name": "Demo Vision OCR",
+  "nodes": [
+    { "id": "n_start", "type": "workflowNode", "position": { "x": 120, "y": 60 },  "data": { "nodeType": "start", "label": "Start" } },
+    { "id": "n_shot",  "type": "workflowNode", "position": { "x": 120, "y": 160 }, "data": { "nodeType": "captureScreen", "label": "Capture Screen", "x": "", "y": "", "width": "", "height": "", "filePath": "", "outputVariable": "shot" } },
+    { "id": "n_ocr",   "type": "workflowNode", "position": { "x": 120, "y": 260 }, "data": { "nodeType": "readText", "label": "OCR Full Screen", "x": "", "y": "", "width": "", "height": "", "outputVariable": "screenText" } },
+    { "id": "n_log",   "type": "workflowNode", "position": { "x": 120, "y": 360 }, "data": { "nodeType": "logMessage", "label": "Log OCR", "message": "OCR read {{screenText}}" } },
+    { "id": "n_end",   "type": "workflowNode", "position": { "x": 120, "y": 460 }, "data": { "nodeType": "end", "label": "End", "autoCloseBrowser": true } }
+  ],
+  "edges": [
+    { "id": "e1", "source": "n_start", "target": "n_shot" },
+    { "id": "e2", "source": "n_shot",  "target": "n_ocr" },
+    { "id": "e3", "source": "n_ocr",   "target": "n_log" },
+    { "id": "e4", "source": "n_log",   "target": "n_end" }
+  ],
+  "viewport": { "x": 0, "y": 0, "zoom": 0.9 }
+}
