@@ -1,0 +1,75 @@
+name: Release Windows
+
+# Push a tag like v1.0.0 → GitHub builds the Windows installer (natively on a
+# Windows runner: nut.js native, FlaUI UIA sidecar, and NSIS installer — no wine)
+# and publishes it as a GitHub Release. Also runnable manually (workflow_dispatch).
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write   # needed to create the Release
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Setup .NET 8 SDK (for the UIA sidecar)
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      # Skip Playwright browser download — browsers aren't bundled (the target
+      # machine uses its own installed Chrome/Edge), so this just speeds up CI.
+      - name: Install root dependencies
+        run: npm install
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
+
+      - name: Install frontend dependencies
+        run: npm run install:frontend
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
+
+      - name: Build UIA sidecar (Tier 4 — FlaUI, self-contained)
+        run: dotnet publish sidecar/Manufactura.Sidecar.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -o sidecar/out
+
+      - name: Build Windows installer (Vite + electron-builder)
+        run: npm run build
+        env:
+          # No code-signing certificate configured → build unsigned.
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload installer as workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: manufactura-connect-windows
+          path: |
+            dist/*.exe
+            dist/*.blockmap
+            dist/latest.yml
+          if-no-files-found: error
+
+      - name: Publish GitHub Release (on tag)
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          draft: false
+          generate_release_notes: true
+          files: |
+            dist/*.exe
+            dist/*.blockmap
+            dist/latest.yml
