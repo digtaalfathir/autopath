@@ -15,9 +15,7 @@ the Windows desktop, files, Excel, databases, email, and even Citrix / RDP / VNC
 sessions. A desktop app inspired by UiPath Studio, built for people who'd rather
 design an automation than write one.
 
-![screenshot](docs/screenshot.png)
-
-> _Screenshot placeholder — replace `docs/screenshot.png` with a real capture of the designer._
+![screenshot](docs/screenshot.jpeg)
 
 ---
 
