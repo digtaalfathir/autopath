@@ -29,13 +29,13 @@ export function AboutModal({ onClose }) {
             </svg>
           </div>
           <div className="about-product">
-            <span className="about-brand">Manufactura</span>
-            <span className="about-name">Connect</span>
-            <span className="about-version">Version 1.0.0</span>
+            <span className="about-brand">Autopath</span>
+            <span className="about-name">Workflow Studio</span>
+            <span className="about-version">Version 1.1.0</span>
           </div>
           <p className="about-desc">
-            Visual RPA Workflow Designer & Automation Engine.<br />
-            Build, schedule, and monitor automation workflows.
+            Visual RPA Workflow Designer.<br />
+            Design the path, the bot walks it.
           </p>
           <div className="about-meta">
             <div className="about-meta__row">
@@ -44,7 +44,7 @@ export function AboutModal({ onClose }) {
             </div>
             <div className="about-meta__row">
               <span>Author</span>
-              <strong>Manufactura</strong>
+              <strong>Rifky Andigta Al-Fathir</strong>
             </div>
             <div className="about-meta__row">
               <span>License</span>

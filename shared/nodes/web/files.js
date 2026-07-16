@@ -71,7 +71,7 @@ const takeScreenshot = {
     const page = requirePage(context);
     let fp = interpolate(data.filePath || '', context.variables).trim();
     if (!fp) {
-      const dir = path.join(os.homedir(), 'Documents', 'ManufacturaConnect', 'screenshots');
+      const dir = path.join(os.homedir(), 'Documents', 'Autopath', 'screenshots');
       fp = path.join(dir, `screenshot_${Date.now()}.png`);
     }
     fs.mkdirSync(path.dirname(fp), { recursive: true });

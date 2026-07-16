@@ -164,7 +164,7 @@ export function SettingsModal({ onClose }) {
               <h4 className="settings-section__title">Startup &amp; Window</h4>
               <label className="settings-row">
                 <input type="checkbox" checked={!!sys.autoStart} onChange={e => patch('system.autoStart', e.target.checked)} />
-                Start Manufactura Connect when Windows starts
+                Start Autopath when Windows starts
               </label>
               <label className="settings-row">
                 <input type="checkbox" checked={!!sys.startMinimized} onChange={e => patch('system.startMinimized', e.target.checked)} />

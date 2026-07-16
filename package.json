@@ -1,9 +1,9 @@
 {
-  "name": "manufactura-connect",
-  "version": "1.0.0",
-  "description": "Manufactura Connect - Visual RPA Workflow Designer & Automation Engine",
+  "name": "autopath",
+  "version": "1.1.0",
+  "description": "Autopath - Visual RPA workflow designer. Design the path, the bot walks it.",
   "main": "apps/designer/electron/main.js",
-  "author": "Manufactura",
+  "author": "Rifky Andigta Al-Fathir",
   "license": "MIT",
   "scripts": {
     "dev:frontend": "cd apps/designer/frontend && npx vite --port 5173",
@@ -32,8 +32,8 @@
     "electron-builder": "^24.13.3"
   },
   "build": {
-    "appId": "com.manufactura.connect",
-    "productName": "Manufactura Connect",
+    "appId": "com.autopath.app",
+    "productName": "Autopath",
     "directories": {
       "output": "dist"
     },
@@ -80,7 +80,7 @@
         }
       ],
       "icon": "assets/icon.ico",
-      "publisherName": "Manufactura",
+      "publisherName": "Rifky Andigta Al-Fathir",
       "signingHashAlgorithms": [
         "sha256"
       ],
@@ -91,7 +91,7 @@
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
-      "shortcutName": "Manufactura Connect"
+      "shortcutName": "Autopath"
     },
     "linux": {
       "icon": "assets/icon.png",

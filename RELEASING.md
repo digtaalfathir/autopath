@@ -1,4 +1,4 @@
-# Releasing Manufactura Connect (Windows)
+# Releasing Autopath (Windows)
 
 Builds run on **GitHub Actions (Windows runner)** — no local build, no wine.
 nut.js native binaries, the FlaUI UIA sidecar, and the NSIS installer are all
@@ -14,7 +14,7 @@ built natively on Windows, then attached to a GitHub Release.
 
 ## Cut a release
 1. Set the version in `package.json` (this names the installer, e.g.
-   `Manufactura Connect Setup 1.2.0.exe`):
+   `Autopath Setup 1.2.0.exe`):
    ```jsonc
    "version": "1.2.0"
    ```
@@ -35,7 +35,7 @@ Manual run (no tag → artifact only, no Release): Actions tab → *Release Wind
 → **Run workflow**.
 
 ## What the workflow produces
-- `Manufactura Connect Setup <version>.exe` — the installer to share. Self-
+- `Autopath Setup <version>.exe` — the installer to share. Self-
   contained; bundles Electron, Node, all node modules (incl. nut.js Windows
   binary), the UIA sidecar, and demo flows.
 - `latest.yml` + `*.blockmap` — auto-update metadata (only needed if you later

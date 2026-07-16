@@ -18,7 +18,7 @@ let tray         = null;
 let forceQuit    = false;  // true only when user explicitly quits from tray
 let trayNotified = false;  // show "running in background" hint only once
 
-const APP_NAME = 'Manufactura Connect';
+const APP_NAME = 'Autopath';
 
 // Resolve the branded app icon, preferring the pre-sized PNG for the target.
 // Falls back through sizes so the tray is never blank if one file is missing.
@@ -215,9 +215,9 @@ function handleJobNotification(data, isScheduled) {
   if (settings.emailEnabled && settings.smtp?.host) {
     const smtp = settings.smtp;
     if (success && settings.emailOnSuccess)
-      sendEmail(smtp, `[Manufactura Connect] Run Complete — ${wfId}`, `${label} "${wfId}" completed successfully.\n\nTimestamp: ${new Date().toISOString()}`);
+      sendEmail(smtp, `[Autopath] Run Complete — ${wfId}`, `${label} "${wfId}" completed successfully.\n\nTimestamp: ${new Date().toISOString()}`);
     if (!success && settings.emailOnFailure)
-      sendEmail(smtp, `[Manufactura Connect] Run Failed — ${wfId}`, `${label} "${wfId}" failed.\n\nError: ${data.error}\nTimestamp: ${new Date().toISOString()}`);
+      sendEmail(smtp, `[Autopath] Run Failed — ${wfId}`, `${label} "${wfId}" failed.\n\nError: ${data.error}\nTimestamp: ${new Date().toISOString()}`);
   }
 }
 
@@ -605,7 +605,7 @@ ipcMain.handle('report:export-excel', async (_e, { runs, filename }) => {
 
     const ExcelJS = require('exceljs');
     const wb = new ExcelJS.Workbook();
-    wb.creator = 'Manufactura Connect';
+    wb.creator = 'Autopath';
     wb.created = new Date();
 
     const ws = wb.addWorksheet('Run History');
@@ -682,7 +682,7 @@ ipcMain.handle('picker:start', async (_e, { url }) => {
 // ── App lifecycle ─────────────────────────────────────────────────────
 app.whenReady().then(() => {
   // Windows: makes desktop notifications + taskbar group use the branded name/icon
-  app.setAppUserModelId('com.manufactura.connect');
+  app.setAppUserModelId('com.autopath.app');
   app.setName(APP_NAME);
   ensureRepos();        // settings available before window/tray decisions
   seedInitialData();

@@ -727,7 +727,7 @@ export default function App() {
       <header className="title-bar">
         <div className="title-bar__brand">
           <span className="title-bar__brandmark"><LogoMark size={16} /></span>
-          <span className="title-bar__name"><em>Manufactura</em> Connect</span>
+          <span className="title-bar__name"><em>Auto</em>path</span>
         </div>
         <div className="title-bar__divider" />
         <span className="title-bar__flow">
@@ -1107,7 +1107,7 @@ export default function App() {
         </div>
         <div className="status-bar__right">
           <button className="status-bar__about-btn" onClick={() => setAboutOpen(true)}>
-            Manufactura Connect v1.0
+            Autopath v1.1
           </button>
         </div>
       </footer>
