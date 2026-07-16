@@ -158,6 +158,11 @@ class WorkflowEngine extends EventEmitter {
       require('../nodes/web/waits'),
       require('../nodes/web/scraping'),
       require('../nodes/comm/email'),
+      require('../nodes/desktop/shell'),   // Desktop Tier 1 — Shell & Launch
+      require('../nodes/desktop/input'),   // Desktop Tier 2 — Keyboard & Mouse
+      require('../nodes/desktop/window'),  // Desktop Tier 3 — Window Management
+      require('../nodes/desktop/uia'),     // Desktop Tier 4 — Element-based (UIA)
+      require('../nodes/vision/vision'),   // Tier 5 — Vision / Surface (Citrix/RDP/VNC)
     ];
     for (const group of webGroups) {
       for (const handler of group.handlers) {
@@ -501,6 +506,10 @@ class WorkflowEngine extends EventEmitter {
         this.context.browser = null;
         this.context.page    = null;
       }
+    } catch (_) {}
+    // Stop the UIA sidecar process if a Desktop (Tier 4) node started one.
+    try {
+      if (this.context.desktopUia) { this.context.desktopUia.stop(); this.context.desktopUia = null; }
     } catch (_) {}
   }
 

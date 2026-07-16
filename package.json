@@ -15,12 +15,15 @@
     "install:frontend": "cd apps/designer/frontend && npm install"
   },
   "dependencies": {
+    "@nut-tree-fork/nut-js": "^4.2.6",
     "exceljs": "^4.4.0",
     "imapflow": "^1.4.2",
+    "jimp": "^1.6.1",
     "mailparser": "^3.9.11",
     "nodemailer": "^6.10.1",
     "playwright": "^1.40.0",
-    "sql.js": "^1.14.1"
+    "sql.js": "^1.14.1",
+    "tesseract.js": "^7.0.0"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",
@@ -34,6 +37,11 @@
     "directories": {
       "output": "dist"
     },
+    "npmRebuild": false,
+    "asarUnpack": [
+      "**/*.node",
+      "**/@nut-tree-fork/**"
+    ],
     "files": [
       "apps/designer/electron/**/*",
       "apps/designer/elementPicker.js",
@@ -50,6 +58,13 @@
       {
         "from": "flows",
         "to": "flows",
+        "filter": [
+          "**/*"
+        ]
+      },
+      {
+        "from": "sidecar/out",
+        "to": "sidecar",
         "filter": [
           "**/*"
         ]

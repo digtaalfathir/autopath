@@ -1,0 +1,31 @@
+{
+  "name": "Demo Calculator Vision",
+  "nodes": [
+    { "id": "s",    "type": "workflowNode", "position": { "x": 140, "y": 40 },  "data": { "nodeType": "start", "label": "Start" } },
+    { "id": "run",  "type": "workflowNode", "position": { "x": 140, "y": 130 }, "data": { "nodeType": "runProgram", "label": "Open Calculator", "programPath": "calc.exe", "waitForExit": false, "outputVariable": "pid" } },
+    { "id": "win",  "type": "workflowNode", "position": { "x": 140, "y": 220 }, "data": { "nodeType": "waitWindow", "label": "Wait Calculator", "title": "Calculator", "matchMode": "contains", "state": "appear", "timeout": "15000", "interval": "500", "focus": true } },
+    { "id": "d1",   "type": "workflowNode", "position": { "x": 140, "y": 310 }, "data": { "nodeType": "delay", "label": "Settle", "milliseconds": "1200" } },
+    { "id": "foc",  "type": "workflowNode", "position": { "x": 140, "y": 400 }, "data": { "nodeType": "focusWindow", "label": "Focus Calculator", "title": "Calculator", "matchMode": "contains" } },
+    { "id": "d2",   "type": "workflowNode", "position": { "x": 140, "y": 490 }, "data": { "nodeType": "delay", "label": "Wait Focus", "milliseconds": "500" } },
+    { "id": "type", "type": "workflowNode", "position": { "x": 140, "y": 580 }, "data": { "nodeType": "typeText", "label": "Type 7*6 =", "text": "7*6", "autoDelayMs": "90", "pressEnter": true } },
+    { "id": "d3",   "type": "workflowNode", "position": { "x": 140, "y": 670 }, "data": { "nodeType": "delay", "label": "Wait Result", "milliseconds": "700" } },
+    { "id": "cap",  "type": "workflowNode", "position": { "x": 140, "y": 760 }, "data": { "nodeType": "captureScreen", "label": "Capture", "outputVariable": "shot" } },
+    { "id": "ocr",  "type": "workflowNode", "position": { "x": 140, "y": 850 }, "data": { "nodeType": "readText", "label": "OCR Result", "outputVariable": "screenText" } },
+    { "id": "log",  "type": "workflowNode", "position": { "x": 140, "y": 940 }, "data": { "nodeType": "logMessage", "label": "Log", "message": "Calculator OCR: {{screenText}}" } },
+    { "id": "e",    "type": "workflowNode", "position": { "x": 140, "y": 1030 }, "data": { "nodeType": "end", "label": "End" } }
+  ],
+  "edges": [
+    { "id": "e0", "source": "s",    "target": "run" },
+    { "id": "e1", "source": "run",  "target": "win" },
+    { "id": "e2", "source": "win",  "target": "d1" },
+    { "id": "e3", "source": "d1",   "target": "foc" },
+    { "id": "e4", "source": "foc",  "target": "d2" },
+    { "id": "e5", "source": "d2",   "target": "type" },
+    { "id": "e6", "source": "type", "target": "d3" },
+    { "id": "e7", "source": "d3",   "target": "cap" },
+    { "id": "e8", "source": "cap",  "target": "ocr" },
+    { "id": "e9", "source": "ocr",  "target": "log" },
+    { "id": "e10","source": "log",  "target": "e" }
+  ],
+  "viewport": { "x": 0, "y": 0, "zoom": 0.8 }
+}

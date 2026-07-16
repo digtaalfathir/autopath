@@ -1,0 +1,129 @@
+{
+  "name": "Demo Monitoring Alert",
+  "nodes": [
+    {
+      "id": "s",
+      "type": "workflowNode",
+      "position": {
+        "x": 140,
+        "y": 90
+      },
+      "data": {
+        "nodeType": "start",
+        "label": "start"
+      }
+    },
+    {
+      "id": "http",
+      "type": "workflowNode",
+      "position": {
+        "x": 140,
+        "y": 180
+      },
+      "data": {
+        "nodeType": "httpRequest",
+        "label": "Health Check",
+        "method": "GET",
+        "url": "https://example.com",
+        "outputVariable": "response"
+      }
+    },
+    {
+      "id": "if",
+      "type": "workflowNode",
+      "position": {
+        "x": 140,
+        "y": 270
+      },
+      "data": {
+        "nodeType": "ifNode",
+        "label": "Status 200?",
+        "condition": "{{response.status == 200}}"
+      }
+    },
+    {
+      "id": "ok",
+      "type": "workflowNode",
+      "position": {
+        "x": 140,
+        "y": 360
+      },
+      "data": {
+        "nodeType": "logMessage",
+        "label": "OK",
+        "message": "Service healthy ({{response.status}})"
+      }
+    },
+    {
+      "id": "mail",
+      "type": "workflowNode",
+      "position": {
+        "x": 140,
+        "y": 450
+      },
+      "data": {
+        "nodeType": "sendEmail",
+        "label": "Send Alert",
+        "smtpHost": "smtp.gmail.com",
+        "smtpPort": "587",
+        "username": "bot@example.com",
+        "password": "{{secret.Mail.password}}",
+        "to": "ops@example.com",
+        "subject": "ALERT: service down",
+        "bodyType": "html",
+        "body": "<p>Health check failed: {{response.status}}</p>"
+      }
+    },
+    {
+      "id": "e",
+      "type": "workflowNode",
+      "position": {
+        "x": 140,
+        "y": 540
+      },
+      "data": {
+        "nodeType": "end",
+        "label": "end"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e0",
+      "source": "s",
+      "target": "http"
+    },
+    {
+      "id": "e1",
+      "source": "http",
+      "target": "if"
+    },
+    {
+      "id": "e2",
+      "source": "if",
+      "sourceHandle": "true",
+      "target": "ok"
+    },
+    {
+      "id": "e3",
+      "source": "if",
+      "sourceHandle": "false",
+      "target": "mail"
+    },
+    {
+      "id": "e4",
+      "source": "ok",
+      "target": "e"
+    },
+    {
+      "id": "e5",
+      "source": "mail",
+      "target": "e"
+    }
+  ],
+  "viewport": {
+    "x": 0,
+    "y": 0,
+    "zoom": 0.85
+  }
+}
