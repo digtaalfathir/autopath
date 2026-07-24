@@ -15,7 +15,7 @@ the Windows desktop, files, Excel, databases, email, and even Citrix / RDP / VNC
 sessions. A desktop app inspired by UiPath Studio, built for people who'd rather
 design an automation than write one.
 
-![screenshot](docs/screenshot.jpeg)
+![Autopath demo](docs/demo.gif)
 
 ---
 
