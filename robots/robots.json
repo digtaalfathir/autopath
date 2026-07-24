@@ -1,0 +1,12 @@
+[
+  {
+    "robotId": "robot_local",
+    "name": "Local Robot",
+    "capabilities": [
+      "workflow"
+    ],
+    "status": "ONLINE",
+    "registeredAt": "2026-07-24T04:03:06.288Z",
+    "lastSeen": "2026-07-24T04:03:40.995Z"
+  }
+]
